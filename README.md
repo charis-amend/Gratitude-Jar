@@ -1,40 +1,128 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gratitude Jar README
 
-## Getting Started
+<aside>
+💡 Browser-based web app to collect good things throughout the day which you are grateful for. And getting a random gratitude memory.
 
-First, run the development server:
+</aside>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| NextJS REACT
+Vercel | MongoDB
+REST API
+| Tailwind CSS
+| NextAuth | Jest | Three Fiber
+|
+| --- | --- | --- | --- | --- | --- |
+
+## Interface
+
+![IMG_3997.jpeg](IMG_3997.jpeg)
+
+## Data Structure
+
+[gratitude_jar_database-structure.pdf](gratitude_jar_database-structure.pdf)
+
+## Naming in this project
+
+```jsx
+// defining the Data
+
+// one user Object
+		const user = {
+			userObjectId: ObjectId(''), // predefined _id by mongoDB
+			username: "string",
+			email: "string",
+			password: "string",
+			gratitudeList: [
+					{gratitudeStatement},
+					{gratitudeStatement}
+					],
+		}
+
+// one gratitudeStatement  Object
+		const gratitudeStatement = {
+			gratitudeStatementObjectId: ObjectId('') // predefined _id by mongoDB
+			dateCreation: "string",
+			statementText: "string",
+		}
+
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Variables                  | explanation / where its used                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| user                       | a user object with its whole info (only used in database)                                                    |
+| gratitudeStatement         | a object for the whole entry that a user does if they submit a gratitude statement                           |
+| dateCreation               | date when gratitudeStatement was created by user (no editing possible)                                       |
+| statementText              | written words of user                                                                                        |
+| userObjectId               | predefined \_id by mongoDB                                                                                   |
+| gratitudeStatementObjectId | predefined \_id by mongoDB                                                                                   |
+| usersList                  | list of all users === Array of userObjects and those userOjects have an array with gratitudeStatementObjects |
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## REACT Components
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```jsx
+// -------- top top top Parent --------
+export default function HomePage() {
+		// no header!
+		<AppBackground /> // link to assets: [see image](https://www.notion.so/Interface-Userflow-ad79dbdd5370451e98673f0c55caa0c5?pvs=21)
+		<BlurryLayer /> // only if GratitudeViewBox is active
+		<CancelBackButton /> // only if GratitudeViewBox is active
+		<GlassJarSection />
+		<GratitudeFormSection />
+		}
+// ------------------------------------
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+// ------------- 2nd Level ------------
+export default function GlassJarSection() {
+		<GlassJar />
+		<CrumpledPaper />
+}
+// --- AND :
+export default function GratitudeFormSection() {
+		<OpenGratitudeFormButton />
+		<GratitudeForm />
+		<DisplayFormButton />
+		<GratitudeViewBox />
+		<RandomGratitudeButton />
+}
+// ------------------------------------
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+export default function AppBackground() {}
+export default function BlurryLayer() {}
+export default function CancelBackButton() {}
+	// Button to cancel writing an entry
 
-## Learn More
+export default function GlassJar() {}
+	// Component for the animated glassJar with Three JS
+export default function CrumpledPaper() {}
+	// adding a CrumpledPaper everytime User submits a gratitudeStatement
+	// --> additional low prio feature
 
-To learn more about Next.js, take a look at the following resources:
+export default function DisplayFormButton() {}
+	// button to hide-> display the GratitudeForm
+export default function GratitudeForm() {}
+	// adding gratitudeStatement
+export default function GratitudeViewBox() {}
+	// div box with gratitudeStatement + dateCreated
+export default function RandomGratitudeButton() {}
+	// Button to get a random gratitudeStatement
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Page Layout and Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. HomePage index.js
+   1. <AppBackground />
+   2. <BlurryLayer />
+   3. <CancelBackButton />
+   4. <GlassJarSection />
+      1. <GlassJar />
+      2. <CrumpledPaper />
+   5. <GratitudeFormSection />
+      1. <GratitudeForm />
+      2. <DisplayFormButton />
+      3. <GratitudeViewBox />
+      4. <RandomGratitudeButton />
 
-## Deploy on Vercel
+## Props UP and DOWN
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[https://miro.com/app/board/uXjVNsCw6Vo=/?share_link_id=781978993892](https://miro.com/app/board/uXjVNsCw6Vo=/?share_link_id=781978993892)
