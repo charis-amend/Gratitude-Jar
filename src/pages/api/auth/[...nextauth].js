@@ -15,7 +15,8 @@ export const authOptions = {
                 url,
                 provider: { server, from },
             }) {
-                /* your function */
+                /* function customizing the sign in email that is sent */
+                sendVerificationRequest();
             },
         }),
     ],

@@ -12,7 +12,6 @@
   "dependencies": {
     "@auth/mongodb-adapter": "^2.4.0",
     "@react-three/fiber": "^8.15.16",
-    "mjml": "^4.15.3",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.3",
     "next": "14.1.0",
