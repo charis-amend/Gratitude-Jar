@@ -4,24 +4,26 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "../../../../lib/mongodb"
 
 
-export default async function auth(req, res) {
-    return await NextAuth(req, res, {
-        adapter: MongoDBAdapter(clientPromise),
-        // Configure one or more authentication providers
-        providers: [
-            EmailProvider({
-                server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
-                from: process.env.EMAIL_FROM,
-                sendVerificationRequest({
-                    identifier: email,
-                    url,
-                    provider: { server, from },
-                }) {
-                    /* your function */
-                },
-            }),
-            // ...add more providers here
-        ],
-        database: process.env.MONGODB_URI
-    })
-}
+export default NextAuth({
+    // Configure one or more authentication providers
+    providers: [
+        EmailProvider({
+            server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
+            from: process.env.EMAIL_FROM,
+        }),
+        // ...add more providers here
+    ],
+    adapter: MongoDBAdapter(clientPromise),
+    // database: process.env.MONGODB_URI
+
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+        jwt: true,
+    },
+    callbacks: {
+        async session({ session, user }) {
+            session.user.userId = user.id;
+            return session;
+        },
+    },
+})
