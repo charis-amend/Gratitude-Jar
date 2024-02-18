@@ -10,6 +10,7 @@ export default NextAuth({
         EmailProvider({
             server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
             from: process.env.EMAIL_FROM,
+            maxAge: 30,
         }),
         // ...add more providers here
     ],
