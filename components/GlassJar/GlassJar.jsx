@@ -1,7 +1,7 @@
-import ReactDOM from 'https://esm.sh/react-dom'
-import React, { useRef, useState } from 'https://esm.sh/react'
-import { Canvas, useFrame } from 'https://esm.sh/@react-three/fiber'
-import htm from 'https://esm.sh/htm'
+import ReactDOM from 'react-dom';
+import React, { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import htm from 'htm';
 
 const html = htm.bind(React.createElement)
 
