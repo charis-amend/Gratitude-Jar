@@ -1,18 +1,20 @@
 import Login from "../../components/Login/Login";
-import { useSession } from "next-auth/react";
+import AppBackground from "../../components/AppBackground/AppBackground";
+import GlassJarSection from "../../components/GlassJarSection/GlassJarSection";
 
+import { useSession } from "next-auth/react";
 
 export default function Home() {
 
-
   return (
     <>
-      <Login />
-      <AppBackground />
-      <BlurryLayer />
-      <CancelBackButton />
-      <GlassJarSection />
-      <GratitudeFormSection />
+      <main className="main min-h-screen flex-col flex-wrap items-center justify-between p-24">
+        <Login />
+        <AppBackground />
+
+        <GlassJarSection />
+
+      </main>
     </>
   )
 }

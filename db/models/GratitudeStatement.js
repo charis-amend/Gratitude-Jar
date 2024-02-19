@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const gratitudeStatementsSchema = new Schema({
+const gratitudeStatementSchema = new Schema({
     // gratitudeStatementObjectId: ObjectId('') predefined _id by mongoDB
     dateCreation: { type: String, require: true },
     statementText: { type: String, require: true },
 });
 
-const GratitudeStatements =
-    mongoose.models.GratitudeStatements || mongoose.model("GratitudeStatements", gratitudeStatementsSchema);
-export default GratitudeStatements;
+const GratitudeStatement =
+    mongoose.models.GratitudeStatement || mongoose.model("GratitudeStatement", gratitudeStatementSchema);
+export default GratitudeStatement;
