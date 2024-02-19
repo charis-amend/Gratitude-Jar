@@ -8,6 +8,11 @@ export default function Home() {
   return (
     <>
       <Login />
+      <AppBackground />
+      <BlurryLayer />
+      <CancelBackButton />
+      <GlassJarSection />
+      <GratitudeFormSection />
     </>
   )
 }
