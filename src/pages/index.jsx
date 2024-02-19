@@ -12,7 +12,7 @@ export default function Home() {
         <Login />
         <AppBackground />
 
-        <GlassJarSection />
+        <GlassJarSection className="w-screen h-screen flex items-center justify-center" />
 
       </main>
     </>
