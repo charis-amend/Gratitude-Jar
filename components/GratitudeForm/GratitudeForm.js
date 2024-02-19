@@ -1,6 +1,6 @@
-export default function GratitudeForm() {
+export default function GratitudeForm({ onGratitudeSubmit }) {
     const { mutate } = useSWR("/api/jokes");
-    const onGratitudeSubmit = async (e) => {
+    const GratitudeSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const gratitudeData = Object.fromEntries(formData);

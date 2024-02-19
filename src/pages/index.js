@@ -1,4 +1,7 @@
 import Login from "../../components/Login/Login";
+
+import GlassJarSection from "../../components/GlassJarSection/GlassJarSection";
+import GratitudeFormSection from "../../components/GratitudeFormSection/GratitudeFormSection";
 import { useSession } from "next-auth/react";
 
 
@@ -7,12 +10,14 @@ export default function Home() {
 
   return (
     <>
-      <Login />
-      <AppBackground />
+      <main className="main min-h-screen flex-col flex-wrap items-center justify-between p-24">
+        <Login />
+        {/* <AppBackground />
       <BlurryLayer />
-      <CancelBackButton />
-      <GlassJarSection />
-      <GratitudeFormSection />
+      <CancelBackButton /> */}
+        <GlassJarSection />
+        <GratitudeFormSection />
+      </main>
     </>
   )
 }
