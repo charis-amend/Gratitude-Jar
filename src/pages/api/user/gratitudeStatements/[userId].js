@@ -1,0 +1,17 @@
+import dbConnect from "../../../../../db/connect";
+import User from "../../../../../db/models/User";
+
+// getting only the gratitudeStatements from the loggedInUser = 
+
+export default async function handler(request, response) {
+    await dbConnect();
+    const { userId } = request.query
+    try {
+        const gratitudeStatements = await User.findById(userId).populate("gratitudeStatements")
+        response.status(200).json(gratitudeStatements)
+    }
+    catch (error) {
+        console.log("------ error in api/user/gratitudeStatements:", error)
+        response.status(400).json({ status: error.message })
+    }
+}

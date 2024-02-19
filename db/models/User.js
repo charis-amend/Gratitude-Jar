@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import "./GratitudeStatements"
+import "./GratitudeStatement"
 const { Schema, models, model } = mongoose;
 
 const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
-    gratitudeStatements: { type: [Schema.Types.ObjectId], ref: "GratitudeStatements" }
+    gratitudeStatements: { type: [Schema.Types.ObjectId], ref: "GratitudeStatement" }
 });
 
 const User = models.User || model("User", userSchema);

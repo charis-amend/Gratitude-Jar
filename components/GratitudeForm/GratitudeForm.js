@@ -1,21 +1,21 @@
 export default function GratitudeForm({ onGratitudeSubmit }) {
-    const { mutate } = useSWR("/api/jokes");
-    const GratitudeSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const gratitudeData = Object.fromEntries(formData);
-        console.log("------ gratitudeData:", gratitudeData);
-        const response = await fetch("/api/jokes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jokeData),
-        });
-        if (response.ok) {
-            mutate();
-        }
-    };
+    // const { mutate } = useSWR("/api/jokes");
+    // const GratitudeSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const formData = new FormData(e.target);
+    //     const gratitudeData = Object.fromEntries(formData);
+    //     console.log("------ gratitudeData:", gratitudeData);
+    //     const response = await fetch("/api/jokes", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(jokeData),
+    //     });
+    //     if (response.ok) {
+    //         mutate();
+    //     }
+    // };
 
     return (
         <>
