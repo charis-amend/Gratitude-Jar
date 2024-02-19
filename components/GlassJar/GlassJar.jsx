@@ -7,10 +7,10 @@ Source: https://sketchfab.com/3d-models/empty-plastic-jar-98b06be0357a46cfa3a7aa
 Title: Empty plastic jar
 */
 
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-    const { nodes, materials } = GLTFLoader(sceneFile)
+    const { nodes, materials } = useGLTF('../../public/glasjar/scene.gltf')
     return (
 
         <group {...props} dispose={null}>
@@ -25,4 +25,4 @@ export default function Model(props) {
     )
 }
 
-GLTFLoader.preload(sceneFile)
+useGLTF.preload('../../public/glasjar/scene.gltf')
