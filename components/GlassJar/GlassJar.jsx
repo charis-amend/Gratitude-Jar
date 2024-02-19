@@ -1,36 +1,19 @@
 import { Canvas } from "react-three-fiber"
-import { useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-
-
-import { Environment, OrbitControls } from "@react-three/drei";
-import { Suspense } from "react";
-
-const Model = () => {
-    const gltf = useLoader(GLTFLoader, "./Poimandres.gltf");
-    return (
-        <>
-            <primitive object={gltf.scene} scale={0.4} />
-        </>
-    );
-};
+import React, { useRef } from 'react'
+import { useGLTF } from '@react-three/drei'
 
 
 export default function GlassJar() {
 
+    const groupRef = useRef()
+    const { nodes, materials } = useGLTF('/scene.gltf')
     return (
-        // Canvas is responsive to fit the parent node, so you can control how big it is by changing the parents width and height, in this case #canvas-container.
-        <div id="canvas-container">
-            <Canvas>
-                <ambientLight intensity={0.1} />
-                <directionalLight color="red" position={[0, 0, 5]} />
-                <mesh>
-                    <boxGeometry args={[2, 2, 2]} />
-                    <meshPhysicalMaterial />
-                </mesh>
-            </Canvas>
-        </div>
+        <group ref={groupRef} {...props} dispose={null}>
+            <mesh castShadow receiveShadow geometry={nodes.Curve007_1.geometry} material={materials['Material.001']} />
+            <mesh castShadow receiveShadow geometry={nodes.Curve007_2.geometry} material={materials['Material.002']} />
+        </group>
     )
 
 }
 
+useGLTF.preload('/scene.gltf')
