@@ -1,5 +1,3 @@
-import Floor from "../Floor/Floor"
-import { Canvas } from "@react-three/fiber"
 import ReactDOM from 'https://esm.sh/react-dom'
 import React, { useRef, useState } from 'https://esm.sh/react'
 import { Canvas, useFrame } from 'https://esm.sh/@react-three/fiber'
