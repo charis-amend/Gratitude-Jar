@@ -12,11 +12,10 @@ export default function Home() {
     <>
       <main className="main min-h-screen flex-col flex-wrap items-center justify-between p-24">
         <Login />
-        {/* <AppBackground />
-      <BlurryLayer />
-      <CancelBackButton /> */}
+        <AppBackground />
+
         <GlassJarSection />
-        <GratitudeFormSection />
+
       </main>
     </>
   )
