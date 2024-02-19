@@ -5,11 +5,11 @@ export default function Login() {
     const { data: session, status } = useSession()
     const router = useRouter()
 
-    async function handleSignInAndDisplayLoginPage() {
+    // async function handleSignInAndDisplayLoginPage() {
 
-        await signIn();
-        router.push("/loggedInUser")
-    }
+    //     await signIn();
+    //     router.push("/loggedInUser")
+    // }
 
     if (session) {
         return (
@@ -23,7 +23,7 @@ export default function Login() {
         <>
             Not signed in <br />
             <button type="button"
-                onClick={handleSignInAndDisplayLoginPage}
+                onClick={() => signIn()}
             >Sign in</button >
         </>
     )

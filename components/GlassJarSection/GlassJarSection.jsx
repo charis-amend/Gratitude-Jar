@@ -14,7 +14,8 @@ export default function GlassJarSection() {
                     <Suspense fallback={null}>
                         <ambientLight />
                         <Model />
-                        <Environment preset="sunset" background />
+                        <Environment preset="night" background />
+
                     </Suspense>
                 </Canvas>
             </div>
