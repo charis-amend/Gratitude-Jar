@@ -19,7 +19,9 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
 
     return (
         <>
-            <form onSubmit={(e) => onGratitudeSubmit(e)}>
+            <form
+            // onSubmit={(e) => onGratitudeSubmit(e)}
+            >
                 <label htmlFor="formTextInput">
                 </label>
                 <textarea

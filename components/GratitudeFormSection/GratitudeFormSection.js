@@ -13,7 +13,9 @@ export default function GratitudeFormSection({ onGratitudeSubmit }) {
                 Add Gratitude
             </button>
 
-            <GratitudeForm onGratitudeSubmit={GratitudeSubmit} />
+            <GratitudeForm
+            // onGratitudeSubmit={GratitudeSubmit} 
+            />
             <GratitudeStatement />
 
             {/* RandomGratitudeButton:  */}

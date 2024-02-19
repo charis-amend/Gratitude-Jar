@@ -1,12 +1,10 @@
 import Login from "../../components/Login/Login";
-
+import AppBackground from "../../components/AppBackground/AppBackground";
 import GlassJarSection from "../../components/GlassJarSection/GlassJarSection";
-import GratitudeFormSection from "../../components/GratitudeFormSection/GratitudeFormSection";
+
 import { useSession } from "next-auth/react";
 
-
 export default function Home() {
-
 
   return (
     <>
