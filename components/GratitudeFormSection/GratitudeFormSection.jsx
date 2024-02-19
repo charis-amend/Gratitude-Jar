@@ -2,7 +2,7 @@ import useSWR from "swr";
 import GratitudeStatement from "../GratitudeStatement/GratitudeStatement";
 import GratitudeForm from "../GratitudeForm/GratitudeForm";
 
-export default function GratitudeFormSection({ onGratitudeSubmit }) {
+export default function GratitudeFormSection() {
 
     return (
         <>
