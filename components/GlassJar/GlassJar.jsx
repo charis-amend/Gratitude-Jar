@@ -6,7 +6,7 @@ License: SKETCHFAB Standard (https://sketchfab.com/licenses)
 Source: https://sketchfab.com/3d-models/empty-plastic-jar-98b06be0357a46cfa3a7aa9e0d0e80e6
 Title: Empty plastic jar
 */
-import sceneFile from "../../public/glasjar/scene.gltf"
+
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export default function Model(props) {
