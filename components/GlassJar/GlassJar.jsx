@@ -1,41 +1,36 @@
-import ReactDOM from 'react-dom';
-import React, { useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import htm from 'htm';
+import { Canvas } from "react-three-fiber"
+import { useLoader } from '@react-three/fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-const html = htm.bind(React.createElement)
+
+import { Environment, OrbitControls } from "@react-three/drei";
+import { Suspense } from "react";
+
+const Model = () => {
+    const gltf = useLoader(GLTFLoader, "./Poimandres.gltf");
+    return (
+        <>
+            <primitive object={gltf.scene} scale={0.4} />
+        </>
+    );
+};
+
 
 export default function GlassJar() {
 
-
-    function Jar(props) {
-        const meshRef = useRef()
-        const [hovered, setHover] = useState(false)
-        const [active, setActive] = useState(false)
-        useFrame(() => (meshRef.current.rotation.x = meshRef.current.rotation.y += 0.01))
-        return html` <mesh
-        ...${props}
-        ref=${meshRef}
-        scale=${active ? 1.5 : 1}
-        onClick=${() => setActive(!active)}
-        onPointerOver=${() => setHover(true)}
-        onPointerOut=${() => setHover(false)}
-      >
-        <boxGeometry args=${[1, 1, 1]} />
-        <meshStandardMaterial color=${hovered ? 'hotpink' : 'orange'} />
-      </mesh>`
-    }
-    ReactDOM.render(
-
-        html` <${Canvas}>
-                <ambientLight />
-                <pointLight position=${[10, 10, 10]} />
-                <${Jar} position=${[-1.2, 0, 0]} />
-                <${Jar} position=${[1.2, 0, 0]} />
-            <//>`,
-        document.getElementById('root'),
+    return (
+        // Canvas is responsive to fit the parent node, so you can control how big it is by changing the parents width and height, in this case #canvas-container.
+        <div id="canvas-container">
+            <Canvas>
+                <ambientLight intensity={0.1} />
+                <directionalLight color="red" position={[0, 0, 5]} />
+                <mesh>
+                    <boxGeometry args={[2, 2, 2]} />
+                    <meshPhysicalMaterial />
+                </mesh>
+            </Canvas>
+        </div>
     )
+
 }
-
-
 
