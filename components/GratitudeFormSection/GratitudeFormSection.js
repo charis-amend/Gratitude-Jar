@@ -1,23 +1,27 @@
-export default function GratitudeFormSection() {
+import useSWR from "swr";
+import GratitudeStatement from "../GratitudeStatement/GratitudeStatement";
+import GratitudeForm from "../GratitudeForm/GratitudeForm";
 
+export default function GratitudeFormSection({ onGratitudeSubmit }) {
 
     return (
         <>
             {/* DisplayFormButton: */}
-            <button type="button" >
+            <button type="button"
+                id="displayFormButton"
+                name="displayFormButton">
                 Add Gratitude
             </button>
-            {/* GratitudeForm: */}
-            <form>
-                <label htmlFor=""></label>
-                <textarea name="formStatementText" id="formTextInput"></textarea>
-                <button type="submit">
-                    ADD
-                </button>
-            </form>
-            <DisplayFormButton />
-            <GratitudeViewBox />
-            <RandomGratitudeButton />
+
+            <GratitudeForm />
+            <GratitudeStatement />
+
+            {/* RandomGratitudeButton:  */}
+            <button
+                type="button"
+                id="RandomGratitudeButton">
+                Gratitude Memory
+            </button>
         </>
     )
 }
