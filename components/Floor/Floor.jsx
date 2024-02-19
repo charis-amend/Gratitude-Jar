@@ -1,3 +1,7 @@
+import { extend } from '@react-three/fiber'
+import { BoxBufferGeometry } from 'three-stdlib'
+extend({ BoxBufferGeometry })
+
 export default function Floor({ props }) {
     return (
         <mesh {...props} receiveShadow>
