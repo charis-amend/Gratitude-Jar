@@ -10,23 +10,26 @@ Title: Empty plastic jar
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-    const { nodes, materials } = useGLTF('/glasjar/scene.gltf')
+    const { nodes, materials } = useGLTF('/assets/WaterBottle.gltf')
     return (
 
+        // <group {...props} dispose={null}>
+        //     <group rotation={[-Math.PI / 2, 0, 0]}>
+        //         <group rotation={[Math.PI / 2, 0, 0]}>
+        //             <mesh
+        //                 geometry={nodes.defaultMaterial.geometry}
+        //                 material={materials.material_1} />
+        //             <mesh
+        //                 geometry={nodes.defaultMaterial_1.geometry}
+        //                 material={materials.material} />
+        //         </group>
+        //     </group>
+        // </group>
         <group {...props} dispose={null}>
-            <group rotation={[-Math.PI / 2, 0, 0]}>
-                <group rotation={[Math.PI / 2, 0, 0]}>
-                    <mesh
-                        geometry={nodes.defaultMaterial.geometry}
-                        material={materials.material_1} />
-                    <mesh
-                        geometry={nodes.defaultMaterial_1.geometry}
-                        material={materials.material} />
-                </group>
-            </group>
+            <mesh geometry={nodes.WaterBottle.geometry} material={materials.BottleMat} rotation={[-Math.PI, 0, -Math.PI]} />
         </group>
 
     )
 }
 
-useGLTF.preload('/glasjar/scene.gltf')
+useGLTF.preload('/assets/WaterBottle.gltf')
