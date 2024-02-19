@@ -3,14 +3,22 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 
-export default function GlassJar() {
+export default function Model(props) {
 
     const groupRef = useRef()
-    const { nodes, materials } = useGLTF('/scene.gltf')
+    const { nodes, materials } = useGLTF('../../public/assets/glasjar/scene.gltf')
     return (
         <group ref={groupRef} {...props} dispose={null}>
-            <mesh castShadow receiveShadow geometry={nodes.Curve007_1.geometry} material={materials['Material.001']} />
-            <mesh castShadow receiveShadow geometry={nodes.Curve007_2.geometry} material={materials['Material.002']} />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Curve007_1.geometry}
+                material={materials['Material.001']} />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Curve007_2.geometry}
+                material={materials['Material.002']} />
         </group>
     )
 
