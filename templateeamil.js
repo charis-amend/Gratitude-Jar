@@ -1,4 +1,4 @@
-<mjml>
+{/* <mjml>
     <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
         <mj-section background-color="#000000" background-repeat="no-repeat" text-align="center" vertical-align="top">
             <mj-column>
@@ -31,9 +31,9 @@
                     </span>
                 </mj-button>
                 <mj-text align="left" color="#55575d" font-family="Arial, sans-serif" font-size="13px" line-height="22px" padding-bottom="0px" padding-top="5px" padding="10px 25px">
-                    <p style="line-height: 16px; text-align: center; margin: 10px 0;font-size:12px;color:#ffffff;font-family:'Times New Roman',Helvetica,Arial,sans-serif">* Offer valid on Allura purchases on 17/29/11 at 11:59 pm. No price adjustments on previous&nbsp;<br /><span style="color:#ffffff;font-family:'Times New Roman',Helvetica,Arial,sans-serif">purchases, offer limited to stock. Cannot be combined with any offer or promotion other than free.</span></p>
+                    <p style="line-height: 16px; text-align: center; margin: 10px 0;font-size:12px;color:#ffffff;font-family:'Times New Roman',Helvetica,Arial,sans-serif">If you did not request this email you can safely ignore it.</p>
                 </mj-text>
             </mj-column>
         </mj-section>
     </mj-body>
-</mjml>
+</mjml> */}
