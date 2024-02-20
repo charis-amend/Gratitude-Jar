@@ -42,7 +42,6 @@ export default NextAuth({
     },
     theme: {
         colorScheme: "dark",
-        brandColor: "#4E8074",
         logo: "/finaljarlogo.png",
     },
 })

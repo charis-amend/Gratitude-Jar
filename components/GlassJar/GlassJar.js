@@ -8,7 +8,6 @@ import { Canvas } from '@react-three/fiber'
 import { Environment, OrbitControls } from '@react-three/drei'
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import { useFrame } from "react-three-fiber";
 
 export default function GlassJar(props) {
     const { nodes, materials } = useGLTF("/assets/finaljar.gltf");
