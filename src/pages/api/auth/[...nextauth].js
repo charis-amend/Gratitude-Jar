@@ -11,6 +11,21 @@ export default NextAuth({
             server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
             from: process.env.EMAIL_FROM,
             maxAge: 30,
+            async sendVerificationRequest({
+                identifier: email,
+                url,
+                provider: { server, from },
+            }) {
+                const { host } = new URL(url)
+                const transport = nodemailer.createTransport(server)
+                await transport.sendMail({
+                    to: email,
+                    from,
+                    subject: `Sign in to ${host}`,
+                    text: text({ url, host }),
+                    html: html({ url, host, email }),
+                })
+            }
         }),
         // ...add more providers here
     ],

@@ -12,7 +12,7 @@ export default function Home() {
       <AppBackground className="bg-blue-200 min-h-screen flex justify-center items-center -z-10" />
       {/* <main className="main min-h-screen flex-col flex-wrap items-center justify-between p-24"> */}
       <Login />
-      <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={100} height={200} />
+      <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} />
 
       {/* <GlassJar /> */}
 
@@ -21,6 +21,8 @@ export default function Home() {
     </>
   )
 }
+
+Home.auth = true;
 // }
 // import Login from "../../../components/Login/Login"
 // import AppBackground from "../../../components/AppBackground/AppBackground"
