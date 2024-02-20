@@ -17,7 +17,6 @@ export default function LoggedInUserPage() {
             <CancelBackButton />
             {/* -> only if GratitudeViewBox is active */}
 
-            <GlassJarSection />
             <GratitudeFormSection />
         </>
     )
