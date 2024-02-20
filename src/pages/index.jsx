@@ -1,20 +1,21 @@
 import Login from "../../components/Login/Login";
 import AppBackground from "../../components/AppBackground/AppBackground";
-import GlassJarSection from "../../components/GlassJarSection/GlassJarSection";
-
+import GlassJar from "../../components/GlassJar/GlassJar";
 import { useSession } from "next-auth/react";
+import App from "./_app";
 
 export default function Home() {
 
   return (
     <>
-      <main className="main min-h-screen flex-col flex-wrap items-center justify-between p-24">
-        <Login />
-        <AppBackground />
+      <AppBackground className="bg-blue-200 min-h-screen flex justify-center items-center -z-10" />
+      {/* <main className="main min-h-screen flex-col flex-wrap items-center justify-between p-24"> */}
+      <Login />
 
-        <GlassJarSection className="w-screen h-screen flex items-center justify-center" />
+      <GlassJar />
 
-      </main>
+      {/* </main> */}
+
     </>
   )
 }
