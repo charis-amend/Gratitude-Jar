@@ -3,6 +3,7 @@ import AppBackground from "../../components/AppBackground/AppBackground";
 import GlassJar from "../../components/GlassJar/GlassJar";
 import { useSession } from "next-auth/react";
 import App from "./_app";
+import Image from "next/image";
 
 export default function Home() {
 
@@ -11,8 +12,9 @@ export default function Home() {
       <AppBackground className="bg-blue-200 min-h-screen flex justify-center items-center -z-10" />
       {/* <main className="main min-h-screen flex-col flex-wrap items-center justify-between p-24"> */}
       <Login />
+      <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={100} height={200} />
 
-      <GlassJar />
+      {/* <GlassJar /> */}
 
       {/* </main> */}
 
