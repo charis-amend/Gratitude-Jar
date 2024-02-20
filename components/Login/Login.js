@@ -1,15 +1,11 @@
 import { useSession, signIn, signOut } from "next-auth/react"
-import { useRouter } from "next/router"
 
 export default function Login() {
     const { data: session, status } = useSession()
-    const router = useRouter()
+    // if (status === "loading") { return <div>... Loading 🫙</div> }
 
-    // async function handleSignInAndDisplayLoginPage() {
-
-    //     await signIn();
-    //     router.push("/loggedInUser")
-    // }
+    const currentStatusAuth = status
+    console.log(currentStatusAuth)
 
     if (session) {
         return (

@@ -1,64 +1,4 @@
-import NextAuth from "next-auth"
-import EmailProvider from "next-auth/providers/email"
-import { MongoDBAdapter } from "@auth/mongodb-adapter"
-import clientPromise from "../../../../lib/mongodb"
-import nodemailer from "nodemailer"
-
-
-export default NextAuth({
-    // Configure one or more authentication providers
-    providers: [
-        EmailProvider({
-            server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
-            from: process.env.EMAIL_FROM,
-            maxAge: 30,
-            async sendVerificationRequest({
-                identifier: email,
-                url,
-                provider: { server, from },
-            }) {
-                const { host } = new URL(url)
-                const transport = nodemailer.createTransport(server)
-                await transport.sendMail({
-                    to: email,
-                    from,
-                    subject: `Sign in to ${host}`,
-                    text: text({ url, host }),
-                    html: html({ url, host, email }),
-                })
-            }
-        }),
-    ],
-    adapter: MongoDBAdapter(clientPromise),
-    secret: process.env.NEXTAUTH_SECRET,
-    session: {
-        jwt: true,
-    },
-    callbacks: {
-        async session({ session, user }) {
-            session.user.userId = user.id;
-            return session;
-        },
-    },
-    theme: {
-        colorScheme: "dark",
-        brandColor: "#4E8074",
-        logo: "/finaljarlogo.png",
-    },
-})
-
-// ------------------------- CUSTOM EMAIL CONFIGURATION ---------------------------
-// Email HTML body
-function html({ url, host, email }) {
-    // Insert invisible space into domains and email address to prevent both the
-    // email address and the domain from being turned into a hyperlink by email
-    // clients like Outlook and Apple mail, as this is confusing because it seems
-    // like they are supposed to click on their email address to sign in.
-    const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`
-    const escapedHost = `${host.replace(/\./g, "&#8203;.")}`
-
-    return `
-    <mjml>
+{/* <mjml>
     <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
         <mj-section background-color="#000000" background-repeat="no-repeat" text-align="center" vertical-align="top">
             <mj-column>
@@ -75,6 +15,7 @@ function html({ url, host, email }) {
                         <span style="color:#ffffff;font-size:18px;font-family:'Times New Roman',Helvetica,Arial,sans-serif">
                             Sign in to
                             ${escapedEmail}
+
                         </span>
                     </p>
                 </mj-text>
@@ -95,11 +36,4 @@ function html({ url, host, email }) {
             </mj-column>
         </mj-section>
     </mj-body>
-</mjml>
-  `
-}
-
-// Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
-function text({ url, host }) {
-    return `Sign in to ${host}\n${url}\n\n`
-}
+</mjml> */}
