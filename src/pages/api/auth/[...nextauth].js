@@ -27,11 +27,17 @@ export default NextAuth({
             return session;
         },
     },
-    pages: {
-        signIn: '/auth/signin',
-        // signOut: '/auth/signout',
-        // error: '/auth/error',
-        // verifyRequest: '/auth/verify-request',
-        newUser: '/auth/new-user'
-    }
+    theme: {
+        colorScheme: "dark",
+        brandColor: "#4E8074",
+        logo: "/finaljarlogo.png",
+    },
+
+    // pages: {
+    // signIn: '/auth/signin',
+    // signOut: '/auth/signout',
+    // error: '/auth/error',
+    // verifyRequest: '/auth/verify-request',
+    // newUser: '/auth/new-user'
+    // }
 })
