@@ -7,5 +7,5 @@ export default function Auth({ children }) {
     if (status === "loading") {
         return "Loading ... 🫙"
     }
-    return { children }
+    return children
 }
