@@ -11,30 +11,30 @@ import { useFrame } from "@react-three/fiber";
 
 export default function Model(props) {
     const { nodes, materials } = useGLTF("/2glassjar/jar.gltf");
-    const baseMaterial = useRef(new MeshStandardMaterial({
-        transparent: true,
-        opacity: 0.5,
-        depthTest: false,
-        side: DoubleSide,
-        color: new Color(244, 247, 247),
-        roughness: 0.3,
-        metalness: 0.7,
-    }))
-    const lidMaterial = useRef(new MeshPhysicalMaterial({
-        // transparent: false,
-        // depthTest: true,
-        // depthWrite: true,
-        // side: BackSide,
-        // // color: new Color(68, 68, 68),
-        // color: new Color(1, 0, 0),
-        // emissive: new Color(35, 35, 35),
-        // roughness: 0.3,
-        color: "red",
-        metalness: 0.2,
-        roughness: 0,
-        clearcoat: 0.8,
+    // const baseMaterial = useRef(new MeshStandardMaterial({
+    //     transparent: true,
+    //     opacity: 0.5,
+    //     depthTest: false,
+    //     side: DoubleSide,
+    //     color: new Color(244, 247, 247),
+    //     roughness: 0.3,
+    //     metalness: 0.7,
+    // }))
+    // const lidMaterial = useRef(new MeshPhysicalMaterial({
+    //     // transparent: false,
+    //     // depthTest: true,
+    //     // depthWrite: true,
+    //     // side: BackSide,
+    //     // // color: new Color(68, 68, 68),
+    //     // color: new Color(1, 0, 0),
+    //     // emissive: new Color(35, 35, 35),
+    //     // roughness: 0.3,
+    //     color: "red",
+    //     metalness: 0.2,
+    //     roughness: 0,
+    //     clearcoat: 0.8,
 
-    }))
+    // }))
 
     const groupRef = useRef();
     // Update rotation in the animation loop
@@ -53,20 +53,19 @@ export default function Model(props) {
                 receiveShadow
                 name="Base_Cylinder"
                 geometry={nodes.Base_Cylinder.geometry}
-                // material={nodes.Base_Cylinder.material}
-                // material={materials.MeshLambertMaterial}
+                material={nodes.Base_Cylinder.material}
                 userData={{ name: "Base_Cylinder" }}
-                material={baseMaterial.current}
+            // material={baseMaterial.current}
             />
 
-            {/* <mesh
+            <mesh
                 castShadow
                 receiveShadow
                 name="Glass_Plug_Cylinder002"
                 geometry={nodes.Glass_Plug_Cylinder002.geometry}
-            // material={nodes.Glass_Plug_Cylinder002.material}
+                material={nodes.Glass_Plug_Cylinder002.material}
             // material={lidMaterial.current}
-            /> */}
+            />
         </group>
     );
 }

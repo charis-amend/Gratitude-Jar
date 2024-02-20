@@ -1,8 +1,0 @@
-Model Information:
-* title:	Empty plastic jar
-* source:	https://sketchfab.com/3d-models/empty-plastic-jar-98b06be0357a46cfa3a7aa9e0d0e80e6
-* author:	FrancescoMilanese (https://sketchfab.com/FrancescoMilanese)
-
-Model License:
-* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
-* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
