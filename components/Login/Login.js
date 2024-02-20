@@ -3,13 +3,12 @@ import { useRouter } from "next/router"
 
 export default function Login() {
     const { data: session, status } = useSession()
+    if (status === "loading") { return <div>... Loading 🫙</div> }
+
     const router = useRouter()
 
-    // async function handleSignInAndDisplayLoginPage() {
-
-    //     await signIn();
-    //     router.push("/loggedInUser")
-    // }
+    const currentStatusAuth = useSession(status === "authenticated")
+    console.log(currentStatusAuth)
 
     if (session) {
         return (

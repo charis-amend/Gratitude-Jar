@@ -1,11 +1,11 @@
 import Login from "../../components/Login/Login";
 import AppBackground from "../../components/AppBackground/AppBackground";
 import GlassJar from "../../components/GlassJar/GlassJar";
-import { useSession } from "next-auth/react";
 import App from "./_app";
 import Image from "next/image";
 
 export default function Home() {
+
 
   return (
     <>
