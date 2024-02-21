@@ -28,12 +28,15 @@ export default function GlassJar(props) {
                 className="h-full w-full"
             >
                 <Suspense fallback={null}>
-                    <ambientLight intensity={0.6} />
+                    {/* <ambientLight intensity={0.6} />
                     <directionalLight color="white" position={[0, 0, 5]} />
                     <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={0.9} />
-                    <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} />
+                    <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} /> */}
 
-
+                    <Environment files="/assets/imgAppBackground.hdr" background blur={0.5} />
+                    <directionalLight position={[3.3, 1.0, 4.4]} />
+                    <OrbitControls target={[0, 1, 0]} autoRotate />
+                    <axesHelper args={[5]} />
 
 
                     <group {...props} dispose={null}
@@ -43,8 +46,9 @@ export default function GlassJar(props) {
                             rotation={[-Math.PI / 2, 1, 0]}
                         >
                             <group
-                                position={[1, 1, 1]}
-                                rotation={[Math.PI / 2, 0, 0]}>
+                                position={[0, 1, 0]}
+                                rotation={[Math.PI / 2, 0, 0]}
+                            >
                                 <mesh
                                     name="defaultMaterial"
                                     geometry={nodes.defaultMaterial.geometry}

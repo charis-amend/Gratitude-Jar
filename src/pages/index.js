@@ -16,11 +16,11 @@ export default function Home() {
       <div className="backgroundapp -z-50 top-0 left-0 fixed h-screen w-screen ">
 
       </div >
-      <div div className="divParent flex flex-col justify-center items-center h-screen" >
+      <div className="divParent flex flex-col justify-center items-center h-screen" >
         <Login />
 
-        {/* <GlassJar /> */}
-        <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} />
+        <GlassJar />
+        {/* <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
 
         <DisplayFormButton />
         <GratitudeForm />

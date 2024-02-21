@@ -28,7 +28,7 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
                     name="formStatementText"
                     id="formTextInput"
                     placeholder="What are you grateful for today...?"
-                    autoFocus="true"
+                    autoFocus={true}
                     cols={10}
                     rows={7}
                     maxLength={150}
