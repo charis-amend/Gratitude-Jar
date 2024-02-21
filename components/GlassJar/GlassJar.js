@@ -19,14 +19,12 @@ export default function GlassJar(props) {
     //     groupRef.current.rotation.y += 0.01 * delta;
     //     groupRef.current.rotation.z += 0.02 * delta;
     // });
-    const scale = [17, 17, 17];
+    const scale = [2, 2, 2];
 
     return (
         <>
 
-            <Canvas
-                className="h-full w-full"
-            >
+            <Canvas>
                 <Suspense fallback={null}>
                     {/* <ambientLight intensity={0.6} />
                     <directionalLight color="white" position={[0, 0, 5]} />
@@ -35,7 +33,7 @@ export default function GlassJar(props) {
 
                     {/* <Environment files="/assets/imgAppBackground.hdr" background blur={0.5} /> */}
                     <directionalLight position={[3.3, 1.0, 4.4]} />
-                    <OrbitControls target={[0, 1, 0]} autoRotate />
+                    <OrbitControls target={[1, 1, 1]} autoRotate />
 
                     <group {...props} dispose={null}
                         // ref={groupRef}
