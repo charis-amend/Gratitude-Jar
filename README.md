@@ -62,21 +62,22 @@ export default function HomePage() {
 
 // -------- Parent ---------------------
 export default function Hompage() {
-		// no header!
-		<Login /> // shows logged in user
-			<BlurryLayer /> // only if GratitudeViewBox is active
-			<CancelBackButton /> // only if GratitudeViewBox is active
-		
-		<GlassJar />
+// no header!
+<Login /> // shows logged in user
+	<BlurryLayer /> // only if GratitudeViewBox is active
+	<CancelBackButton /> // only if GratitudeViewBox is active
 
-				<DisplayFormButton />
-				// button to hide&display the GratitudeForm
-        <GratitudeForm />
-				// adding gratitudeStatement
-        <GratitudeStatement />
-        <RandomGratitudeButton />
-				// Button to get a random gratitudeStatement
+<GlassJar />
+
+<DisplayFormButton />
+// button to hide&display the GratitudeForm
+<GratitudeForm />
+// adding gratitudeStatement
+<GratitudeStatement />
+<RandomGratitudeButton />
+// Button to get a random gratitudeStatement
 		}
+
 // ------------------------------------
 
 // ------------- 3rd Level ------------
@@ -100,21 +101,6 @@ export default function CrumpledPaper() {}
 export default function GratitudeStatement() {}
 export default function GratitudeForm() {}
 ```
-
-## Page Layout and Components
-
-1. HomePage index.js
-   1. <AppBackground />
-   2. <BlurryLayer />
-   3. <CancelBackButton />
-   4. <GlassJarSection />
-      1. <GlassJar />
-      2. <CrumpledPaper />
-   5. <GratitudeFormSection />
-      1. <GratitudeForm />
-      2. <DisplayFormButton />
-      3. <GratitudeViewBox />
-      4. <RandomGratitudeButton />
 
 ## Props UP and DOWN
 
