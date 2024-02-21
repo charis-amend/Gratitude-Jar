@@ -33,11 +33,9 @@ export default function GlassJar(props) {
                     <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={0.9} />
                     <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} /> */}
 
-                    <Environment files="/assets/imgAppBackground.hdr" background blur={0.5} />
+                    {/* <Environment files="/assets/imgAppBackground.hdr" background blur={0.5} /> */}
                     <directionalLight position={[3.3, 1.0, 4.4]} />
                     <OrbitControls target={[0, 1, 0]} autoRotate />
-                    <axesHelper args={[5]} />
-
 
                     <group {...props} dispose={null}
                         // ref={groupRef}
