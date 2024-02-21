@@ -3,27 +3,32 @@
 @tailwind utilities;
 
 :root {
+  /* 
+  some variables ...  
+
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+   */
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
+.backgroundapp {
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    to bottom right,
+    #070707 0%,
+    #111111 20%,
+    #1a1a1a 40%,
+    #29292a 60%,
+    #1c1c1c 80%,
+    #141414 100%
+  );
+}
+/* Apply styles for screens up to 767px wide (mobile devices) */
+@media only screen and (max-width: 767px) {
+  body {
+    background-color: transparent;
+    font-family: Arial, sans-serif; /* Default font family */
+    margin: 0; /* Remove default margin */
+    padding: 20px; /* Add padding to create spacing around content */
+    color: antiquewhite;
+  }
 }
 
 @layer utilities {

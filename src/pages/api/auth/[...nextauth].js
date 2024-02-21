@@ -22,7 +22,7 @@ export default NextAuth({
                 await transport.sendMail({
                     to: email,
                     from,
-                    subject: `Sign in to ${host}`,
+                    subject: `Your Sign in | Gratitude Jar`,
                     text: text({ url, host }),
                     html: html({ url, host, email }),
                 })
@@ -42,7 +42,6 @@ export default NextAuth({
     },
     theme: {
         colorScheme: "dark",
-        brandColor: "#4E8074",
         logo: "/finaljarlogo.png",
     },
 })
@@ -57,45 +56,66 @@ function html({ url, host, email }) {
     const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`
     const escapedHost = `${host.replace(/\./g, "&#8203;.")}`
 
+    // Some simple styling options
+    const backgroundColor = "#232323"
+    const textColor = "#444444"
+    const mainBackgroundColor = "#ffffff"
+    const buttonBackgroundColor = "#473AEB"
+    const buttonBorderColor = "#346df1"
+    const buttonTextColor = "#ffffff"
+
     return `
-    <mjml>
-    <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
-        <mj-section background-color="#000000" background-repeat="no-repeat" text-align="center" vertical-align="top">
-            <mj-column>
-                <mj-image align="center" border="none" padding-bottom="30px" padding="10px 25px" src="/finaljarlogo.png" target="_blank" title="" width="180px"></mj-image>
-            </mj-column>
-        </mj-section>
-        <mj-section background-color="#000000" background-repeat="no-repeat" text-align="center" vertical-align="top" padding="0 0 0 0">
-            <mj-column>
-                <mj-text align="left" color="#55575d" font-family="Arial, sans-serif" font-size="13px" line-height="22px" padding-bottom="5px" padding-top="25px" padding="10px 25px">
-                    <p style="line-height: 40px; text-align: center; margin: 10px 0;font-size:55px;color:#fcfcfc;font-family:'Arial,sans-serif"><b>${escapedHost}</b></p>
-                </mj-text>
-                <mj-text align="left" color="#55575d" font-family="Arial, sans-serif" font-size="13px" line-height="22px" padding-bottom="20px" padding-top="0px" padding="10px 25px">
-                    <p style="line-height: 30px; text-align: center; margin: 10px 0;color:#f5f5f5;font-size:25px;font-family:'Times New Roman',Helvetica,Arial,sans-serif">
-                        <span style="color:#ffffff;font-size:18px;font-family:'Times New Roman',Helvetica,Arial,sans-serif">
-                            Sign in to
-                            ${escapedEmail}
-                        </span>
-                    </p>
-                </mj-text>
-            </mj-column>
-        </mj-section>
-        <mj-section background-color="#000000" background-repeat="no-repeat" text-align="center" vertical-align="top" padding-bottom="40px" padding="0 0 0 0">
-            <mj-column>
-                <mj-button background-color="#ffffff" border-radius="3px" font-family="Times New Roman, Helvetica, Arial, sans-serif" font-size="18px" font-weight="normal" inner-padding="10px 25px" padding-bottom="30px" padding="10px 25px">
-                    <span style="color:#212020">
-                        <a href="${url}" target="_blank">
-                            Sign in
-                        </a>
-                    </span>
-                </mj-button>
-                <mj-text align="left" color="#55575d" font-family="Arial, sans-serif" font-size="13px" line-height="22px" padding-bottom="0px" padding-top="5px" padding="10px 25px">
-                    <p style="line-height: 16px; text-align: center; margin: 10px 0;font-size:12px;color:#ffffff;font-family:'Times New Roman',Helvetica,Arial,sans-serif">If you did not request this email you can safely ignore it.</p>
-                </mj-text>
-            </mj-column>
-        </mj-section>
-    </mj-body>
-</mjml>
+  <body style="background: ${backgroundColor};">
+  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:30px;word-break:break-word;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                          <tbody>
+                            <tr>
+                              <td style="width:180px;">
+                                <img height="auto" src="https://raw.githubusercontent.com/charis-amend/Gratitude-Jar/main/finaljarlogo.png" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" title="" width="180" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="center" style="padding: 10px 0px 20px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: #ffffff;">
+          <strong>GRATITUDE JAR</strong>
+        </td>
+      </tr>
+    </table>
+    <table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${mainBackgroundColor}; max-width: 600px; margin: auto; border-radius: 10px;">
+      <tr>
+        <td align="center" style="padding: 10px 0px 0px 0px; font-size: 13px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
+          Sign in with your e-mail: ${escapedEmail}
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 20px 0;">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center" style="border-radius: 5px;" bgcolor="${buttonBackgroundColor}">
+              <a href="${url}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${buttonTextColor}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${buttonBorderColor}; display: inline-block; font-weight: bold;">
+              Sign in 
+              </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
+          If you did not request this email you can safely ignore it.
+        </td>
+      </tr>
+    </table>
+  </body>
   `
 }
 
