@@ -13,9 +13,6 @@ REST API
 |
 | --- | --- | --- | --- | --- | --- |
 
-## Interface
-
-![IMG_3997.jpeg](IMG_3997.jpeg)
 
 ## Data Structure
 
