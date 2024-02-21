@@ -1,5 +1,4 @@
 import Login from "../../components/Login/Login";
-import AppBackground from "../../components/AppBackground/AppBackground";
 import GlassJar from "../../components/GlassJar/GlassJar";
 import Image from "next/image";
 import GratitudeForm from "../../components/GratitudeForm/GratitudeForm";
@@ -13,8 +12,11 @@ import RandomGratitudeButton from "../../components/RandomGratitudeButton/Random
 export default function Home() {
   return (
     <>
-      <div className="divParent flex flex-col justify-center items-center h-screen">
-        <AppBackground />
+
+      <div className="backgroundapp -z-50 top-0 left-0 fixed h-screen w-screen ">
+
+      </div >
+      <div div className="divParent flex flex-col justify-center items-center h-screen" >
         <Login />
 
         {/* <GlassJar /> */}
@@ -29,7 +31,7 @@ export default function Home() {
         {/* -> only if GratitudeViewBox is active */}
         <CancelBackButton />
         {/* -> only if GratitudeViewBox is active */}
-      </div>
+      </div >
     </>
   )
 }

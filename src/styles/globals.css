@@ -9,7 +9,17 @@
   --foreground-rgb: 0, 0, 0;
    */
 }
-
+.backgroundapp {
+  background: linear-gradient(
+    to bottom right,
+    #070707 0%,
+    #111111 20%,
+    #1a1a1a 40%,
+    #29292a 60%,
+    #1c1c1c 80%,
+    #141414 100%
+  );
+}
 /* Apply styles for screens up to 767px wide (mobile devices) */
 @media only screen and (max-width: 767px) {
   body {
