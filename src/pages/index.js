@@ -13,24 +13,22 @@ export default function Home() {
   return (
     <>
 
-      <div className="backgroundapp -z-50 top-0 left-0 fixed h-screen w-screen ">
+      <div className="backgroundapp -z-50 top-0 left-0 fixed h-screen w-screen ">  {/* css gradient background: */}
+        <div className="divParent flex flex-col justify-center items-center h-screen" > {/* Parent-div for flex-col layout */}
+          <Login />
+          <GlassJar />
+          {/* <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
 
-      </div >
-      <div className="divParent flex flex-col justify-center items-center h-screen" >
-        <Login />
+          <DisplayFormButton />
+          <GratitudeForm />
+          <GratitudeStatement />
+          <RandomGratitudeButton />
 
-        <GlassJar />
-        {/* <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
-
-        <DisplayFormButton />
-        <GratitudeForm />
-        <GratitudeStatement />
-        <RandomGratitudeButton />
-
-        <BlurryLayer />
-        {/* -> only if GratitudeViewBox is active */}
-        <CancelBackButton />
-        {/* -> only if GratitudeViewBox is active */}
+          <BlurryLayer />
+          {/* -> only if GratitudeViewBox is active */}
+          <CancelBackButton />
+          {/* -> only if GratitudeViewBox is active */}
+        </div >
       </div >
     </>
   )
