@@ -23,25 +23,16 @@ REST API
 ```jsx
 // defining the Data
 
-// one user Object
-		const user = {
-			userObjectId: ObjectId(''), // predefined _id by mongoDB
-			username: "string",
-			email: "string",
-			password: "string",
-			gratitudeList: [
-					{gratitudeStatement},
-					{gratitudeStatement}
-					],
-		}
-
-// one gratitudeStatement  Object
-		const gratitudeStatement = {
-			gratitudeStatementObjectId: ObjectId('') // predefined _id by mongoDB
-			dateCreation: "string",
-			statementText: "string",
-		}
-
+const userSchema = new Schema({
+    email: { type: String, required: true, unique: true },
+    gratitudeStatements: { type: [Schema.Types.ObjectId], ref: "GratitudeStatements" }
+});
+	
+const gratitudeStatementsSchema = new Schema({
+    // gratitudeStatementObjectId: ObjectId('') predefined _id by mongoDB
+    dateCreation: { type: String, require: true },
+    statementText: { type: String, require: true },
+});
 
 ```
 
@@ -58,32 +49,43 @@ REST API
 ## REACT Components
 
 ```jsx
+
 // -------- top top top Parent --------
 export default function HomePage() {
 		// no header!
-		<AppBackground /> // link to assets: [see image](https://www.notion.so/Interface-Userflow-ad79dbdd5370451e98673f0c55caa0c5?pvs=21)
-		<BlurryLayer /> // only if GratitudeViewBox is active
-		<CancelBackButton /> // only if GratitudeViewBox is active
-		<GlassJarSection />
-		<GratitudeFormSection />
+		<GlassJar />
+		<Login />
 		}
 // ------------------------------------
 
-// ------------- 2nd Level ------------
-export default function GlassJarSection() {
+// ---- user is logging in ------ 
+
+// -------- Parent ---------------------
+export default function Hompage() {
+		// no header!
+		<Login /> // shows logged in user
+			<BlurryLayer /> // only if GratitudeViewBox is active
+			<CancelBackButton /> // only if GratitudeViewBox is active
+		
 		<GlassJar />
+
+				<DisplayFormButton />
+				// button to hide&display the GratitudeForm
+        <GratitudeForm />
+				// adding gratitudeStatement
+        <GratitudeStatement />
+        <RandomGratitudeButton />
+				// Button to get a random gratitudeStatement
+		}
+// ------------------------------------
+
+// ------------- 3rd Level ------------
+export default function GlassJar() {	
 		<CrumpledPaper />
-}
-// --- AND :
-export default function GratitudeFormSection() {
-		<OpenGratitudeFormButton />
-		<GratitudeForm />
-		<DisplayFormButton />
-		<GratitudeViewBox />
-		<RandomGratitudeButton />
 }
 // ------------------------------------
 
+export default function Login() {}
 export default function AppBackground() {}
 export default function BlurryLayer() {}
 export default function CancelBackButton() {}
@@ -95,14 +97,8 @@ export default function CrumpledPaper() {}
 	// adding a CrumpledPaper everytime User submits a gratitudeStatement
 	// --> additional low prio feature
 
-export default function DisplayFormButton() {}
-	// button to hide-> display the GratitudeForm
+export default function GratitudeStatement() {}
 export default function GratitudeForm() {}
-	// adding gratitudeStatement
-export default function GratitudeViewBox() {}
-	// div box with gratitudeStatement + dateCreated
-export default function RandomGratitudeButton() {}
-	// Button to get a random gratitudeStatement
 ```
 
 ## Page Layout and Components
