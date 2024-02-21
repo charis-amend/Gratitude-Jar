@@ -5,20 +5,13 @@ import CrumpledPaper from "../CrumbledPaper/CrumbledPaper.js"
 
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
+
 export default function GlassJar(props) {
     const { nodes, materials } = useGLTF("/assets/finaljar.gltf");
-
-    // const groupRef = useRef();
-    // // Update rotation in the animation loop
-    // useFrame((state, delta) => {
-    //     groupRef.current.rotation.x += 0.0 * delta; // Adjust speed as needed
-    //     groupRef.current.rotation.y += 0.01 * delta;
-    //     groupRef.current.rotation.z += 0.02 * delta;
-    // });
     const scale = [2, 2, 2];
 
     return (
@@ -26,24 +19,21 @@ export default function GlassJar(props) {
 
             <Canvas>
                 <Suspense fallback={null}>
-                    {/* <ambientLight intensity={0.6} />
+                    <ambientLight intensity={0.6} />
                     <directionalLight color="white" position={[0, 0, 5]} />
-                    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={0.9} />
-                    <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} /> */}
-
-                    {/* <Environment files="/assets/imgAppBackground.hdr" background blur={0.5} /> */}
+                    <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} />
                     <directionalLight position={[3.3, 1.0, 4.4]} />
                     <OrbitControls target={[1, 1, 1]} autoRotate />
 
-                    <group {...props} dispose={null}
-                        // ref={groupRef}
+                    <group {...props}
+                        dispose={null}
                         scale={scale}>
                         <group
-                            rotation={[-Math.PI / 2, 1, 0]}
+                        // rotation={[-Math.PI / 1, 1, 0]}
                         >
                             <group
-                                position={[0, 1, 0]}
-                                rotation={[Math.PI / 2, 0, 0]}
+                            // position={[2, 2, 0]}
+                            // rotation={[Math.PI / 1, 0, 0]}
                             >
                                 <mesh
                                     name="defaultMaterial"
