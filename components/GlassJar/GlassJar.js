@@ -28,27 +28,19 @@ export default function GlassJar(props) {
                     <group {...props}
                         dispose={null}
                         scale={scale}>
-                        <group
-                        // rotation={[-Math.PI / 1, 1, 0]}
-                        >
-                            <group
-                            // position={[2, 2, 0]}
-                            // rotation={[Math.PI / 1, 0, 0]}
-                            >
-                                <mesh
-                                    name="defaultMaterial"
-                                    geometry={nodes.defaultMaterial.geometry}
-                                    material={materials.material_1}
-                                    userData={{ name: "defaultMaterial" }}
-                                />
-                                <mesh
-                                    name="defaultMaterial_1"
-                                    geometry={nodes.defaultMaterial_1.geometry}
-                                    material={materials.material}
-                                    userData={{ name: "defaultMaterial" }}
-                                />
-                            </group>
-                        </group>
+
+                        <mesh
+                            name="defaultMaterial"
+                            geometry={nodes.defaultMaterial.geometry}
+                            material={materials.material_1}
+                            userData={{ name: "defaultMaterial" }}
+                        />
+                        <mesh
+                            name="defaultMaterial_1"
+                            geometry={nodes.defaultMaterial_1.geometry}
+                            material={materials.material}
+                            userData={{ name: "defaultMaterial" }}
+                        />
                     </group>
 
                     <OrbitControls />
