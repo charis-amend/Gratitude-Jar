@@ -5,9 +5,8 @@ import CrumpledPaper from "../CrumbledPaper/CrumbledPaper.js"
 
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Environment, EnvironmentMap, OrbitControls } from '@react-three/drei'
+import { Environment, EnvironmentMap, OrbitControls, useGLTF } from '@react-three/drei'
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 
 export default function GlassJar(props) {
@@ -16,7 +15,6 @@ export default function GlassJar(props) {
 
     return (
         <>
-
             <Canvas>
                 <Suspense fallback={null}>
                     <ambientLight intensity={1.6} />
@@ -24,7 +22,6 @@ export default function GlassJar(props) {
                     <pointLight position={[-10, -10, -10]} decay={0} intensity={4.9} />
                     <directionalLight position={[3.3, 1.0, 4.4]} />
                     <OrbitControls target={[1, 1, 1]} autoRotate />
-                    { }
                     <group {...props}
                         dispose={null}
                         scale={scale}>
@@ -46,9 +43,6 @@ export default function GlassJar(props) {
                     <OrbitControls />
                 </Suspense>
             </Canvas>
-
-
-            <CrumpledPaper />
         </>
     );
 }
