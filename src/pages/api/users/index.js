@@ -1,5 +1,5 @@
-import dbConnect from "../../../../../db/connect";
-import User from "../../../../../db/models/User";
+import dbConnect from "../../../../db/connect";
+import User from "../../../../db/models/User";
 
 // getting only the gratitudeStatements from the loggedInUser = 
 

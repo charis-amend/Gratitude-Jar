@@ -2,7 +2,7 @@ export default function GratitudeStatement() {
 
     return (
         <>
-            <div className="viewbox z-10 top-20 m-5 my-60 p-3 right-5 left-5 fixed h-60 w-200 place-self-center flex flex-col items-center justify-between bg-slate-500/90 shadow-white shadow-sm">
+            <div className="viewbox z-10 top-18 m-3 my-60 p-3 right-5 left-5 fixed h-55 w-200 place-self-center flex flex-col items-center justify-between bg-slate-500/80 rounded-md shadow-white shadow-sm">
                 <button
                     type="button"
                     id="cancelButton"
