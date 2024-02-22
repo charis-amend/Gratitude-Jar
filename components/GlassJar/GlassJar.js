@@ -52,8 +52,8 @@ export default function GlassJar(props) {
         </>
     );
 }
-
 useGLTF.preload("/assets/jar2final.gltf");
+
 
 
 

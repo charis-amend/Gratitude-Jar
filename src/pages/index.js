@@ -24,6 +24,20 @@ export default function Home() {
           <Login />
         </div>
 
+        {Component.auth ? (
+          <Auth>
+            {/* if status = loading & authenticated display ALL Components:*/}
+
+
+
+
+          </Auth>
+        ) : (
+          {/* if status = unauthenticated display only glasjar and login and disabled displayformbutton:*/ }
+
+
+        )}
+
         {/* viewbox for active displayed gratitude statement and blurry background: */}
         <GratitudeStatement />
 
@@ -40,4 +54,4 @@ export default function Home() {
   )
 }
 
-Home.auth = true;
+// Home.auth = true;

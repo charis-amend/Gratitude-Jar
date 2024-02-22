@@ -1,9 +1,13 @@
 import dbConnect from "../../../../db/connect";
 import User from "../../../../db/models/User";
+import GratitudeStatement from "../../../../db/models/GratitudeStatement";
 
-// getting only the gratitudeStatements from the loggedInUser = 
+// getting only the gratitudeStatements from the loggedInUser 
 
 export default async function handler(request, response) {
+    // get id of loggedInUser
+    // const {id} = request.query
+
     await dbConnect();
     const { userId } = request.query
     try {

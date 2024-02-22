@@ -9,15 +9,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   return (
     <>
       <SessionProvider session={session}>
-        {Component.auth ? (
-          <Auth>
-            <Component {...pageProps} />
-          </Auth>
-        ) : (
-          <SWRConfig value={{ fetcher }}>
-            <Component {...pageProps} />
-          </SWRConfig>
-        )}
+        <SWRConfig value={{ fetcher }}>
+          <Component {...pageProps} />
+        </SWRConfig>
       </SessionProvider>
     </>
   );

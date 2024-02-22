@@ -12,8 +12,6 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
     } else {
         // unauthenticated & loading the "displayformbutton" is disabled and a message is shown that you need to sign in to create a gratitude statement 
     }
-
-    if
     // const { mutate } = useSWR("/api/jokes");
     // const GratitudeSubmit = async (e) => {
     //     e.preventDefault();
@@ -33,28 +31,28 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
     // };
 
     return (
-            <>
-                <form
-                    className="form w-full max-w-sm"
-                // onSubmit={(e) => onGratitudeSubmit(e)}
-                >
-                    <div className="flex items-center border-b border-white py-2 bg-transparent">
-                        <label htmlFor="formTextInput">
-                        </label>
-                        <input
-                            name="formStatementText"
-                            id="formTextInput"
-                            placeholder="What are you grateful for...?"
-                            maxLength={150}
-                            required
-                            className="appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                        ></input>
-                        <button type="submit"
-                            className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
-                            ADD
-                        </button>
-                    </div>
-                </form >
-            </>
-        )
+        <>
+            <form
+                className="form w-full max-w-sm"
+            // onSubmit={(e) => onGratitudeSubmit(e)}
+            >
+                <div className="flex items-center border-b border-white py-2 bg-transparent">
+                    <label htmlFor="formTextInput">
+                    </label>
+                    <input
+                        name="formStatementText"
+                        id="formTextInput"
+                        placeholder="What are you grateful for...?"
+                        maxLength={150}
+                        required
+                        className="appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                    ></input>
+                    <button type="submit"
+                        className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
+                        ADD
+                    </button>
+                </div>
+            </form >
+        </>
+    )
 }
