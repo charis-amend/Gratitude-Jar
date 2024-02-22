@@ -5,12 +5,12 @@ import CrumpledPaper from "../CrumbledPaper/CrumbledPaper.js"
 
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Environment, EnvironmentMap, OrbitControls, useGLTF } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import React, { useRef } from "react";
-import { useLoader } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 
 export default function GlassJar(props) {
-    const { nodes, materials } = useGLTF("/public/assets/final2jar.gltf");
+    const { nodes, materials } = useGLTF("/assets/final2jar.gltf");
     const scale = [1.5, 1.5, 1.5];
 
     return (
@@ -46,7 +46,7 @@ export default function GlassJar(props) {
         </>
     );
 }
-useGLTF.preload("/public/assets/final2jar.gltf");
+useGLTF.preload("/assets/final2jar.gltf");
 
 
 
