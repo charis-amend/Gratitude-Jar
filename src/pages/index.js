@@ -8,7 +8,6 @@ import GlassJar from "../../components/GlassJar/GlassJar";
 import GratitudeForm from "../../components/GratitudeForm/GratitudeForm";
 import GratitudeStatement from "../../components/GratitudeStatement/GratitudeStatement";
 import DisplayFormButton from "../../components/DisplayFormButton/DisplayFormButton";
-import CancelBackButton from "../../components/CancelBackButton/CancelBackButton";
 import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
 // -------------------------
 
@@ -26,10 +25,8 @@ export default function Home() {
         </div>
 
         {/* viewbox for active displayed gratitude statement and blurry background: */}
-        <div className="viewbox z-10 top-20 m-10 my-60 right-5 bottom-20 left-5 fixed h-auto w-auto place-self-center flex flex-col justify-center items-center bg-slate-500/70 shadow-white shadow-sm">
-          <CancelBackButton />
-          <GratitudeStatement />
-        </div>
+        <GratitudeStatement />
+
 
         {/* lower section: */}
         <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">

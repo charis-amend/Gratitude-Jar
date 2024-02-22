@@ -35,7 +35,7 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
                         className="appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none"
                     ></input>
                     <button type="submit"
-                        button class="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
+                        className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
                         ADD
                     </button>
                 </div>
