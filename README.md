@@ -13,7 +13,6 @@ REST API
 |
 | --- | --- | --- | --- | --- | --- |
 
-
 ## Data Structure
 
 [gratitude_jar_database-structure.pdf](gratitude_jar_database-structure.pdf)
@@ -22,18 +21,19 @@ REST API
 
 ```jsx
 // defining the Data
-
 const userSchema = new Schema({
-    email: { type: String, required: true, unique: true },
-    gratitudeStatements: { type: [Schema.Types.ObjectId], ref: "GratitudeStatements" }
-});
-	
-const gratitudeStatementsSchema = new Schema({
-    // gratitudeStatementObjectId: ObjectId('') predefined _id by mongoDB
-    dateCreation: { type: String, require: true },
-    statementText: { type: String, require: true },
+  email: { type: String, required: true, unique: true },
+  gratitudeStatements: {
+    type: [Schema.Types.ObjectId],
+    ref: "GratitudeStatements",
+  },
 });
 
+const gratitudeStatementsSchema = new Schema({
+  // gratitudeStatementObjectId: ObjectId('') predefined _id by mongoDB
+  dateCreation: { type: String, require: true },
+  statementText: { type: String, require: true },
+});
 ```
 
 | Variables                  | explanation / where its used                                                                                 |
@@ -52,13 +52,24 @@ const gratitudeStatementsSchema = new Schema({
 
 // -------- top top top Parent --------
 export default function HomePage() {
-		// no header!
-		<GlassJar />
-		<Login />
-		}
+// no header!
+ <Login /> // shows logged in user
+ 	<BlurryLayer /> // only if GratitudeViewBox is active
+ 	<CancelBackButton /> // only if GratitudeViewBox is active
+
+ <GlassJar />
+
+ <DisplayFormButton />
+ // button to hide&display the GratitudeForm
+ <GratitudeForm />
+ // adding gratitudeStatement
+ <GratitudeStatement />
+ <RandomGratitudeButton />
+ // Button to get a random gratitudeStatement
+}
 // ------------------------------------
 
-// ---- user is logging in ------ 
+// ---- user is logging in ------
 
 // -------- Parent ---------------------
 export default function Hompage() {
@@ -81,7 +92,7 @@ export default function Hompage() {
 // ------------------------------------
 
 // ------------- 3rd Level ------------
-export default function GlassJar() {	
+export default function GlassJar() {
 		<CrumpledPaper />
 }
 // ------------------------------------
@@ -100,6 +111,11 @@ export default function CrumpledPaper() {}
 
 export default function GratitudeStatement() {}
 export default function GratitudeForm() {}
+	// adding gratitudeStatement
+export default function GratitudeViewBox() {}
+	// div box with gratitudeStatement + dateCreated
+export default function RandomGratitudeButton() {}
+	// Button to get a random gratitudeStatement
 ```
 
 ## Props UP and DOWN
