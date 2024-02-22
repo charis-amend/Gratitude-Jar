@@ -10,7 +10,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function GlassJar(props) {
-    const { nodes, materials } = useGLTF("/assets/finaljar.gltf");
+    const { nodes, materials } = useGLTF("/assets/jar2final.gltf");
     const scale = [2, 2, 2];
 
     return (
@@ -44,7 +44,7 @@ export default function GlassJar(props) {
         </>
     );
 }
-useGLTF.preload("/assets/finaljar.gltf");
+useGLTF.preload("/assets/jar2final.gltf");
 
 
 
