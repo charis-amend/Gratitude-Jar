@@ -12,7 +12,7 @@ import { useGLTF } from "@react-three/drei";
 
 export default function GlassJar(props) {
     const { nodes, materials } = useGLTF("/assets/jar2final.gltf");
-    const scale = [2, 2, 2];
+    const scale = [1.5, 1.5, 1.5];
 
     return (
         <>
@@ -24,7 +24,6 @@ export default function GlassJar(props) {
                     <pointLight position={[-10, -10, -10]} decay={0} intensity={4.9} />
                     <directionalLight position={[3.3, 1.0, 4.4]} />
                     <OrbitControls target={[1, 1, 1]} autoRotate />
-                    <EnvironmentMap scene="sunset" background />
 
                     <group {...props}
                         dispose={null}
