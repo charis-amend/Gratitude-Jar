@@ -2,7 +2,6 @@
 // Styling with Tailwind in each Component
 // no other subpages, components will display/hide according to user activity.
 // -------------- -----------
-import Auth from "./Auth"; // condition if authenticated
 // Components:
 import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
@@ -35,4 +34,4 @@ export default function Home() {
   )
 }
 
-// Home.auth = true;
+Home.auth = true;
