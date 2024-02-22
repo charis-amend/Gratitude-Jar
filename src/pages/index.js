@@ -19,11 +19,14 @@ export default function Home() {
 
       <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen ">  {/* css gradient background: */}
         <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
+        {/* image for the loading page showing this image before the 3D object has loaded 
+          <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
 
-        <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-20 z-50 border border-solid border-white border-1 p-4 flex flex-col justify-center items-center">
-          {/* <div className="divParent flex flex-col justify-center items-center" > Parent-div for flex-col layout */}
+        <div className="login-info-section fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
           <Login />
-          {/* <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
+        </div>
+
+        <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-50 p-4 flex flex-col justify-center items-center">
 
           <DisplayFormButton />
           <GratitudeForm />

@@ -20,25 +20,25 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
     return (
         <>
             <form
-                className="form w-5/6 "
+                className="form w-full max-w-sm"
             // onSubmit={(e) => onGratitudeSubmit(e)}
             >
-                <div className="flex items-center border-b-2 border-white py-2 bg-transparent">
+                <div className="flex items-center border-b border-white py-2 bg-transparent">
                     <label htmlFor="formTextInput">
                     </label>
                     <input
                         name="formStatementText"
                         id="formTextInput"
-                        placeholder="What are you grateful for today...?"
+                        placeholder="What are you grateful for...?"
                         maxLength={150}
                         required
-                        className="input-field bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                        className="appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none"
                     ></input>
+                    <button type="submit"
+                        button class="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
+                        ADD
+                    </button>
                 </div>
-                <button type="submit"
-                    button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"  >
-                    ADD
-                </button>
             </form >
         </>
     )
