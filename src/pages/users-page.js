@@ -1,4 +1,7 @@
-import { useSession, getSession } from "next-auth/react"
+'use client'
+
+import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation";
 // Components:
 import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
@@ -9,7 +12,7 @@ import RandomGratitudeButton from "../../components/RandomGratitudeButton/Random
 // -------------------------
 
 export default function UsersPage() {
-    const { status } = useSession({ required: true })
+    const { data: session, status } = useSession({ required: true, onUnauthenticated() { redirect("signin?callbackUrl=") } })
     if (status === "loading") {
         return (
             <>

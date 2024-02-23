@@ -51,12 +51,12 @@ export default NextAuth({
     colorScheme: "dark",
     logo: "/finaljarlogo.png",
   },
-  pages: {
-    signIn: '/auth/signin',
-    signOut: '/auth/signout',
-    error: '/auth/error',
-    verifyRequest: '/auth/verify-request',
-  }
+  // pages: {
+  //   signIn: '/auth/signin',
+  //   signOut: '/auth/signout',
+  //   error: '/auth/error',
+  //   verifyRequest: '/auth/verify-request',
+  // }
 })
 
 // ------------------------- CUSTOM EMAIL CONFIGURATION ---------------------------
