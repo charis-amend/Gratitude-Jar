@@ -46,6 +46,14 @@ export default NextAuth({
       session.user.userId = user.id;
       return session;
     },
+    async signIn({ user, account, profile, email, credentials }) {
+      const isAllowedToSignIn = true
+      if (isAllowedToSignIn) {
+        return '/users-page' // if login was successful go to this url
+      } else {
+        return "/"  // returns to index.js again
+      }
+    }
   },
   theme: {
     colorScheme: "dark",
