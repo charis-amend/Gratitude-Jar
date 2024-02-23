@@ -4,33 +4,6 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "../../../../lib/mongodb"
 import nodemailer from "nodemailer"
 
-// different url when opening the verification-email: 
-function emailSender(callbackUrl) {
-  return async ({ identifier, url, provider: { server, from } }) => {
-    try {
-      const emailVerificationLink = new URL(url)
-      emailVerificationLink.searchParams.set("/users-page", callbackUrl)
-      await sendVerificationRequest({
-        email: identifier,
-        url: emailVerificationLink.href,
-        provider: { server, from }
-      }) {
-        const { host } = new URL(url)
-        const transport = nodemailer.createTransport(server)
-        await transport.sendMail({
-          to: email,
-          from,
-          subject: `Your Sign in | Gratitude Jar`,
-          text: text({ url, host }),
-          html: html({ url, host, email }),
-        })
-      }
-    } catch (error) {
-      console.error(error.message, "error in [nextAuth].js file whilst fetching callbackURL")
-    }
-  }
-}
-
 export default NextAuth({
   providers: [
     EmailProvider({
@@ -75,15 +48,41 @@ export default NextAuth({
     },
   }
 })
+// different url when opening the verification-email: 
+function emailSender(callbackUrl) {
+  return async ({ identifier, url, provider: { server, from } }) => {
+    try {
+      const emailVerificationLink = new URL(url)
+      emailVerificationLink.searchParams.set("/users-page", callbackUrl)
+      await sendVerificationRequest({
+        email: identifier,
+        url: emailVerificationLink.href,
+        provider: { server, from },
+      })
+      const { host } = new URL(url)
+      const transport = nodemailer.createTransport(server)
+      await transport.sendMail({
+        to: email,
+        from,
+        subject: `Your Sign in | Gratitude Jar`,
+        text: text({ url, host }),
+        html: html({ url, host, identifier }),
+      })
+
+    } catch (error) {
+      console.error(error.message, "error in [nextAuth].js file whilst fetching callbackURL")
+    }
+  }
+}
 
 // ------------------------- CUSTOM EMAIL CONFIGURATION ---------------------------
 // Email HTML body
-function html({ url, host, email }) {
+function html({ url, host, identifier }) {
   // Insert invisible space into domains and email address to prevent both the
   // email address and the domain from being turned into a hyperlink by email
   // clients like Outlook and Apple mail, as this is confusing because it seems
   // like they are supposed to click on their email address to sign in.
-  const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`
+  const escapedEmail = `${identifier.replace(/\./g, "&#8203;.")}`
   const escapedHost = `${host.replace(/\./g, "&#8203;.")}`
 
   // Some simple styling options
