@@ -3,20 +3,17 @@ import EmailProvider from "next-auth/providers/email"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "../../../../lib/mongodb"
 import nodemailer from "nodemailer"
-import { useSession } from "next-auth/react"
 
-
-export default NextAuth({
-  providers: [
-    EmailProvider({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-      maxAge: 30 * 24 * 60 * 60, // 30daays
-
-      async sendVerificationRequest({
-        identifier: email,
-        url,
-        provider: { server, from },
+// different url when opening the verification-email: 
+function emailSender(callbackUrl) {
+  return async ({ identifier, url, provider: { server, from } }) => {
+    try {
+      const emailVerificationLink = new URL(url)
+      emailVerificationLink.searchParams.set("/users-page", callbackUrl)
+      await sendVerificationRequest({
+        email: identifier,
+        url: emailVerificationLink.href,
+        provider: { server, from }
       }) {
         const { host } = new URL(url)
         const transport = nodemailer.createTransport(server)
@@ -27,7 +24,36 @@ export default NextAuth({
           text: text({ url, host }),
           html: html({ url, host, email }),
         })
-      },
+      }
+    } catch (error) {
+      console.error(error.message, "error in [nextAuth].js file whilst fetching callbackURL")
+    }
+  }
+}
+
+export default NextAuth({
+  providers: [
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+      maxAge: 30 * 24 * 60 * 60, // 30daays
+
+      sendVerificationRequest: emailSender(),
+      // async sendVerificationRequest({
+      //   identifier: email,
+      //   url,
+      //   provider: { server, from },
+      // }) {
+      //   const { host } = new URL(url)
+      //   const transport = nodemailer.createTransport(server)
+      //   await transport.sendMail({
+      //     to: email,
+      //     from,
+      //     subject: `Your Sign in | Gratitude Jar`,
+      //     text: text({ url, host }),
+      //     html: html({ url, host, email }),
+      //   })
+      // },
       // normalizing email-address, so not more than 1 address possible:
       normalizeIdentifier: function (identifier) {
         let [local, domain] = identifier.toLowerCase().trim().split("@")
@@ -47,31 +73,7 @@ export default NextAuth({
       session.user.userId = user.id;
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // **New logic for verification email redirection:**
-      else if (url.startsWith(`${baseUrl}/api/auth/callback/email`)) {
-        // Extract the callback URL from the query parameter
-        const callbackUrl = new URLSearchParams(url.split('?')[1]).get('callbackUrl');
-        // Redirect to the users-page only if the callback URL matches your internal domain
-        if (callbackUrl && callbackUrl.startsWith(baseUrl)) {
-          return `/users-page`;
-        } else {
-          // Handle invalid callback URL (log, warn, etc.)
-          console.warn("Invalid callback URL in verification email:", callbackUrl);
-          return baseUrl;
-        }
-      }
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
-    }
-  },
-  theme: {
-    colorScheme: "dark",
-    logo: "/finaljarlogo.png",
-  },
+  }
 })
 
 // ------------------------- CUSTOM EMAIL CONFIGURATION ---------------------------
