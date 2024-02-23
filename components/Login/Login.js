@@ -32,7 +32,7 @@ export default function Login() {
                     <br />
                     {session.user.email}
                 </p>
-                <button type="button" onClick={() => signOut("email", { email, callbackUrl: 'http://localhost:3000' })}
+                <button type="button" onClick={() => signOut()}
                     className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign out</button>
             </>
         )
@@ -45,7 +45,7 @@ export default function Login() {
                     Not signed in
                 </p>
                 <button type="button"
-                    onClick={() => signIn("email", { email, callbackUrl: 'http://localhost:3000/users-page.js' })}
+                    onClick={() => signIn()}
                     className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign In
                 </button>
             </>

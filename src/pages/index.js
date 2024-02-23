@@ -24,8 +24,8 @@ export default function Home() {
             Loading your jar ... 🫙
           </h1>
           <div className="img-div w-full, h-full relative">
-            <Image src="/imgGlasJar.png" alt="placeholder glasjar" layout='fill'
-              objectFit='contain' />
+            {/* <Image src="/imgGlasJar.png" alt="placeholder glasjar" layout='fill'
+              objectFit='contain' /> */}
           </div>
         </div >
       </>)

@@ -3,6 +3,7 @@ import EmailProvider from "next-auth/providers/email"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "../../../../lib/mongodb"
 import nodemailer from "nodemailer"
+import { useSession } from "next-auth/react"
 
 
 export default NextAuth({
@@ -46,13 +47,25 @@ export default NextAuth({
       session.user.userId = user.id;
       return session;
     },
-    async signIn({ user, account, profile, email, credentials }) {
-      const isAllowedToSignIn = true
-      if (isAllowedToSignIn) {
-        return '/users-page' // if login was successful go to this url
-      } else {
-        return "/"  // returns to index.js again
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // **New logic for verification email redirection:**
+      else if (url.startsWith(`${baseUrl}/api/auth/callback/email`)) {
+        // Extract the callback URL from the query parameter
+        const callbackUrl = new URLSearchParams(url.split('?')[1]).get('callbackUrl');
+        // Redirect to the users-page only if the callback URL matches your internal domain
+        if (callbackUrl && callbackUrl.startsWith(baseUrl)) {
+          return `/users-page`;
+        } else {
+          // Handle invalid callback URL (log, warn, etc.)
+          console.warn("Invalid callback URL in verification email:", callbackUrl);
+          return baseUrl;
+        }
       }
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
     }
   },
   theme: {
