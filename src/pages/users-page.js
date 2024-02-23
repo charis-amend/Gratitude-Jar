@@ -11,14 +11,8 @@ import DisplayFormButton from "../../components/DisplayFormButton/DisplayFormBut
 import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
 // -------------------------
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 export default function UsersPage() {
-    const router = useRouter()
-    const { data: session, status } = useSession({
-        required: true,
-        onUnauthenticated() { router.push("/") }
-    })
+    const { data: session, status } = useSession()
 
     // const {data: statements}
     if (status === "loading") {
@@ -35,32 +29,31 @@ export default function UsersPage() {
                 </div >
             </>)
     }
-    if (!session) { return null } // redirecting to index.js HOME page
+    if (session) {
+        return (
+            <>
+                <Head>
+                    <title>🫙 Gratitude Jar</title>
+                </Head>
 
-    return (
-        <>
-            <Head>
-                <title>🫙 Gratitude Jar</title>
-            </Head>
+                <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* background: */}
+                    <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
+                    <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
+                        <Login />
+                    </div>
 
-            <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* background: */}
-                <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
-                <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
-                    <Login />
-                </div>
+                    <GratitudeStatement /> {/* viewbox for active displayed gratitude statement and blurry background: */}
 
-                <GratitudeStatement /> {/* viewbox for active displayed gratitude statement and blurry background: */}
-
-                {/* lower section: */}
-                <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
-                    <DisplayFormButton />
-                    <GratitudeForm />
-                    <RandomGratitudeButton />
+                    {/* lower section: */}
+                    <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
+                        <DisplayFormButton />
+                        <GratitudeForm />
+                        <RandomGratitudeButton />
+                    </div >
                 </div >
-            </div >
 
-        </>
-    )
+            </>
+        )
+    }
+    return console.log("users-page error after status is not authenticated", status)
 }
-
-

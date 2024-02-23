@@ -3,16 +3,15 @@
 // -------------- -----------
 import Head from "next/head";
 import React from "react";
-import Image from "next/image";
+import { useRouter } from "next/router";
 // Components:
-import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
 import { useSession } from "next-auth/react";
 import SignInButton from "../../components/SignInButton/SignInButton";
 // -------------------------
 
 export default function Home() {
-
+  const router = useRouter()
   const { data: session, status } = useSession()
   console.log("---data in index.js:", session, status)
 
@@ -29,6 +28,10 @@ export default function Home() {
           </div>
         </div >
       </>)
+  }
+
+  if (status === "authenticated") {
+    router.push(`/users-page`)
   }
   // if data is anything but session then show index.js Homepage:
   if (!session) {

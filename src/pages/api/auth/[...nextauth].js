@@ -3,6 +3,7 @@ import EmailProvider from "next-auth/providers/email"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "../../../../lib/mongodb"
 import nodemailer from "nodemailer"
+import { getToken } from "next-auth/jwt"
 
 export default NextAuth({
   providers: [
@@ -11,22 +12,21 @@ export default NextAuth({
       from: process.env.EMAIL_FROM,
       maxAge: 30 * 24 * 60 * 60, // 30daays
 
-      sendVerificationRequest: emailSender(),
-      // async sendVerificationRequest({
-      //   identifier: email,
-      //   url,
-      //   provider: { server, from },
-      // }) {
-      //   const { host } = new URL(url)
-      //   const transport = nodemailer.createTransport(server)
-      //   await transport.sendMail({
-      //     to: email,
-      //     from,
-      //     subject: `Your Sign in | Gratitude Jar`,
-      //     text: text({ url, host }),
-      //     html: html({ url, host, email }),
-      //   })
-      // },
+      async sendVerificationRequest({
+        identifier: email,
+        url,
+        provider: { server, from },
+      }) {
+        const { host } = new URL(url)
+        const transport = nodemailer.createTransport(server)
+        await transport.sendMail({
+          to: email,
+          from,
+          subject: `Your Sign in | Gratitude Jar`,
+          text: text({ url, host }),
+          html: html({ url, host, email }),
+        })
+      },
       // normalizing email-address, so not more than 1 address possible:
       normalizeIdentifier: function (identifier) {
         let [local, domain] = identifier.toLowerCase().trim().split("@")
@@ -42,47 +42,54 @@ export default NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30days
   },
   callbacks: {
-    async session({ session, user }) {
+    async jwt({ token, user, session }) {
+      console.log("---- console.log in nextauth jwt : token:", token, "----")
+      console.log("---- console.log in nextauth jwt :  user", user, "----")
+      console.log("---- console.log in nextauth jwt : session", session, "----")
+      return token;
+    },
+    async session({ session, user, token }) {
       session.user.userId = user.id;
+      console.log(token, user, session, "---- console.log in nextauth jwt : token, user, session")
       return session;
     },
   }
 })
 // different url when opening the verification-email: 
-function emailSender(callbackUrl) {
-  return async ({ identifier, url, provider: { server, from } }) => {
-    try {
-      const emailVerificationLink = new URL(url)
-      emailVerificationLink.searchParams.set("/users-page", callbackUrl)
-      await sendVerificationRequest({
-        email: identifier,
-        url: emailVerificationLink.href,
-        provider: { server, from },
-      })
-      const { host } = new URL(url)
-      const transport = nodemailer.createTransport(server)
-      await transport.sendMail({
-        to: email,
-        from,
-        subject: `Your Sign in | Gratitude Jar`,
-        text: text({ url, host }),
-        html: html({ url, host, identifier }),
-      })
+// function emailSender(callbackUrl) {
+//   return async ({ identifier, url, provider: { server, from } }) => {
+//     try {
+//       const emailVerificationLink = new URL(url)
+//       emailVerificationLink.searchParams.set("callbackUrl", callbackUrl)
+//       await sendVerificationRequest({
+//         email: identifier,
+//         url: emailVerificationLink.href,
+//         provider: { server, from },
+//       })
+//       const { host } = new URL(url)
+//       const transport = nodemailer.createTransport(server)
+//       await transport.sendMail({
+//         to: email,
+//         from,
+//         subject: `Your Sign in | Gratitude Jar`,
+//         text: text({ url, host }),
+//         html: html({ url, host, identifier }),
+//       })
 
-    } catch (error) {
-      console.error(error.message, "error in [nextAuth].js file whilst fetching callbackURL")
-    }
-  }
-}
+//     } catch (error) {
+//       console.error(error.message, "error in [nextAuth].js file whilst fetching callbackURL")
+//     }
+//   }
+// }
 
 // ------------------------- CUSTOM EMAIL CONFIGURATION ---------------------------
 // Email HTML body
-function html({ url, host, identifier }) {
+function html({ url, host, email }) {
   // Insert invisible space into domains and email address to prevent both the
   // email address and the domain from being turned into a hyperlink by email
   // clients like Outlook and Apple mail, as this is confusing because it seems
   // like they are supposed to click on their email address to sign in.
-  const escapedEmail = `${identifier.replace(/\./g, "&#8203;.")}`
+  const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`
   const escapedHost = `${host.replace(/\./g, "&#8203;.")}`
 
   // Some simple styling options
