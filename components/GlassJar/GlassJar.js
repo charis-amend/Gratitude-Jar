@@ -12,8 +12,8 @@ import { useGLTF } from "@react-three/drei";
 export default function GlassJar(props) {
 
     try {
-        const { nodes, materials } = useGLTF("/public/assets/scene.gltf");
-        // const { nodes, materials } = useGLTF("/assets/scene.gltf");
+        // const { nodes, materials } = useGLTF("/public/assets/scene.gltf");
+        const { nodes, materials } = useGLTF("/assets/scene.gltf");
 
         const scale = [1.5, 1.5, 1.5];
 

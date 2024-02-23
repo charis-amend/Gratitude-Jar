@@ -11,12 +11,16 @@ import DisplayFormButton from "../../components/DisplayFormButton/DisplayFormBut
 import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
 // -------------------------
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 export default function UsersPage() {
     const router = useRouter()
     const { data: session, status } = useSession({
         required: true,
         onUnauthenticated() { router.push("/") }
     })
+
+    // const {data: statements}
     if (status === "loading") {
         return (
             <>
