@@ -29,4 +29,3 @@ export default function Home() {
   )
 }
 
-// Home.auth = true;

@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react"
+import { useSession, getSession } from "next-auth/react"
 // Components:
 import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
@@ -12,7 +12,7 @@ export default function UsersPage() {
     return (
         <>
             <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-                <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
+                {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
                 {/* image for the loading page showing this image before the 3D object has loaded 
           <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
                 <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
@@ -31,6 +31,9 @@ export default function UsersPage() {
         </>
     )
 }
+
+UsersPage.auth = true;
+
 
 // signOut()
 

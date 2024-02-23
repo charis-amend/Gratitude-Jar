@@ -14,9 +14,6 @@ export default function Login() {
     // ↪ authenticated -> route push to users-page.js and return() signedin as + signout button
     // ↪ unauthenticated -> route push to index.js and return() not signed in + signin button
 
-    // if data: null or undefined then: 
-
-
     if (session) {
         if (status === "loading") {
             return (
@@ -33,25 +30,22 @@ export default function Login() {
                 </>)
         }
 
-        useEffect(() => {
-            if (status === "authenticated") {
-                router.replace("/users-page") // lead user to UsersPage users-page.js
-                return (
-                    <>
-                        <p className="signedin-text text-white text-xs w-fit text-right my-3">
-                            Signed in as
-                            <br />
-                            {session.user.email}
-                        </p>
-                        <button type="button" onClick={() => signOut()}
-                            className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign out</button>
-                    </>
-                )
-            }
-        }, [session, router])
+        if (status === "authenticated") {
+            router.replace("/users-page") // lead user to UsersPage users-page.js
+            return (
+                <>
+                    <p className="signedin-text text-white text-xs w-fit text-right my-3">
+                        Signed in as
+                        <br />
+                        {session.user.email}
+                    </p>
+                    <button type="button" onClick={() => signOut()}
+                        className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign out</button>
+                </>
+            )
+        }
 
         if (status === "unauthenticated") {
-            router.replace("/")
             return (
                 <>
                     <p
@@ -65,5 +59,20 @@ export default function Login() {
                 </>
             )
         }
+
+    }
+    else if (!session) {
+        return (
+            <>
+                <p
+                    className="signedin-text text-white text-xs w-fit text-right my-3">
+                    Not signed in
+                </p>
+                <button type="button"
+                    onClick={() => signIn()}
+                    className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign In
+                </button>
+            </>
+        )
     }
 }
