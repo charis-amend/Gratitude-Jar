@@ -1,6 +1,5 @@
-// MAIN PAGE
+// FIRST PAGE
 // Styling with Tailwind in each Component
-// no other subpages, components will display/hide according to user activity.
 // -------------- -----------
 // Components:
 import Login from "../../components/Login/Login";

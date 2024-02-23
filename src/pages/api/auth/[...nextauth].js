@@ -6,10 +6,9 @@ import nodemailer from "nodemailer"
 
 
 export default NextAuth({
-  // Configure one or more authentication providers
   providers: [
     EmailProvider({
-      server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
+      server: process.env.EMAIL_SERVER,
       from: process.env.EMAIL_FROM,
       maxAge: 30 * 24 * 60 * 60, // 30daays
 
