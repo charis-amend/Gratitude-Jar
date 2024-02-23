@@ -3,68 +3,104 @@ import EmailProvider from "next-auth/providers/email"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "../../../../lib/mongodb"
 import nodemailer from "nodemailer"
-
+import { getToken } from "next-auth/jwt"
 
 export default NextAuth({
-    // Configure one or more authentication providers
-    providers: [
-        EmailProvider({
-            server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
-            from: process.env.EMAIL_FROM,
-            maxAge: 30,
-            async sendVerificationRequest({
-                identifier: email,
-                url,
-                provider: { server, from },
-            }) {
-                const { host } = new URL(url)
-                const transport = nodemailer.createTransport(server)
-                await transport.sendMail({
-                    to: email,
-                    from,
-                    subject: `Your Sign in | Gratitude Jar`,
-                    text: text({ url, host }),
-                    html: html({ url, host, email }),
-                })
-            }
-        }),
-    ],
-    adapter: MongoDBAdapter(clientPromise),
-    secret: process.env.NEXTAUTH_SECRET,
-    session: {
-        jwt: true,
+  providers: [
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+      maxAge: 30 * 24 * 60 * 60, // 30daays
+
+      async sendVerificationRequest({
+        identifier: email,
+        url,
+        provider: { server, from },
+      }) {
+        const { host } = new URL(url)
+        const transport = nodemailer.createTransport(server)
+        await transport.sendMail({
+          to: email,
+          from,
+          subject: `Your Sign in | Gratitude Jar`,
+          text: text({ url, host }),
+          html: html({ url, host, email }),
+        })
+      },
+      // normalizing email-address, so not more than 1 address possible:
+      normalizeIdentifier: function (identifier) {
+        let [local, domain] = identifier.toLowerCase().trim().split("@")
+        domain = domain.split(",")[0]  // removing , for the domain part
+        return `${local}@${domain}`
+      },
+    }),
+  ],
+  adapter: MongoDBAdapter(clientPromise),
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60, // 30days
+  },
+  callbacks: {
+    async jwt({ token, user, session }) {
+      console.log("---- console.log in nextauth jwt : token:", token, "----")
+      console.log("---- console.log in nextauth jwt :  user", user, "----")
+      console.log("---- console.log in nextauth jwt : session", session, "----")
+      return token;
     },
-    callbacks: {
-        async session({ session, user }) {
-            session.user.userId = user.id;
-            return session;
-        },
+    async session({ session, user, token }) {
+      session.user.userId = user.id;
+      console.log(token, user, session, "---- console.log in nextauth jwt : token, user, session")
+      return session;
     },
-    theme: {
-        colorScheme: "dark",
-        logo: "/finaljarlogo.png",
-    },
+  }
 })
+// different url when opening the verification-email: 
+// function emailSender(callbackUrl) {
+//   return async ({ identifier, url, provider: { server, from } }) => {
+//     try {
+//       const emailVerificationLink = new URL(url)
+//       emailVerificationLink.searchParams.set("callbackUrl", callbackUrl)
+//       await sendVerificationRequest({
+//         email: identifier,
+//         url: emailVerificationLink.href,
+//         provider: { server, from },
+//       })
+//       const { host } = new URL(url)
+//       const transport = nodemailer.createTransport(server)
+//       await transport.sendMail({
+//         to: email,
+//         from,
+//         subject: `Your Sign in | Gratitude Jar`,
+//         text: text({ url, host }),
+//         html: html({ url, host, identifier }),
+//       })
+
+//     } catch (error) {
+//       console.error(error.message, "error in [nextAuth].js file whilst fetching callbackURL")
+//     }
+//   }
+// }
 
 // ------------------------- CUSTOM EMAIL CONFIGURATION ---------------------------
 // Email HTML body
 function html({ url, host, email }) {
-    // Insert invisible space into domains and email address to prevent both the
-    // email address and the domain from being turned into a hyperlink by email
-    // clients like Outlook and Apple mail, as this is confusing because it seems
-    // like they are supposed to click on their email address to sign in.
-    const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`
-    const escapedHost = `${host.replace(/\./g, "&#8203;.")}`
+  // Insert invisible space into domains and email address to prevent both the
+  // email address and the domain from being turned into a hyperlink by email
+  // clients like Outlook and Apple mail, as this is confusing because it seems
+  // like they are supposed to click on their email address to sign in.
+  const escapedEmail = `${email.replace(/\./g, "&#8203;.")}`
+  const escapedHost = `${host.replace(/\./g, "&#8203;.")}`
 
-    // Some simple styling options
-    const backgroundColor = "#232323"
-    const textColor = "#444444"
-    const mainBackgroundColor = "#ffffff"
-    const buttonBackgroundColor = "#473AEB"
-    const buttonBorderColor = "#346df1"
-    const buttonTextColor = "#ffffff"
+  // Some simple styling options
+  const backgroundColor = "#232323"
+  const textColor = "#444444"
+  const mainBackgroundColor = "#ffffff"
+  const buttonBackgroundColor = "#473AEB"
+  const buttonBorderColor = "#346df1"
+  const buttonTextColor = "#ffffff"
 
-    return `
+  return `
   <body style="background: ${backgroundColor};">
   <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                   <tbody>
@@ -121,5 +157,5 @@ function html({ url, host, email }) {
 
 // Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
 function text({ url, host }) {
-    return `Sign in to ${host}\n${url}\n\n`
+  return `Sign in to ${host}\n${url}\n\n`
 }
