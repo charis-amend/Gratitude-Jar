@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 // Components:
 import Login from "../../components/Login/Login";
-import GlassJar from "../../components/GlassJar/GlassJar";
+import GlassJar from "../../components/GlassJar/GlassJar.js";
 import GratitudeForm from "../../components/GratitudeForm/GratitudeForm";
 import GratitudeStatement from "../../components/GratitudeStatement/GratitudeStatement";
 import DisplayFormButton from "../../components/DisplayFormButton/DisplayFormButton";

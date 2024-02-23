@@ -11,6 +11,7 @@ import GlassJar from "../../components/GlassJar/GlassJar";
 // import GratitudeStatement from "../../components/GratitudeStatement/GratitudeStatement";
 import DisplayFormButton from "../../components/DisplayFormButton/DisplayFormButton";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 // import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
 // -------------------------
 
@@ -29,16 +30,18 @@ export default function Home() {
         {/* lower section: */}
         <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
           {/* display a button here which leads to the signin page */}
-          <button
-            type="button"
-            className="displayformbutton bg-blue-700 hover:bg-v-blue-200 active:bg-blue-700 disabled:bg-blue-200
+          <Link
+            href={"/users-page"}>
+            <button
+              type="button"
+              className="displayformbutton bg-blue-700 hover:bg-v-blue-200 active:bg-blue-700 disabled:bg-blue-200
                 text-white font-bold py-3 px-6 rounded-md shadow-lg my-5"
-            id="button-opening-signin-page"
-            name="button-opening-signin-page"
-          >
-            Add Gratitude Memory
-          </button>
-
+              id="button-opening-signin-page"
+              name="button-opening-signin-page"
+            >
+              Add Gratitude Memory
+            </button>
+          </Link>
           <p
             className="statement text-left p-2 text-blue-50 place-self-start h-full"
           >

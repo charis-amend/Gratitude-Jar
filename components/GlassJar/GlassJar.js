@@ -10,47 +10,50 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function GlassJar(props) {
-    // const { nodes, materials } = useGLTF("../../public/assets/scene.gltf");
-    const { nodes, materials } = useGLTF("/assets/scene.gltf");
 
-    const scale = [1.5, 1.5, 1.5];
+    try {
+        const { nodes, materials } = useGLTF("/public/assets/scene.gltf");
+        // const { nodes, materials } = useGLTF("/assets/scene.gltf");
 
-    useGLTF.preload("/assets/scene.gltf");
-    return (
-        <>
-            <Canvas>
-                <Suspense fallback={null}>
-                    <ambientLight intensity={0.6} />
-                    <directionalLight color="white" position={[0, 0, 5]} />
-                    <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} />
-                    <directionalLight position={[3.3, 1.0, 4.4]} />
-                    <OrbitControls target={[1, 1, 1]} autoRotate />
-                    <group {...props}
-                        dispose={null}
-                        scale={scale}>
+        const scale = [1.5, 1.5, 1.5];
 
-                        <mesh
-                            name="defaultMaterial"
-                            geometry={nodes.defaultMaterial.geometry}
-                            material={materials.material_1}
-                            userData={{ name: "defaultMaterial" }}
-                        />
-                        <mesh
-                            name="defaultMaterial_1"
-                            geometry={nodes.defaultMaterial_1.geometry}
-                            material={materials.material}
-                            userData={{ name: "defaultMaterial" }}
-                        />
-                    </group>
-                </Suspense>
-            </Canvas>
-        </>
-    );
+        return (
+            <>
+                <Canvas>
+                    <Suspense fallback={null}>
+                        <ambientLight intensity={0.6} />
+                        <directionalLight color="white" position={[0, 0, 5]} />
+                        <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} />
+                        <directionalLight position={[3.3, 1.0, 4.4]} />
+                        <OrbitControls target={[1, 1, 1]} autoRotate />
+                        <group {...props}
+                            dispose={null}
+                            scale={scale}>
+
+                            <mesh
+                                name="defaultMaterial"
+                                geometry={nodes.defaultMaterial.geometry}
+                                material={materials.material_1}
+                                userData={{ name: "defaultMaterial" }}
+                            />
+                            <mesh
+                                name="defaultMaterial_1"
+                                geometry={nodes.defaultMaterial_1.geometry}
+                                material={materials.material}
+                                userData={{ name: "defaultMaterial" }}
+                            />
+                        </group>
+                    </Suspense>
+                </Canvas>
+            </>
+        );
+    }
+    catch (error) {
+        console.error("An error occurred while loading the GLTF file:", error);
+        return null; // or render an error message component
+    }
 }
-
-
-
-
+useGLTF.preload("/assets/scene.gltf");
 
 // const baseMaterial = useRef(new MeshStandardMaterial({
 //     transparent: true,
