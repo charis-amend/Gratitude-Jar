@@ -11,7 +11,7 @@ export default NextAuth({
     EmailProvider({
       server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
       from: process.env.EMAIL_FROM,
-      maxAge: 168, // 7 * 24h
+      maxAge: 30 * 24 * 60 * 60, // 30daays
 
       async sendVerificationRequest({
         identifier: email,
@@ -40,7 +40,7 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     jwt: true,
-    maxAge
+    maxAge: 30 * 24 * 60 * 60, // 30days
   },
   callbacks: {
     async session({ session, user }) {
