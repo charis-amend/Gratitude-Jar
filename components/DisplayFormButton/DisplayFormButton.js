@@ -6,7 +6,8 @@ export default function DisplayFormButton() {
                 text-white font-bold py-3 px-6 rounded-md shadow-lg my-5"
                 type="button"
                 id="displayFormButton"
-                name="displayFormButton">
+                name="displayFormButton"
+            >
                 Add Gratitude
             </button>
         </>

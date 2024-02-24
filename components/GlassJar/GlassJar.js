@@ -26,7 +26,7 @@ export default function GlassJar(props) {
                     <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} />
                     <directionalLight position={[3.3, 1.0, 4.4]} />
                     <OrbitControls target={[1, 1, 1]} autoRotate />
-                    <group {...props}
+                    {/* <group {...props}
                         dispose={null}
                         scale={scale}>
 
@@ -42,7 +42,7 @@ export default function GlassJar(props) {
                             material={materials.material}
                             userData={{ name: "defaultMaterial" }}
                         />
-                    </group>
+                    </group> */}
                 </Suspense>
             </Canvas>
         </>

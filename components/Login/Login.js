@@ -4,8 +4,8 @@ export default function Login() {
     const { data: session, status } = useSession()
     if (status === "loading") { return <div>... Loading your jar 🫙</div> }
     console.log("----- session in login component:", session)
-    const userAuthenticated = useSession(status === "authenticated")
-    console.log("----- user is authenticated in login component:", userAuthenticated)
+    const isAuthenticated = status === "authenticated"
+    console.log("----- user is authenticated in login component:", isAuthenticated)
 
     if (session) {
         return (
