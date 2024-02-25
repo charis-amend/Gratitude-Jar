@@ -16,6 +16,7 @@ import SignInButton from "../../components/SignInButton/SignInButton";
 
 export default function Home() {
   const { status } = useSession()
+  const [showForm, setShowForm] = useState(false)
 
   if (status === "authenticated") {
     return (
@@ -31,8 +32,12 @@ export default function Home() {
           <GratitudeStatement />
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
-            <DisplayFormButton />
-            <GratitudeForm />
+            <DisplayFormButton
+              onClick={() => setShowForm(!showForm)}
+            />
+            {isVisible && (
+              <GratitudeForm />
+            )}
             <RandomGratitudeButton />
           </div >
         </div >

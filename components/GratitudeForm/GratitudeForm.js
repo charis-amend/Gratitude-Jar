@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react"
+import GratitudeStatement from "../GratitudeStatement/GratitudeStatement";
 
 export default function GratitudeForm({ onGratitudeSubmit }) {
     const { status, data: session } = useSession()
@@ -15,19 +16,19 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
             const newGratitudeData = {
                 dateCreation,
                 statementText,
-                userId: session.user.userId,
             }
             console.log("------ gratitudeData:", newGratitudeData);
 
-            const response = await fetch("/api/gratitudeStatements", {
+            const response = await fetch("/api/user/gratitudeStatements", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(jokeData),
+                body: JSON.stringify(gratitudeStatement),
             });
+            const data = await response.json()
             if (response.ok) {
-                mutate();
+
             }
         };
 
