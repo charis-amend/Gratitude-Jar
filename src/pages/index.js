@@ -31,8 +31,9 @@ export default function Home() {
     });
     if (response.ok) {
       mutate();
+      console.log("newGratitudeData in /pages/index.js HOME(): ", newGratitudeData)
     } else {
-      console.error(`---- Error in GratitudeForm: ${response.status}`)
+      console.error(`---- Error in /pages/index.js : ${response.status}`)
     }
   }
 
