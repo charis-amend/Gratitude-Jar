@@ -1,37 +1,18 @@
 import { useSession } from "next-auth/react"
 import { useState } from "react";
 
-export default function GratitudeForm({ onGratitudeSubmit }) {
-    const { data: session } = useSession() // getting the userId to add the gratitudeStatement to the correct user
-    console.log("----------session object in gratitudeform:", session)
+export default function GratitudeForm({ onSubmit, userIdForGratitudeStatement, dateFormSubmission }) {
     const [showForm, setShowForm] = useState(false) // hide & show form with Add Gratitude Button
 
-    async function addingGratitude(event) {
+    function submittingGratitudeForm(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const { dateCreation, statementText } = Object.fromEntries(formData);
-
-        const newGratitudeData = {
-            dateCreation,
-            statementText,
-        }
+        const newGratitudeData = Object.fromEntries(formData);
+        onSubmit(newGratitudeData) // contains dateEntry, 
         console.log("------ gratitudeData:", newGratitudeData);
-
-        const response = await fetch(`/api/users/${userId}`, {
-            method: "POST",
-            body: JSON.stringify(newGratitudeData),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        if (response.ok) {
-            await response.json()
-            event.target.reset() // reseting input to empty
-            setShowForm(false)
-        } else {
-            console.error(`---- Error in GratitudeForm: ${response.status}`)
-        }
-    };
+        event.target.reset() // reseting input to empty
+        setShowForm(false) // hiding form again
+    }
 
     return (
         <>
@@ -41,26 +22,27 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
                 id="displayFormButton"
                 name="displayFormButton"
                 onClick={() => setShowForm(!showForm)}
-            >
-                Add Gratitude Memory
-            </button>
+            >Add Gratitude Memory</button>
+
+
             {showForm ?
                 <form
                     className="form w-full max-w-sm"
-                    onSubmit={addingGratitude}
-                    showForm={false}
-                >
+                    onSubmit={submittingGratitudeForm}>
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">
                         </label>
                         <input
-                            name="formStatementText"
+                            name="statementText"
                             id="formTextInput"
                             placeholder="What are you grateful for...?"
                             maxLength={150}
                             required
                             className="appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                        ></input>
+                        />
+                        <input type="hidden" value={dateFormSubmission} name="dateCreation" />
+                        <input type="hidden" value={userIdForGratitudeStatement} name="userId" />
+
                         <button type="submit"
                             className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
                             ADD

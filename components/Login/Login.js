@@ -3,9 +3,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 export default function Login() {
     const { data: session, status } = useSession()
     if (status === "loading") { return <div>... Loading your jar 🫙</div> }
-    console.log("----- session in login component:", session)
     const isAuthenticated = status === "authenticated"
-    console.log("----- user is authenticated in login component:", isAuthenticated)
 
     if (session) {
         return (

@@ -10,10 +10,31 @@ import GratitudeStatement from "../../components/GratitudeStatement/GratitudeSta
 import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
 import { useSession } from "next-auth/react";
 import SignInButton from "../../components/SignInButton/SignInButton";
+import useSWR from "swr";
 // -------------------------
 
 export default function Home() {
-  const { status } = useSession()
+  const { status, data: session } = useSession() // for condition which components displayed - when user === authenticated
+  const userId = session?.user?.userId
+  const dateCreation = new Date().toDateString();
+
+  const { mutate } = useSWR(userId ? `/api/users/${userId}` : null); // POST -> adding statement to user object in statement array
+  // if (isLoading || error) return <div>... Loading your jar 🫙</div>;
+
+  async function addingGratitudeStatement(newGratitudeData) {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: "POST",
+      body: JSON.stringify(newGratitudeData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      mutate();
+    } else {
+      console.error(`---- Error in GratitudeForm: ${response.status}`)
+    }
+  }
 
   if (status === "authenticated") {
     return (
@@ -29,7 +50,11 @@ export default function Home() {
           <GratitudeStatement />
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
-            <GratitudeForm />
+            <GratitudeForm
+              onSubmit={addingGratitudeStatement}
+              userIdForGratitudeStatement={userId}
+              dateFormSubmission={dateCreation}
+            />
             <RandomGratitudeButton />
           </div >
         </div >
@@ -48,7 +73,7 @@ export default function Home() {
             <p
               className="statement text-center text-xs p-2 text-blue-50 place-self-start h-full"
             >
-              Login here, to add your gratitude statements, so no one else can see them. We will only send you a link to your e-mail to log you in. None of your data will be processed.
+              Login here, to add your gratitude statements. We will only send you a link to your e-mail to log you in. None of your data will be processed.
             </p>
             <SignInButton />
 
