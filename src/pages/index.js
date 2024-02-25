@@ -7,16 +7,13 @@ import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
 import GratitudeForm from "../../components/GratitudeForm/GratitudeForm";
 import GratitudeStatement from "../../components/GratitudeStatement/GratitudeStatement";
-import DisplayFormButton from "../../components/DisplayFormButton/DisplayFormButton";
 import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
 import SignInButton from "../../components/SignInButton/SignInButton";
 // -------------------------
 
 export default function Home() {
   const { status } = useSession()
-  const [showForm, setShowForm] = useState(false)
 
   if (status === "authenticated") {
     return (
@@ -32,12 +29,7 @@ export default function Home() {
           <GratitudeStatement />
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
-            <DisplayFormButton
-              onClick={() => setShowForm(!showForm)}
-            />
-            {isVisible && (
-              <GratitudeForm />
-            )}
+            <GratitudeForm />
             <RandomGratitudeButton />
           </div >
         </div >

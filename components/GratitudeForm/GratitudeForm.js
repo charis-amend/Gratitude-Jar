@@ -1,42 +1,54 @@
 import { useSession } from "next-auth/react"
-import GratitudeStatement from "../GratitudeStatement/GratitudeStatement";
+import { useState } from "react";
 
 export default function GratitudeForm({ onGratitudeSubmit }) {
-    const { status, data: session } = useSession()
+    const { data: session } = useSession() // getting the userId to add the gratitudeStatement to the correct user
     console.log("----------session object in gratitudeform:", session)
+    const [showForm, setShowForm] = useState(false) // hide & show form with Add Gratitude Button
 
-    if (status === "authenticated") {
-        // if user is authenticated, then input is possible
+    async function addingGratitude(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const { dateCreation, statementText } = Object.fromEntries(formData);
 
-        const addingGratitude = async (event) => {
-            e.preventDefault();
-            const formData = new FormData(event.target);
-            const { dateCreation, statementText } = Object.fromEntries(formData);
+        const newGratitudeData = {
+            dateCreation,
+            statementText,
+        }
+        console.log("------ gratitudeData:", newGratitudeData);
 
-            const newGratitudeData = {
-                dateCreation,
-                statementText,
-            }
-            console.log("------ gratitudeData:", newGratitudeData);
+        const response = await fetch(`/api/users/${userId}`, {
+            method: "POST",
+            body: JSON.stringify(newGratitudeData),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (response.ok) {
+            await response.json()
+            event.target.reset() // reseting input to empty
+            setShowForm(false)
+        } else {
+            console.error(`---- Error in GratitudeForm: ${response.status}`)
+        }
+    };
 
-            const response = await fetch("/api/user/gratitudeStatements", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(gratitudeStatement),
-            });
-            const data = await response.json()
-            if (response.ok) {
-
-            }
-        };
-
-        return (
-            <>
+    return (
+        <>
+            <button
+                className="displayformbutton bg-blue-700 hover:bg-v-blue-200 active:bg-blue-700 disabled:bg-blue-200 text-white font-bold py-3 px-6 rounded-md shadow-lg my-5"
+                type="button"
+                id="displayFormButton"
+                name="displayFormButton"
+                onClick={() => setShowForm(!showForm)}
+            >
+                Add Gratitude Memory
+            </button>
+            {showForm ?
                 <form
                     className="form w-full max-w-sm"
                     onSubmit={addingGratitude}
+                    showForm={false}
                 >
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">
@@ -54,8 +66,10 @@ export default function GratitudeForm({ onGratitudeSubmit }) {
                             ADD
                         </button>
                     </div>
-                </form >
-            </>
-        )
-    }
+                </form>
+                :
+                null
+            }
+        </>
+    )
 }

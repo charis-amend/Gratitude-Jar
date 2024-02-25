@@ -5,9 +5,6 @@ import User from "../../../../../db/models/User";
 // getting only the gratitudeStatements from the loggedInUser 
 
 export default async function handler(request, response) {
-    // get id of loggedInUser
-    // const {id} = request.query
-
     await dbConnect();
     const { userId } = request.query
     try {
