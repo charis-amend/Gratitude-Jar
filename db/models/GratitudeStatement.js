@@ -5,6 +5,7 @@ const gratitudeStatementSchema = new Schema({
     // gratitudeStatementObjectId: ObjectId('') predefined _id by mongoDB
     dateCreation: { type: String, require: true },
     statementText: { type: String, require: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 const GratitudeStatement =

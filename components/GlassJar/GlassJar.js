@@ -11,10 +11,10 @@ import { useGLTF } from "@react-three/drei";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export default function GlassJar(props) {
-    const gltfUrl = "/assets/jar2final.gltf";
-    console.log("GLTF URL:", gltfUrl);
+    // const gltfUrl = "/assets/jar2final.gltf";
+    // console.log("GLTF URL:", gltfUrl);
     // const { nodes, materials } = useGLTF(gltfUrl);
-    // const { nodes, materials } = useGLTF("/assets/jar2final.gltf");
+    const { nodes, materials } = useGLTF("public/assets/jar2final.gltf");
     const scale = [2, 2, 2];
 
     return (
@@ -26,7 +26,7 @@ export default function GlassJar(props) {
                     <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} />
                     <directionalLight position={[3.3, 1.0, 4.4]} />
                     <OrbitControls target={[1, 1, 1]} autoRotate />
-                    {/* <group {...props}
+                    <group {...props}
                         dispose={null}
                         scale={scale}>
 
@@ -42,13 +42,13 @@ export default function GlassJar(props) {
                             material={materials.material}
                             userData={{ name: "defaultMaterial" }}
                         />
-                    </group> */}
+                    </group>
                 </Suspense>
             </Canvas>
         </>
     );
 }
-// useGLTF.preload("/assets/jar2final.gltf");
+useGLTF.preload("public/assets/jar2final.gltf");
 
 
 

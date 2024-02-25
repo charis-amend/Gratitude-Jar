@@ -1,33 +1,41 @@
 import { useSession } from "next-auth/react"
 
 export default function GratitudeForm({ onGratitudeSubmit }) {
-    const { status } = useSession()
+    const { status, data: session } = useSession()
+    console.log("----------session object in gratitudeform:", session)
+
     if (status === "authenticated") {
         // if user is authenticated, then input is possible
 
-        // const { mutate } = useSWR("/api/jokes");
-        // const GratitudeSubmit = async (e) => {
-        //     e.preventDefault();
-        //     const formData = new FormData(e.target);
-        //     const gratitudeData = Object.fromEntries(formData);
-        //     console.log("------ gratitudeData:", gratitudeData);
-        //     const response = await fetch("/api/jokes", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify(jokeData),
-        //     });
-        //     if (response.ok) {
-        //         mutate();
-        //     }
-        // };
+        const addingGratitude = async (event) => {
+            e.preventDefault();
+            const formData = new FormData(event.target);
+            const { dateCreation, statementText } = Object.fromEntries(formData);
+
+            const newGratitudeData = {
+                dateCreation,
+                statementText,
+                userId: session.user.userId,
+            }
+            console.log("------ gratitudeData:", newGratitudeData);
+
+            const response = await fetch("/api/gratitudeStatements", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(jokeData),
+            });
+            if (response.ok) {
+                mutate();
+            }
+        };
 
         return (
             <>
                 <form
                     className="form w-full max-w-sm"
-                    onSubmit={(event) => onGratitudeSubmit(event)}
+                    onSubmit={addingGratitude}
                 >
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">
