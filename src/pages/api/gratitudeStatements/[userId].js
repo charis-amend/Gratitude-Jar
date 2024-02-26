@@ -15,8 +15,13 @@ export default async function handler(req, res) {
 
     if (req.method === "GET")
         try {
-            const gratitudeStatements = await User.findById(userId).populate("gratitudeStatements")
-            res.status(200).json(gratitudeStatements);
+            const user = await User.findById(userId)
+            if (!user) {
+                return res.status(404).json({ error: "User not found" });
+            } else {
+                const gratitudeStatements = await User.findById(userId)
+                res.status(200).json(gratitudeStatements);
+            }
         } catch (error) {
             console.error("Error in GET /api/gratitudeStatements/[userId].js  :", error);
             res.status(500).json({ status: "Internal Server Error" });
