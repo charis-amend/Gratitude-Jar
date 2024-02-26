@@ -48,7 +48,8 @@ export default function Home() {
           {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
           {/* image for the loading page showing this image before the 3D object has loaded  */}
           <div className="image-container relative h-2/4 place-self-center">
-            <Image src="/assets/preloadedGlasJar.png" alt="placeholder-glasjar" priority fill={true} style={{ objectFit: "contain" }} />
+            <Image src="/assets/preloadedGlasJar.png" alt="placeholder-glasjar" fill={true} style={{ objectFit: "contain" }}
+              sizes="(max-width: 750px) 60vw, (max-width: 1200px) 50vw, 33vw" />
           </div>
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
@@ -74,7 +75,7 @@ export default function Home() {
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
           {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
           <div className="image-container relative h-2/4 place-self-center">
-            <Image src="/assets/preloadedGlasJar.png" alt="placeholder glasjar" width={636} height={832} priority />
+            <Image src="/assets/preloadedGlasJar.png" alt="placeholder glasjar" sizes="(max-width: 750px) 60vw, (max-width: 1200px) 50vw, 33vw" />
           </div>
 
           {/* lower section: */}
