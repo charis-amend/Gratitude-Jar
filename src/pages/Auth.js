@@ -9,11 +9,9 @@ export default function Auth({ children }) {
         return (
             <>
                 <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">
-                    <h2
-                        className="loading-statement-auth text-center text-xs p-2 text-blue-50 place-self-center h-full"
-                    >
+                    <h1 className="loading-heading text-center p-2 text-blue-50 align-middle mt-10">
                         "Loading your jar ... 🫙"
-                    </h2>
+                    </h1>
                 </div>
                 `
             </>)
