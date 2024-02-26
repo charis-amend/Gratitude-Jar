@@ -42,7 +42,7 @@ export default function GratitudeForm({ onSubmit }) {
         event.target.reset() // reseting input to empty
         setShowForm(false) // hiding form again
     }
-    onSubmit(addingGratitudeStatement);
+    // onSubmit(addingGratitudeStatement);
     return (
         <>
             <button

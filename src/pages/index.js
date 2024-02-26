@@ -26,12 +26,7 @@ export default function Home() {
     fetcher
   );
   if (isLoading || error) return <div>... Loading your jar 🫙</div>;
-  const [showStatement, setShowStatement] = useState(false);
-  const [randomStatement, setRandomStatement] = useState(null);
 
-  function toggleShowStatementBox() {
-    setShowStatement((prevStatus) => !prevStatus)
-  }
 
   if (status === "authenticated") {
     return (
@@ -43,17 +38,13 @@ export default function Home() {
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
-          {showStatement && randomStatement &&
-            <GratitudeStatement gratitudeStatement={randomStatement} />
-          }
+
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
             <GratitudeForm
               onSubmit={addingGratitudeStatement}
             />
-            <RandomGratitudeButton toggleShowStatementBox={toggleShowStatementBox}
-              setRandomStatement={setRandomStatement}
-              userId={session.user?.userId} />
+            <RandomGratitudeButton />
 
           </div>
         </div>
