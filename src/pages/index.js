@@ -22,18 +22,22 @@ export default function Home() {
   // getting api/gratitudeStatement data: 
   const { mutate } = useSWR(userId ? `/api/gratitudeStatements/${userId}` : null, fetcher);
 
-  async function addingGratitudeStatement(newGratitudeData) {
-    const response = await fetch(`/api/gratitudeStatements/${userId}`, {
-      method: "POST",
-      body: JSON.stringify(newGratitudeData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      mutate();
-    } else {
-      console.error(`---- Error in GratitudeForm: ${response.status}`)
+  async function addingGratitudeStatement(gratitudeStatementData) {
+    try {
+      const response = await fetch(`/api/gratitudeStatements/${userId}`, {
+        method: "POST",
+        body: JSON.stringify(gratitudeStatementData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        mutate();
+      } else {
+        console.error(`---- response status of fetch gratitudeStatementData in HomepPage: ${response.status}`)
+      }
+    } catch (error) {
+      console.log("error in HomepPage addingGratitudeStatement", error)
     }
   }
 

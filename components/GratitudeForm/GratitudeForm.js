@@ -10,7 +10,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
         event.preventDefault()
         const formData = new FormData(event.target);
         const gratitudeStatementData = Object.fromEntries(formData);
-        onSubmit(gratitudeStatementData)
+        // onSubmit(gratitudeStatementData)
         event.target.reset() // reseting input to empty
         setShowForm(false) // hiding form again
         console.log("successfully submitted gratitude statement clientside and backendside // gratitudeStatementData:", gratitudeStatementData)
