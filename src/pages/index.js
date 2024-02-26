@@ -6,36 +6,24 @@
 import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
 import GratitudeForm from "../../components/GratitudeForm/GratitudeForm";
+import { addingGratitudeStatement } from "../../components/GratitudeForm/GratitudeForm.js"
 import GratitudeStatement from "../../components/GratitudeStatement/GratitudeStatement";
 import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
-import { useSession } from "next-auth/react";
 import SignInButton from "../../components/SignInButton/SignInButton";
-import useSWR from "swr";
 // -------------------------
+import { useSession } from "next-auth/react";
+import useSWR from "swr";
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 
 export default function Home() {
   const { status, data: session } = useSession() // for condition which components displayed - when user === authenticated
-  const userId = session?.user?.userId
-  const dateCreation = new Date().toDateString();
 
-  const { mutate } = useSWR(userId ? `/api/users/${userId}` : null); // POST -> adding statement to user object in statement array
-  // if (isLoading || error) return <div>... Loading your jar 🫙</div>;
-
-  async function addingGratitudeStatement(newGratitudeData) {
-    const response = await fetch(`/api/users/${userId}`, {
-      method: "POST",
-      body: JSON.stringify(newGratitudeData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      mutate();
-      console.log("newGratitudeData in /pages/index.js HOME(): ", newGratitudeData)
-    } else {
-      console.error(`---- Error in /pages/index.js : ${response.status}`)
-    }
-  }
+  const { data, isLoading, error } = useSWR(
+    session ? `/api/gratitudeStatements/${session.user?.userId}` : null,
+    fetcher
+  );
+  if (isLoading || error) return <div>... Loading your jar 🫙</div>;
 
   if (status === "authenticated") {
     return (
@@ -48,13 +36,11 @@ export default function Home() {
             <Login />
           </div>
           {/* viewbox for active displayed gratitude statement and blurry background: */}
-          <GratitudeStatement />
+          <GratitudeStatement gratitudeStatements={data} />
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
             <GratitudeForm
               onSubmit={addingGratitudeStatement}
-              userIdForGratitudeStatement={userId}
-              dateFormSubmission={dateCreation}
             />
             <RandomGratitudeButton />
           </div >
