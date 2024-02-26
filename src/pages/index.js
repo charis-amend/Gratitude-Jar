@@ -10,6 +10,7 @@ import RandomGratitudeButton from "../../components/RandomGratitudeButton/Random
 import SignInButton from "../../components/SignInButton/SignInButton";
 // -------------------------
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -21,18 +22,22 @@ export default function Home() {
   // getting api/gratitudeStatement data: 
   const { mutate } = useSWR(userId ? `/api/gratitudeStatements/${userId}` : null, fetcher);
 
-  async function addingGratitudeStatement(newGratitudeData) {
-    const response = await fetch(`/api/gratitudeStatements/${userId}`, {
-      method: "POST",
-      body: JSON.stringify(newGratitudeData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      mutate();
-    } else {
-      console.error(`---- Error in GratitudeForm: ${response.status}`)
+  async function addingGratitudeStatement(gratitudeStatementData) {
+    try {
+      const response = await fetch(`/api/gratitudeStatements/${userId}`, {
+        method: "POST",
+        body: JSON.stringify(gratitudeStatementData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        mutate();
+      } else {
+        console.error(`---- response status of fetch gratitudeStatementData in HomepPage: ${response.status}`)
+      }
+    } catch (error) {
+      console.log("error in HomepPage addingGratitudeStatement", error)
     }
   }
 
@@ -41,8 +46,8 @@ export default function Home() {
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
           {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
-          {/* image for the loading page showing this image before the 3D object has loaded 
-          <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
+          {/* image for the loading page showing this image before the 3D object has loaded  */}
+          <Image src="/assets/preloadedGlasJar.png" alt="placeholder glasjar" width={400} height={600} />
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
@@ -66,8 +71,7 @@ export default function Home() {
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
           {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
-          {/* image for the loading page showing this image before the 3D object has loaded 
-          <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
+          <Image src="/assets/preloadedGlasJar.png" alt="placeholder glasjar" width={400} height={600} />
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
             <p

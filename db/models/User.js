@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import "./GratitudeStatement"
+import GratitudeStatement from "./GratitudeStatement";
 const { Schema, models, model } = mongoose;
 
 const userSchema = new Schema({
