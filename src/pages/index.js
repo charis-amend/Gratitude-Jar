@@ -12,18 +12,26 @@ import RandomGratitudeButton from "../../components/RandomGratitudeButton/Random
 import SignInButton from "../../components/SignInButton/SignInButton";
 // -------------------------
 import { useSession } from "next-auth/react";
+import { useState } from "react"
 import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 
 export default function Home() {
-  const { status, data: session } = useSession() // for condition which components displayed - when user === authenticated
-
+  // getting session data:
+  const { status, data: session } = useSession()
+  // getting api/gratitudeStatement data: 
   const { data, isLoading, error } = useSWR(
     session ? `/api/gratitudeStatements/${session.user?.userId}` : null,
     fetcher
   );
   if (isLoading || error) return <div>... Loading your jar 🫙</div>;
+  const [showStatement, setShowStatement] = useState(false);
+  const [randomStatement, setRandomStatement] = useState(null);
+
+  function toggleShowStatementBox() {
+    setShowStatement((prevStatus) => !prevStatus)
+  }
 
   if (status === "authenticated") {
     return (
@@ -35,16 +43,20 @@ export default function Home() {
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
-          {/* viewbox for active displayed gratitude statement and blurry background: */}
-          <GratitudeStatement gratitudeStatements={data} />
+          {showStatement && randomStatement &&
+            <GratitudeStatement gratitudeStatement={randomStatement} />
+          }
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
             <GratitudeForm
               onSubmit={addingGratitudeStatement}
             />
-            <RandomGratitudeButton />
-          </div >
-        </div >
+            <RandomGratitudeButton toggleShowStatementBox={toggleShowStatementBox}
+              setRandomStatement={setRandomStatement}
+              userId={session.user?.userId} />
+
+          </div>
+        </div>
       </>
     )
   } else {
@@ -58,7 +70,7 @@ export default function Home() {
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
             <p
-              className="statement text-center text-xs p-2 text-blue-50 place-self-start h-full"
+              className="statement text-center text-xs p-2 text-blue-50 place-self-center h-full"
             >
               Login here, to add your gratitude statements. We will only send you a link to your e-mail to log you in. None of your data will be processed.
             </p>

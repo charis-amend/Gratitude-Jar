@@ -6,12 +6,12 @@ export default function SignInButton() {
     return (
         <>
             {/* <p
-                 className="signedin-text text-white text-xs w-fit text-right my-3">
+                 className="signedin-text text-white text-xs w-fit text-center my-3">
                  Not signed in
              </p> */}
             <button type="button"
                 onClick={() => signIn()}
-                className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign In
+                className="signout-button place-self-center text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign In
             </button>
         </>
     )

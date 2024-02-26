@@ -18,6 +18,7 @@ export default function GratitudeForm({ onSubmit }) {
         }
         console.log("------ gratitudeData:", gratitudeStatementData);
 
+
         // this component GratitudeForm.js is ssr + csr!!! the POST is not in the /api/gratitudeStatement 
         try {
             const response = await fetch("/api/gratitudeStatements", {
