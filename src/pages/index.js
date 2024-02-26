@@ -16,28 +16,27 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Home() {
   // getting session data:
-  const { status, data: session } = useSession()
+  const { data: session, status } = useSession()
   const userId = session?.user?.userId
   const dateCreation = new Date().toDateString();
   // getting api/gratitudeStatement data: 
-  const { mutate } = useSWR(userId ? `/api/gratitudeStatements/${userId}` : null, fetcher);
+  const { mutate } = useSWR(userId ? `/api/${userId}` : null, fetcher);
 
   async function addingGratitudeStatement(gratitudeStatementData) {
-    try {
-      const response = await fetch(`/api/gratitudeStatements/${userId}`, {
-        method: "POST",
-        body: JSON.stringify(gratitudeStatementData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        mutate();
-      } else {
-        console.error(`---- response status of fetch gratitudeStatementData in HomepPage: ${response.status}`)
-      }
-    } catch (error) {
-      console.log("error in HomepPage addingGratitudeStatement", error)
+    const response = await fetch(`/api/${userId}`, {
+      method: "POST",
+      body: JSON.stringify(gratitudeStatementData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      mutate();
+      console.log("----- in index.js HOME() response:", response)
+      console.log("----- in index.js HOME() gratitudeStatementData:", gratitudeStatementData)
+      // } else {
+      //   console.error(`---- response status of fetch gratitudeStatementData in HomepPage: ${response.status}`, error)
+      // }
     }
   }
 
@@ -70,6 +69,7 @@ export default function Home() {
               onSubmit={addingGratitudeStatement}
               userIdForGratitudeStatement={userId}
               dateFormSubmission={dateCreation}
+
             />
             <RandomGratitudeButton />
 

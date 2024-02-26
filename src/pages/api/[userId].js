@@ -1,6 +1,6 @@
-import dbConnect from "../../../../db/connect";
-import GratitudeStatement from "../../../../db/models/GratitudeStatement";
-import User from "../../../../db/models/User";
+import dbConnect from "../../../db/connect";
+import GratitudeStatement from "../../../db/models/GratitudeStatement";
+import User from "../../../db/models/User";
 
 
 export default async function handler(req, res) {
@@ -16,11 +16,14 @@ export default async function handler(req, res) {
 
     // adding GratitudeStatement via GratitudeForm by the user === session.user.userId
     if (req.method === "POST") {
-        console.log("inside POST METHOD req.body : ", req.body)
         try {
-            const gratitudeStatementData = req.body
+            const gratitudeStatementData = req.body;
             const newGratitudeStatement = await GratitudeStatement.create(gratitudeStatementData);
-            const userWithNewGratitudeStatement = await User.findById(gratitudeStatementData.userIdForGratitudeStatement);
+            res.status(201).json({ success: true, data: newGratitudeStatement });
+
+            // const newGratitudeStatement = await GratitudeStatement.create(newGratitudeStatement);
+            const userWithNewGratitudeStatement = await User.findById(userId);
+            console.log("..................userWithNewGratitudeStatement:", userId)
             userWithNewGratitudeStatement.gratitudeStatements.push(newGratitudeStatement)
             await userWithNewGratitudeStatement.save()
             return res.status(201).json({ status: "added statement successfully" })
