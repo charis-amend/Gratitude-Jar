@@ -6,7 +6,7 @@ import GratitudeStatement from "../GratitudeStatement/GratitudeStatement"
 
 export default function RandomGratitudeButton() {
     const { session } = useSession()
-    const { userId } = session?.user?.userId
+    const userId = session?.user?.userId
     const [randomStatement, setRandomStatement] = useState(null); // no random statement fetched yet
     const [showStatement, setShowStatement] = useState(false);
     const [error, setError] = useState(null); // State variable for error handling
@@ -17,6 +17,7 @@ export default function RandomGratitudeButton() {
 
     async function gettingRandomMemory() {
         try {
+            if (!session) return; // Guard against undefined session
             const response = await fetch(`/api/gratitudeStatements/${userId}`)
             const statements = await response.json()
             if (statements && statements.length > 0) {

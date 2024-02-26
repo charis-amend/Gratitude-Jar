@@ -1,4 +1,4 @@
-import dbConnect from "@/db/connect";
+import dbConnect from "../../../../db/connect";
 import GratitudeStatement from "../../../../db/models/GratitudeStatement";
 
 export default async function handler(req, res) {
