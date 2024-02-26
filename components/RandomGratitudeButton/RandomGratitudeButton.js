@@ -13,15 +13,16 @@ export default function RandomGratitudeButton() {
 
     function toggleShowStatementBox() {
         setShowStatement((prevStatus) => !prevStatus)
+        console.log("---random gratitude button:", setShowStatement())
     }
 
     async function gettingRandomMemory() {
         try {
             if (!session) return; // Guard against undefined session
             const response = await fetch(`/api/gratitudeStatements/${userId}`)
-            const statements = await response.json()
-            if (statements && statements.length > 0) {
-                const randomIndex = Math.floor(Math.random() * statements.length);
+            const data = await response.json()
+            if (data && data.length > 0) {
+                const randomIndex = Math.floor(Math.random() * data.length);
                 const randomStatement = statements[randomIndex];
                 setRandomStatement(randomStatement);
                 toggleShowStatementBox()

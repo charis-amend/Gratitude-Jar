@@ -15,11 +15,11 @@ export default async function handler(req, res) {
 
     if (req.method === "GET")
         try {
-            const user = await User.findById(userId)
+            const user = await User.findById(userId).populate("gratitudeStatements")
             if (!user) {
                 return res.status(404).json({ error: "User not found" });
             } else {
-                const gratitudeStatements = await User.findById(userId)
+                const gratitudeStatements = user.gratitudeStatements
                 res.status(200).json(gratitudeStatements);
             }
         } catch (error) {
