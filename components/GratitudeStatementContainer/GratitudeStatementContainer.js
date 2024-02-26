@@ -1,5 +1,7 @@
 
-export default function GratitudeStatement({ gratitudeStatement }) {
+export default function GratitudeStatementContainer(
+    // { randomStatement }
+) {
 
     return (
         <>
@@ -13,14 +15,14 @@ export default function GratitudeStatement({ gratitudeStatement }) {
                 >
                     ⓧ
                 </button>
-
+                {/* 
                 <p
                     className="statement text-left p-2 text-blue-50 place-self-start h-full"
                 >{randomStatement.statementText}</p>
 
                 <p
                     className="date-statement bottom-1 right-3 place-self-end"
-                >{randomStatement.dateCreation}</p>
+                >{randomStatement.dateCreation}</p> */}
             </div >
         </>
     )

@@ -1,7 +1,8 @@
 // MAIN PAGE
 // Styling with Tailwind in each Component
 // no other subpages, components will display/hide according to user activity.
-// -------------- -----------
+
+
 // Components:
 import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
@@ -14,12 +15,13 @@ import Image from "next/image";
 import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
+
+
+
 export default function Home() {
-  // getting session data:
   const { data: session, status } = useSession()
   const userId = session?.user?.userId
   const dateCreation = new Date().toDateString();
-  // getting api/gratitudeStatement data: 
   const { mutate } = useSWR(userId ? `/api/${userId}` : null, fetcher);
 
   async function addingGratitudeStatement(gratitudeStatementData) {
@@ -32,11 +34,6 @@ export default function Home() {
     });
     if (response.ok) {
       mutate();
-      console.log("----- in index.js HOME() response:", response)
-      console.log("----- in index.js HOME() gratitudeStatementData:", gratitudeStatementData)
-      // } else {
-      //   console.error(`---- response status of fetch gratitudeStatementData in HomepPage: ${response.status}`, error)
-      // }
     }
   }
 

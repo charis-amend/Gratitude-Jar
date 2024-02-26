@@ -1,7 +1,6 @@
 import dbConnect from "../../../db/connect";
 import GratitudeStatement from "../../../db/models/GratitudeStatement";
 import User from "../../../db/models/User";
-import { aggregate } from "mongoose";
 
 export default async function handler(req, res) {
     await dbConnect();
@@ -29,24 +28,24 @@ export default async function handler(req, res) {
     }
 
     // getting random GratitudeStatement with RandomGratitudeButton:
-    if (req.method === "GET") {
-        try {
-            // Use aggregation to fetch a random statement
-            const randomStatement = await aggregate([
-                { $match: { user: userId } }, // Filter by user ID
-                { $sample: 1 }, // Select one random statement
-            ]);
+    // if (req.method === "GET") {
+    //     try {
+    //         // Use aggregation to fetch a random statement
+    //         // const randomStatement = await aggregate([
+    //         //     { $match: { user: userId } }, // Filter by user ID
+    //         //     { $sample: 1 }, // Select one random statement
+    //         // ]);
 
-            if (randomStatement.length > 0) {
-                res.status(200).json(randomStatement[0]); // Send the first (random) statement
-            } else {
-                res.status(200).json([]); // No statements found, return empty array
-            }
-        } catch (error) {
-            console.error("Error in GET /api/gratitudeStatements/[userId].js:", error);
-            res.status(500).json({ status: "Internal Server Error" });
-        }
-    }
+    //         if (randomStatement.length > 0) {
+    //             res.status(200).json(randomStatement[0]); // Send the first (random) statement
+    //         } else {
+    //             res.status(200).json([]); // No statements found, return empty array
+    //         }
+    //     } catch (error) {
+    //         console.error("Error in GET /api/gratitudeStatements/[userId].js:", error);
+    //         res.status(500).json({ status: "Internal Server Error" });
+    //     }
+    // }
 
 
 }
