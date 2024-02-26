@@ -5,7 +5,7 @@ const { Schema, models, model } = mongoose;
 const userSchema = new Schema({
     // mongoDBs _id
     email: { type: String, required: true, unique: true },
-    // nextauth emailVerified 
+    // nextauth emailVerified date and time  
     gratitudeStatements: { type: [Schema.Types.ObjectId], ref: "GratitudeStatement" }
 });
 

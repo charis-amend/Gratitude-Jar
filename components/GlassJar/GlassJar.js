@@ -11,10 +11,10 @@ import { useGLTF } from "@react-three/drei";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export default function GlassJar(props) {
-    // const gltfUrl = "/assets/jar2final.gltf";
-    // console.log("GLTF URL:", gltfUrl);
-    // const { nodes, materials } = useGLTF(gltfUrl);
-    const { nodes, materials } = useGLTF("public/assets/jar2final.gltf");
+
+    const { nodes, materials } = useGLTF("/assets/jar2final.gltf");
+    // async function loadObject() {
+    // }
     const scale = [2, 2, 2];
 
     return (
@@ -48,7 +48,7 @@ export default function GlassJar(props) {
         </>
     );
 }
-useGLTF.preload("public/assets/jar2final.gltf");
+useGLTF.preload("/assets/jar2final.gltf");
 
 
 

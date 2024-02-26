@@ -2,31 +2,40 @@ import dbConnect from "../../../../db/connect";
 import GratitudeStatement from "../../../../db/models/GratitudeStatement";
 import User from "../../../../db/models/User";
 
+
 export default async function handler(req, res) {
+    await dbConnect();
     const { userId } = req.query;
+    console.log("----- request.query in api/gratitudeStatements/[userId]:", req.query,
+        "----- userId in api/gratitudeStatements/[userId]:", userId)
 
-    try {
-        await dbConnect();
-        const gratitudeStatements = await GratitudeStatement.find({ userId });
-        res.status(200).json(gratitudeStatements);
-    } catch (error) {
-        console.error("Error in GET /api/gratitudeStatements/[userId].js  :", error);
-        res.status(500).json({ status: "Internal Server Error" });
+    if (!userId) {
+        return res.status(400).json({ error: "User ID is undefined" });
     }
+
+    if (req.method === "GET")
+        try {
+            const gratitudeStatements = await User.findById(userId).populate("gratitudeStatements")
+            res.status(200).json(gratitudeStatements);
+        } catch (error) {
+            console.error("Error in GET /api/gratitudeStatements/[userId].js  :", error);
+            res.status(500).json({ status: "Internal Server Error" });
+        }
+
+    // adding GratitudeStatement via GratitudeForm by the user === session.user.userId
+    if (req.method === "POST") {
+        try {
+            const { statementText, dateCreation, userId } = req.body;
+            console.log("---- req.body in api endpoint in POST req:", req.body)
+            const newGratitudeStatement = await GratitudeStatement.create({ statementText, dateCreation, userId });
+            res.status(201).json({ success: true, data: newGratitudeStatement });
+        } catch (error) {
+            console.error("Error in POST /api/gratitudeStatements:", error);
+            res.status(500).json({ status: "Internal Server Error" });
+        }
+    }
+
+    // getting random GratitudeStatement with RandomGratitudeButton:
+    //....
+
 }
-
-
-// ---- this is in the GratitudeForm Component (this component is ssr + csr!!!)
-// if (req.method === "POST") {
-//     try {
-//         await dbConnect();
-//         const { statementText, dateCreation, userId } = req.body;
-//         const newGratitudeStatement = await GratitudeStatement.create({ statementText, dateCreation, userId });
-//         res.status(201).json({ success: true, data: newGratitudeStatement });
-//     } catch (error) {
-//         console.error("Error in POST /api/gratitudeStatements:", error);
-//         res.status(500).json({ status: "Internal Server Error" });
-//     }
-// }
-
-
