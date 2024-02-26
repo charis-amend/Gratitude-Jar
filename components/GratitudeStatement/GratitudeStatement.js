@@ -1,4 +1,5 @@
-export default function GratitudeStatement() {
+
+export default function GratitudeStatement({ gratitudeStatement }) {
 
     return (
         <>
@@ -15,11 +16,11 @@ export default function GratitudeStatement() {
 
                 <p
                     className="statement text-left p-2 text-blue-50 place-self-start h-full"
-                >Gratitude Statement this is an example text which can only contain max. 150 characters. This data has a lot of privacy. Every user shows gratitude....</p>
+                >{gratitudeStatement.statementText}</p>
 
                 <p
                     className="date-statement bottom-1 right-3 place-self-end"
-                >01/01/2024</p>
+                >{gratitudeStatement.dateCreation}</p>
             </div >
         </>
     )

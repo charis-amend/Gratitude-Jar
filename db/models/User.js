@@ -3,7 +3,9 @@ import "./GratitudeStatement"
 const { Schema, models, model } = mongoose;
 
 const userSchema = new Schema({
+    // mongoDBs _id
     email: { type: String, required: true, unique: true },
+    // nextauth emailVerified 
     gratitudeStatements: { type: [Schema.Types.ObjectId], ref: "GratitudeStatement" }
 });
 
