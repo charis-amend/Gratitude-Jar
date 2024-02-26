@@ -2,47 +2,18 @@ import { useSession } from "next-auth/react"
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-export default function GratitudeForm({ onSubmit }) {
-    const { data: session } = useSession()
+export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForGratitudeStatement }) {
     const [showForm, setShowForm] = useState(false) // hide & show form with Add Gratitude Button
-    const router = useRouter()
 
-    async function addingGratitudeStatement(event) {
-        event.preventDefault();
+    function submittingGratitudeForm(event) {
+        event.preventDefault()
         const formData = new FormData(event.target);
-        const { statementText } = Object.fromEntries(formData);
-        const gratitudeStatementData = {
-            statementText,
-            dateCreation: new Date().toDateString(),
-            userId: session?.user?.userId,
-        }
-        console.log("------ gratitudeData:", gratitudeStatementData);
-
-
-        // this component GratitudeForm.js is ssr + csr!!! the POST is not in the /api/gratitudeStatement 
-        try {
-            const response = await fetch(`/api/gratitudeStatements/${gratitudeStatementData.userId}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(gratitudeStatementData),
-            });
-
-            console.log(response);
-
-            const data = await response.json();
-
-            if (data.success) {
-                router.push("/");
-            }
-        } catch (error) {
-            console.error("----- error in GratitudeForm:", error);
-        }
+        const gratitudeStatementData = Object.fromEntries(formData);
+        onSubmit(gratitudeStatementData)
         event.target.reset() // reseting input to empty
         setShowForm(false) // hiding form again
     }
-    // onSubmit(addingGratitudeStatement);
+
     return (
         <>
             <button
@@ -57,7 +28,7 @@ export default function GratitudeForm({ onSubmit }) {
             {showForm ?
                 <form
                     className="form w-full max-w-sm"
-                    onSubmit={addingGratitudeStatement}>
+                    onSubmit={submittingGratitudeForm}>
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">
                         </label>
@@ -69,6 +40,10 @@ export default function GratitudeForm({ onSubmit }) {
                             required
                             className="appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none"
                         />
+
+                        <input type="hidden" value={dateFormSubmission} name="dateCreation" />
+                        <input type="hidden" value={userIdForGratitudeStatement} name="userId" />
+
                         <button type="submit"
                             className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
                             ADD

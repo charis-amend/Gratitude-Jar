@@ -28,51 +28,74 @@ export default function Home() {
   if (isLoading || error) return <div>... Loading your jar 🫙</div>;
 
 
-  if (status === "authenticated") {
-    return (
-      <>
-        <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
-          {/* image for the loading page showing this image before the 3D object has loaded 
-          <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
-          <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
-            <Login />
-          </div>
+  try {
+    const response = await fetch(`/api/gratitudeStatements/${gratitudeStatementData.userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gratitudeStatementData),
+    });
 
-          {/* lower section: */}
-          <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
-            <GratitudeForm
-              onSubmit={addingGratitudeStatement}
-            />
-            <RandomGratitudeButton />
+    console.log(response);
 
-          </div>
-        </div>
-      </>
-    )
-  } else {
-    // not signed in:
-    return (
-      <>
-        <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
-          {/* image for the loading page showing this image before the 3D object has loaded 
-          <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
-          {/* lower section: */}
-          <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
-            <p
-              className="statement text-center text-xs p-2 text-blue-50 place-self-center h-full"
-            >
-              Login here, to add your gratitude statements. We will only send you a link to your e-mail to log you in. None of your data will be processed.
-            </p>
-            <SignInButton />
+    const data = await response.json();
 
-          </div >
-        </div >
-      </>
-    )
-
+    if (data.success) {
+      router.push("/");
+    }
+  } catch (error) {
+    console.error("----- error in GratitudeForm:", error);
   }
+  event.target.reset() // reseting input to empty
+  setShowForm(false) // hiding form again
+}
+
+if (status === "authenticated") {
+  return (
+    <>
+      <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
+        {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
+        {/* image for the loading page showing this image before the 3D object has loaded 
+          <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
+        <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
+          <Login />
+        </div>
+
+        {/* lower section: */}
+        <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
+          <GratitudeForm
+            onSubmit={addingGratitudeStatement}
+          />
+          <RandomGratitudeButton />
+
+        </div>
+      </div>
+    </>
+  )
+} else {
+  // not signed in:
+  return (
+    <>
+      <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
+        {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
+        {/* image for the loading page showing this image before the 3D object has loaded 
+          <Image src="/imgGlasJar.png" alt="placeholder glasjar" width={400} height={600} /> */}
+        {/* lower section: */}
+        <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
+          <p
+            className="statement text-center text-xs p-2 text-blue-50 place-self-center h-full"
+          >
+            Login here, to add your gratitude statements. We will only send you a link to your e-mail to log you in. None of your data will be processed.
+          </p>
+          <SignInButton />
+
+        </div >
+      </div >
+    </>
+  )
+
+}
 }
 
 // Home.auth = true;
