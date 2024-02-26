@@ -1,15 +1,11 @@
 import dbConnect from "../../../db/connect";
 import GratitudeStatement from "../../../db/models/GratitudeStatement";
 import User from "../../../db/models/User";
-
+import { aggregate } from "mongoose";
 
 export default async function handler(req, res) {
     await dbConnect();
     const { userId } = req.query;
-    console.log("----- request.query in api/gratitudeStatements/[userId]:", req.query,
-        "----- userId in api/gratitudeStatements/[userId]:", userId,
-        "----- request.body in api/gratitudeStatements/[userId]:", req.body)
-
     if (!userId) {
         return res.status(400).json({ error: "User ID is undefined" });
     }
@@ -21,11 +17,10 @@ export default async function handler(req, res) {
             const newGratitudeStatement = await GratitudeStatement.create(gratitudeStatementData);
             res.status(201).json({ success: true, data: newGratitudeStatement });
 
-            // const newGratitudeStatement = await GratitudeStatement.create(newGratitudeStatement);
             const userWithNewGratitudeStatement = await User.findById(userId);
-            console.log("..................userWithNewGratitudeStatement:", userId)
             userWithNewGratitudeStatement.gratitudeStatements.push(newGratitudeStatement)
             await userWithNewGratitudeStatement.save()
+
             return res.status(201).json({ status: "added statement successfully" })
         } catch (error) {
             console.error("Error in POST /api/gratitudeStatements:", error);
@@ -36,15 +31,19 @@ export default async function handler(req, res) {
     // getting random GratitudeStatement with RandomGratitudeButton:
     if (req.method === "GET") {
         try {
-            const user = await User.findById(userId).populate("gratitudeStatements")
-            if (!user) {
-                return res.status(404).json({ error: "User not found" });
+            // Use aggregation to fetch a random statement
+            const randomStatement = await aggregate([
+                { $match: { user: userId } }, // Filter by user ID
+                { $sample: 1 }, // Select one random statement
+            ]);
+
+            if (randomStatement.length > 0) {
+                res.status(200).json(randomStatement[0]); // Send the first (random) statement
             } else {
-                const gratitudeStatements = user.gratitudeStatements
-                res.status(200).json(gratitudeStatements);
+                res.status(200).json([]); // No statements found, return empty array
             }
         } catch (error) {
-            console.error("Error in GET /api/gratitudeStatements/[userId].js  :", error);
+            console.error("Error in GET /api/gratitudeStatements/[userId].js:", error);
             res.status(500).json({ status: "Internal Server Error" });
         }
     }

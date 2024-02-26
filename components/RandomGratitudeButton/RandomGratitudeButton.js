@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import GratitudeStatement from "../GratitudeStatement/GratitudeStatement"
 
@@ -15,25 +14,29 @@ export default function RandomGratitudeButton() {
         setShowStatement((prevStatus) => !prevStatus)
         console.log("---random gratitude button:", setShowStatement())
     }
+    useEffect(() => {
+        async function gettingRandomMemory() {
+            try {
+                const response = await fetch(`/api/${userId}`)
+                const data = await response.json()
+                console.log("data from api:", data)
+                if (data && data.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * data.length);
+                    const randomStatement = data[randomIndex];
+                    setRandomStatement(randomStatement, () => { toggleShowStatementBox() });
+                    console.log("randomStatement", randomStatement)
 
-    async function gettingRandomMemory() {
-        try {
-            const response = await fetch(`/api/gratitudeStatements/${userId}`)
-            const data = await response.json()
-            console.log("data from api:", data)
-            if (data && data.length > 0) {
-                const randomIndex = Math.floor(Math.random() * data.length);
-                const randomStatement = data[randomIndex];
-                setRandomStatement(randomStatement, () => { toggleShowStatementBox() });
-            } else if (data.length < 1) {
+                } else if (data.length < 1) {
+                    setError("You have no gratitude statements. Please add a gratitude statement to get a random gratitude memory.")
+                }
+            }
+            catch (error) {
                 setError("You have no gratitude statements. Please add a gratitude statement to get a random gratitude memory.")
+                console.error("error in randomgratitudebutton.js in gettingRandomMemory", error)
             }
         }
-        catch (error) {
-            console.error("error in randomgratitudebutton.js in gettingRandomMemory", error)
-        }
-    }
-    console.log("randomStatement", randomStatement)
+        gettingRandomMemory();
+    }, [])
 
     return (
         <>
@@ -45,7 +48,7 @@ export default function RandomGratitudeButton() {
                 className="randombutton bg-blue-700 hover:bg-v-blue-200 active:bg-blue-700 disabled:bg-blue-200 text-white font-bold py-3 px-6 rounded-md shadow-lg my-5"
                 type="button"
                 id="RandomGratitudeButton"
-                onClick={() => gettingRandomMemory()}>
+                onClick={() => gettingRandomMemory}>
                 Get Random Gratitude Memory
             </button>
         </>
