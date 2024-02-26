@@ -16,11 +16,11 @@ export default function GratitudeStatement({ gratitudeStatement }) {
 
                 <p
                     className="statement text-left p-2 text-blue-50 place-self-start h-full"
-                >{gratitudeStatement.statementText}</p>
+                >{randomStatement.statementText}</p>
 
                 <p
                     className="date-statement bottom-1 right-3 place-self-end"
-                >{gratitudeStatement.dateCreation}</p>
+                >{randomStatement.dateCreation}</p>
             </div >
         </>
     )

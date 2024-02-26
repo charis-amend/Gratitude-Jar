@@ -17,7 +17,6 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
     }
     function handleCharacterCount(event) {
         const formTextInput = event.target.value;
-        console.log(formTextInput)
         if (formTextInput.length >= 150) {
             setShowMaxLengthMessage(!showMaxLengthMessage);
         }

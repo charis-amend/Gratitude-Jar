@@ -30,10 +30,15 @@ export default async function handler(req, res) {
     // adding GratitudeStatement via GratitudeForm by the user === session.user.userId
     if (req.method === "POST") {
         try {
-            const { statementText, dateCreation, userId } = req.body;
-            console.log("---- req.body in api endpoint in POST req:", req.body)
-            const newGratitudeStatement = await GratitudeStatement.create({ statementText, dateCreation, userId });
-            res.status(201).json({ success: true, data: newGratitudeStatement });
+            const gratitudeStatementData = req.body
+            const { statementText, dateCreation, userId } = gratitudeStatementData
+            console.log("---- req.body in api endpoint in POST req:", gratitudeStatementData)
+            const newGratitudeStatement = await GratitudeStatement.create(gratitudeStatementData);
+            const userWithNewGratitudeStatement = await User.findById(gratitudeStatementData.userIdForGratitudeStatement);
+            userWithNewGratitudeStatement.gratitudeStatements.push(newGratitudeStatement)
+            await userWithNewGratitudeStatement.save()
+
+            return res.status(201).json({ status: "added statement successfully" })
         } catch (error) {
             console.error("Error in POST /api/gratitudeStatements:", error);
             res.status(500).json({ status: "Internal Server Error" });
