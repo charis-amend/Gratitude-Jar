@@ -21,7 +21,7 @@ export default function GratitudeForm({ onSubmit }) {
 
         // this component GratitudeForm.js is ssr + csr!!! the POST is not in the /api/gratitudeStatement 
         try {
-            const response = await fetch("/api/gratitudeStatements", {
+            const response = await fetch(`/api/gratitudeStatements/${userId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
