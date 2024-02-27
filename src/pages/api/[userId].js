@@ -42,12 +42,14 @@ export default async function handler(req, res) {
             // https://www.mongodb.com/docs/manual/reference/operator/aggregation/rand/
 
             const userGettingRandomStatement = await User.findById(userId)
-            const countOfStatements = userGettingRandomStatement.gratitudeStatements.length
-            console.log("----- countOfStatements:", countOfStatements, "-----")
-            const randomStatement = await users.aggregate([
+            const countOfUsersStatements = userGettingRandomStatement.gratitudeStatements.length
+            console.log("----- countOfStatements:", countOfUsersStatements, "-----")
+
+            const randomStatement = await GratitudeStatement.aggregate([
                 { $match: { _id: userId } }, // Match the user with the specified userId
                 { $unwind: "$gratitudeStatements" }, // Unwind the gratitudeStatements array
-                { $sample: { size: 1 } } // Select one random gratitude statement
+                { $sample: { size: 1 } }, // Select one random gratitude statement
+                console.log("------ randomStatement:", randomStatement, "----------")
             ]).catch((error) => {
                 console.error("Error in aggregation:", error);
                 res.status(400).json({ status: "Error retrieving random statement." }); // More specific error response
