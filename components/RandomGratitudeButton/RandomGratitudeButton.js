@@ -16,7 +16,7 @@ export default function RandomGratitudeButton() {
             const { data: randomStatement } = await response.json()
             console.log("data from api: (should be returning a single random statement", randomStatement) // logic for random object in array is ssr.
 
-            if (data) {
+            if (randomStatement) {
                 setRandomStatement(randomStatement);
                 setShowStatement(!showStatement)
             } else {
@@ -26,11 +26,8 @@ export default function RandomGratitudeButton() {
         catch (error) {
             setShowError(!showError)
             console.error("error in RandomGratitudeButton.js: ", error)
-            response.status(404).json({ status: "Getting random GratitudeStatement not found!" })
         }
     }
-    gettingRandomMemory();
-
 
     return (
         <>

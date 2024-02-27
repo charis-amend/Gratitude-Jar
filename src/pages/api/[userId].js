@@ -1,6 +1,9 @@
+import { AlwaysCompare } from "three";
 import dbConnect from "../../../db/connect";
 import GratitudeStatement from "../../../db/models/GratitudeStatement";
 import User from "../../../db/models/User";
+import { Aggregate } from "mongoose";
+
 
 export default async function handler(req, res) {
     await dbConnect();
@@ -8,6 +11,8 @@ export default async function handler(req, res) {
     if (!userId) {
         return res.status(400).json({ error: "User ID is undefined" });
     }
+
+
 
     // adding GratitudeStatement via GratitudeForm by the user === session.user.userId
     if (req.method === "POST") {
@@ -27,27 +32,38 @@ export default async function handler(req, res) {
         }
     }
 
+
+
     // getting random GratitudeStatement with RandomGratitudeButton:
-    // if (req.method === "GET") {
-    //     try {
-    //         // Use aggregation to fetch a random statement
-    //         // const randomStatement = await aggregate([
-    //         //     { $match: { user: userId } }, // Filter by user ID
-    //         //     { $sample: 1 }, // Select one random statement
-    //         // ]);
+    if (req.method === "GET") {
+        try {
+            // Use AGGREGATION $MATCH & $RAND to fetch a random statement
+            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/
+            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/rand/
 
-    //         if (randomStatement.length > 0) {
-    //             res.status(200).json(randomStatement[0]); // Send the first (random) statement
-    //         } else {
-    //             res.status(200).json([]); // No statements found, return empty array
-    //         }
-    //     } catch (error) {
-    //         console.error("Error in GET /api/gratitudeStatements/[userId].js:", error);
-    //         res.status(500).json({ status: "Internal Server Error" });
-    //     }
-    // }
+            const userGettingRandomStatement = await User.findById(userId)
+            const countOfStatements = userGettingRandomStatement.gratitudeStatements.length
+            console.log("----- countOfStatements:", countOfStatements, "-----")
+            const randomStatement = await users.aggregate([
+                { $match: { _id: userId } }, // Match the user with the specified userId
+                { $unwind: "$gratitudeStatements" }, // Unwind the gratitudeStatements array
+                { $sample: { size: 1 } } // Select one random gratitude statement
+            ]).catch((error) => {
+                console.error("Error in aggregation:", error);
+                res.status(400).json({ status: "Error retrieving random statement." }); // More specific error response
+            });
+
+            // {
+            //     if (countOfStatements > 0) {
+            //         res.status(200).json({ status: "Statements exist and random Statement was selected." }); // Send the first (random) statement
+            //     } else {
 
 
+        } catch (error) {
+            console.error("Error in GET /api/gratitudeStatements/[userId].js:", error);
+            res.status(500).json({ status: "Internal Server Error" });
+        }
+    }
 }
 
 
