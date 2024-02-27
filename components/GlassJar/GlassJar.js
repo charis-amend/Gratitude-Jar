@@ -78,7 +78,7 @@ const Loader = () => {
 
 
 function GlassJarObject(props) {
-    const { nodes, materials } = useLoader(GLTFLoader, "/newjar2702.gltf");
+    const { nodes, materials } = useLoader(GLTFLoader, "/assets/newjar2702.gltf");
     const scale = [2, 2, 2];
 
     return (
