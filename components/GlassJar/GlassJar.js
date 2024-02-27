@@ -11,6 +11,8 @@ import React from "react";
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
 import { MeshPhysicalMaterial, MeshStandardMaterial } from 'three';
+import { RoomEnvironment } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/environments/RoomEnvironment.js';
+import { PMREMGenerator } from 'three';
 
 const Loader = () => {
     const { progress } = useProgress();
@@ -45,7 +47,10 @@ function GlassJarObject(props) {
         ...materials.material_1, // Copy existing material properties
         depthTest: false, // Override depthTest to false
         depthWrite: false, // Override depthTest to false
-        // add material_1_baseColor.png for MAP 
+        // add material_1_baseColor.png for MAP -maybe
+        // add darker sheen  color
+        // color: 0xB0B0B0,
+
     });
 
     // Create a new instance of MeshStandardMaterial with depthTest overridden
@@ -84,6 +89,9 @@ function GlassJarObject(props) {
 }
 
 export default function GlassJar() {
+    const pmremGenerator = new PMREMGenerator(renderer);
+    const roomTexture = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+
 
     return (
         <>
@@ -94,11 +102,9 @@ export default function GlassJar() {
                 gl={true}
             >
                 <Suspense fallback={<Loader />}>
-                    {/* <ambientLight color="white" intensity={6} /> */}
-                    {/* <directionalLight color="white" position={[5, 5, 5]} /> */}
-                    {/* <pointLight position={[10, 10, 10]} decay={0} intensity={3} /> */}
-                    {/* <directionalLight position={[3.3, 1.0, 4.4]} /> */}
-                    {/* <hemisphereLight skyColor="0xffffff" groundColor="black" intensity={3} /> */}
+
+                    {/* Environment: */}
+                    <primitive object={roomTexture} attach="background" />
 
                     <spotLight
                         name="SpotLight"
