@@ -10,6 +10,7 @@ import { OrbitControls, Preload } from '@react-three/drei'
 import React from "react";
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
+import { MaterialLoader, ObjectLoader } from 'three';
 
 const Loader = () => {
     const { progress } = useProgress();
@@ -60,12 +61,7 @@ function GlassJarObject(props) {
     )
 }
 
-
 export default function GlassJar() {
-
-    // async function loadObject() {
-    // }
-    // const scale = [2, 2, 2];
 
     return (
         <>
@@ -81,6 +77,7 @@ export default function GlassJar() {
                     {/* <pointLight position={[10, 10, 10]} decay={0} intensity={3} /> */}
                     {/* <directionalLight position={[3.3, 1.0, 4.4]} /> */}
                     {/* <hemisphereLight skyColor="0xffffff" groundColor="black" intensity={3} /> */}
+
                     <spotLight
                         name="SpotLight"
                         intensity={20}
@@ -123,8 +120,6 @@ export default function GlassJar() {
                     <OrbitControls
                         target={[0, 0, 0]}
                         autoRotate
-                    // maxPolarAngle={Math.PI / 2}
-                    // minPolarAngle={Math.PI / -2}
                     />
 
 
