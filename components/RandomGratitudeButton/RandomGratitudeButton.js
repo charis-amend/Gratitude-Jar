@@ -6,8 +6,8 @@ export default function RandomGratitudeButton() {
     const { data: session } = useSession()
     const userId = session.user.userId
     const [randomGratitudeStatement, setRandomGratitudeStatement] = useState(null); // defining randomStatement from the fetch from api endpoint
-    const [showStatement, setShowStatement] = useState({ default: false }); // display/hides <GratitudeStatement /> Component
-    const [showError, setShowError] = useState({ default: false }); // State variable for error handling
+    const [showStatement, setShowStatement] = useState(false); // display/hides <GratitudeStatement /> Component
+    const [showError, setShowError] = useState(false); // State variable for error handling
 
     async function gettingRandomStatement() {
         try {
@@ -24,7 +24,7 @@ export default function RandomGratitudeButton() {
 
             if (randomGratitudeStatement) {
                 setRandomGratitudeStatement(randomGratitudeStatement);
-                setShowStatement(!showStatement)
+                setShowStatement(true)
             }
 
         } catch (error) {
@@ -35,7 +35,7 @@ export default function RandomGratitudeButton() {
 
     // Function to handle closing the GratitudeStatementContainer
     function handleClose() {
-        setShowStatement(showStatement);
+        setShowStatement(false);
         setRandomGratitudeStatement(null); // resets the randomGratitudeStatement state when closing
     }
 
@@ -54,7 +54,7 @@ export default function RandomGratitudeButton() {
                 onClick={() => gettingRandomStatement()}>
                 Get Random Gratitude Memory
             </button>
-            {showError ? (<p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p>) : null}
+            {/* {showError ? null : (<p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p>)} */}
         </>
     )
 }

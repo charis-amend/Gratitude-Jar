@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function GratitudeStatementContainer({ randomGratitudeStatement }) {
+export default function GratitudeStatementContainer({ randomGratitudeStatement, onClose }) {
     const [closeContainer, setCloseContainer] = useState(false)
 
     if (!randomGratitudeStatement) {
@@ -9,6 +9,7 @@ export default function GratitudeStatementContainer({ randomGratitudeStatement }
 
     const handleClose = () => {
         setCloseContainer(!closeContainer); // Toggle the state when the close button is clicked
+        onClose();
     };
 
 
