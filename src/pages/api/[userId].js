@@ -48,17 +48,12 @@ export default async function handler(req, res) {
                 return res.status(404).json({ status: "User has no gratitudeStatements Error retrieving random statement." });
             }
 
+            // Randomly select a GratitudeStatement ID from the user's array
+            const randomGratitudeStatementId = userGratitudeStatements[Math.floor(Math.random() * userGratitudeStatements.length)];
 
-            // Use AGGREGATION $UNWIND & $RAND to fetch a random statement
-            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/
-            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/rand/
-            const randomStatementData = await userGettingRandomStatement.aggregate([
-                // { $match: { _id: userId } }, // Match the user with the specified userId
-                { $unwind: "$gratitudeStatements" }, // Unwind the gratitudeStatements array
-                { $sample: { size: 1 } }, // Select one random gratitude statement
-            ]).catch((error) => {
-                console.error("Error in aggregation:", error);
-            });
+            // Retrieve the full GratitudeStatement document using the ID
+            const randomGratitudeStatement = await GratitudeStatement.findById(randomGratitudeStatementId);
+
             console.log("------ randomStatement:", randomStatementData, "----------")
 
 
