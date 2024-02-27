@@ -1,53 +1,60 @@
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
 import { useState } from "react"
-
-import GratitudeStatement from "../GratitudeStatement/GratitudeStatement"
+import GratitudeStatementContainer from "../GratitudeStatementContainer/GratitudeStatementContainer"
 
 export default function RandomGratitudeButton() {
     const { data: session } = useSession()
     const userId = session.user.userId
-    const [randomStatement, setRandomStatement] = useState(null); // no random statement fetched yet
-    const [showStatement, setShowStatement] = useState(false);
-    const [error, setError] = useState(null); // State variable for error handling
+    const [randomGratitudeStatement, setRandomGratitudeStatement] = useState(null); // defining randomStatement from the fetch from api endpoint
+    const [showStatement, setShowStatement] = useState({ default: false }); // display/hides <GratitudeStatement /> Component
+    const [showError, setShowError] = useState({ default: false }); // State variable for error handling
 
-    function toggleShowStatementBox() {
-        setShowStatement((prevStatus) => !prevStatus)
-        console.log("---random gratitude button:", setShowStatement())
-    }
-
-    async function gettingRandomMemory() {
+    async function gettingRandomStatement() {
         try {
-            const response = await fetch(`/api/gratitudeStatements/${userId}`)
-            const data = await response.json()
-            console.log("data from api:", data)
-            if (data && data.length > 0) {
-                const randomIndex = Math.floor(Math.random() * data.length);
-                const randomStatement = data[randomIndex];
-                setRandomStatement(randomStatement, () => { toggleShowStatementBox() });
-            } else if (data.length < 1) {
-                setError("You have no gratitude statements. Please add a gratitude statement to get a random gratitude memory.")
+            const response = await fetch(`/api/${userId}/`)
+            const randomGratitudeStatement = await response.json()
+            console.log("data from api: (should be returning a single random statement", randomGratitudeStatement) // logic for random object in array is ssr.
+
+
+            if (!response.ok || !randomGratitudeStatement) {  // Check for errors or empty response
+                console.error("Error fetching random statement:", response);
+                setShowError(!showError);
+                return;
             }
-        }
-        catch (error) {
-            console.error("error in randomgratitudebutton.js in gettingRandomMemory", error)
+
+            if (randomGratitudeStatement) {
+                setRandomGratitudeStatement(randomGratitudeStatement);
+                setShowStatement(!showStatement)
+            }
+
+        } catch (error) {
+            setShowError(!showError)
+            console.error("error in RandomGratitudeButton.js: ", error)
         }
     }
-    console.log("randomStatement", randomStatement)
+
+    // Function to handle closing the GratitudeStatementContainer
+    function handleClose() {
+        setShowStatement(showStatement);
+        setRandomGratitudeStatement(null); // resets the randomGratitudeStatement state when closing
+    }
+
 
     return (
         <>
-            {error && <p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p>}
-            {showStatement && randomStatement && (
-                <GratitudeStatement gratitudeStatement={randomStatement} />
-            )}
+            {showStatement && randomGratitudeStatement ? (
+                <GratitudeStatementContainer
+                    randomGratitudeStatement={randomGratitudeStatement}
+                    onClose={handleClose}
+                />) : null}
             <button
                 className="randombutton bg-blue-700 hover:bg-v-blue-200 active:bg-blue-700 disabled:bg-blue-200 text-white font-bold py-3 px-6 rounded-md shadow-lg my-5"
                 type="button"
                 id="RandomGratitudeButton"
-                onClick={() => gettingRandomMemory()}>
+                onClick={() => gettingRandomStatement()}>
                 Get Random Gratitude Memory
             </button>
+            {showError ? (<p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p>) : null}
         </>
     )
 }

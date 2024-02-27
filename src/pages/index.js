@@ -1,7 +1,8 @@
 // MAIN PAGE
 // Styling with Tailwind in each Component
 // no other subpages, components will display/hide according to user activity.
-// -------------- -----------
+
+
 // Components:
 import Login from "../../components/Login/Login";
 import GlassJar from "../../components/GlassJar/GlassJar";
@@ -14,30 +15,25 @@ import Image from "next/image";
 import useSWR from "swr";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
+
+
+
 export default function Home() {
-  // getting session data:
-  const { status, data: session } = useSession()
+  const { data: session, status } = useSession()
   const userId = session?.user?.userId
   const dateCreation = new Date().toDateString();
-  // getting api/gratitudeStatement data: 
-  const { mutate } = useSWR(userId ? `/api/gratitudeStatements/${userId}` : null, fetcher);
+  const { mutate } = useSWR(userId ? `/api/${userId}` : null, fetcher);
 
   async function addingGratitudeStatement(gratitudeStatementData) {
-    try {
-      const response = await fetch(`/api/gratitudeStatements/${userId}`, {
-        method: "POST",
-        body: JSON.stringify(gratitudeStatementData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        mutate();
-      } else {
-        console.error(`---- response status of fetch gratitudeStatementData in HomepPage: ${response.status}`)
-      }
-    } catch (error) {
-      console.log("error in HomepPage addingGratitudeStatement", error)
+    const response = await fetch(`/api/${userId}`, {
+      method: "POST",
+      body: JSON.stringify(gratitudeStatementData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      mutate();
     }
   }
 
@@ -45,9 +41,21 @@ export default function Home() {
     return (
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
+          <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
           {/* image for the loading page showing this image before the 3D object has loaded  */}
-          <Image src="/assets/preloadedGlasJar.png" alt="placeholder glasjar" width={400} height={600} />
+          {/* <div className="image-container z-1 relative h-2/4 place-self-center">
+            <Image
+              priority
+              src="/preloadedGlasJar.png"
+              alt="placeholder-glasjar"
+              width={500}
+              height={500}
+              sizes="90vw"
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </div> */}
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
@@ -58,6 +66,7 @@ export default function Home() {
               onSubmit={addingGratitudeStatement}
               userIdForGratitudeStatement={userId}
               dateFormSubmission={dateCreation}
+
             />
             <RandomGratitudeButton />
 
@@ -71,7 +80,20 @@ export default function Home() {
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
           {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
-          <Image src="/assets/preloadedGlasJar.png" alt="placeholder glasjar" width={400} height={600} />
+          <div className="image-container z-1 relative h-2/4 place-self-center">
+            <Image
+              priority
+              src="/preloadedGlasJar.png"
+              alt="placeholder-glasjar"
+              width={500}
+              height={500}
+              sizes="90vw"
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </div>
+
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
             <p

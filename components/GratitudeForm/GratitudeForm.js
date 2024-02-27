@@ -10,7 +10,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
         event.preventDefault()
         const formData = new FormData(event.target);
         const gratitudeStatementData = Object.fromEntries(formData);
-        // onSubmit(gratitudeStatementData)
+        onSubmit(gratitudeStatementData)
         event.target.reset() // reseting input to empty
         setShowForm(false) // hiding form again
         console.log("successfully submitted gratitude statement clientside and backendside // gratitudeStatementData:", gratitudeStatementData)
@@ -52,8 +52,6 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
                             className="inputfield appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none disabled:border-red-300"
                         />
                         <input type="hidden" value={dateFormSubmission} name="dateCreation" />
-                        <input type="hidden" value={userIdForGratitudeStatement} name="userId" />
-
                         <button type="submit"
                             className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
                             ADD
