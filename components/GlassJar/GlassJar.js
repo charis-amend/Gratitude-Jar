@@ -58,25 +58,30 @@ const Loader = () => {
 
     return (
         <Html>
-            <div className="progress-container ms-5 flex flex-col justify-items-center">
-                <Image
-                    priority
-                    src="/preloadedGlasJar.png"
-                    alt="placeholder-glasjar"
-                    width={500}
-                    height={500}
-                    sizes="100vw, 100vh"
-                    style={{
-                        objectFit: 'cover',
-                        justifySelf: 'center',
-                    }}
-                />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="text-center">
 
-                <p className="text-sm color text-white-100 font-extrabold p-3 justify-items-center">
-                    {progress.toFixed(2)}%
-                </p>
+                    {/* <div className="progress-container flex flex-col justify-items-center"> */}
+                    <Image
+                        priority
+                        src="/preloadedGlasJar.png"
+                        alt="placeholder-glasjar"
+                        width={500}
+                        height={500}
+                    // sizes="100vw, 100vh"
+                    // style={{
+                    //     objectFit: 'cover',
+                    //     justifySelf: 'center',
+                    // }}
+                    />
+
+                    <p className="text-sm color text-white-100 font-extrabold p-3 justify-items-center">
+                        {progress.toFixed(2)}%
+                    </p>
+                    {/* </div> */}
+                </div>
             </div>
-        </Html>
+        </Html >
     );
 };
 
