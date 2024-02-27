@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+import ExternalImportPlugin from 'webpack-external-import';
 
 const nextConfig = {
   reactStrictMode: true,
@@ -29,6 +30,8 @@ const nextConfig = {
         },
       ],
     });
+    // Add webpack-external-import plugin
+    config.plugins.push(new ExternalImportPlugin());
 
     return config;
   },
