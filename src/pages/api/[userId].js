@@ -37,28 +37,31 @@ export default async function handler(req, res) {
     // getting random GratitudeStatement with RandomGratitudeButton:
     if (req.method === "GET") {
         try {
-            // Use AGGREGATION $MATCH & $RAND to fetch a random statement
-            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/
-            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/rand/
 
-            const userGettingRandomStatement = await User.findById(userId)
+            const userGettingRandomStatement = await User.findById(userId);
+            if (!userGettingRandomStatement) {
+                return res.status(404).json({ error: "User not found" })
+            }
+
             const countOfUsersStatements = userGettingRandomStatement.gratitudeStatements.length
-            console.log("----- countOfStatements:", countOfUsersStatements, "-----")
+            if (countOfUsersStatements === 0) {
+                return res.status(404).json({ status: "User has no gratitudeStatements Error retrieving random statement." });
+            }
 
-            const randomStatement = await GratitudeStatement.aggregate([
-                { $match: { _id: userId } }, // Match the user with the specified userId
+
+            // Use AGGREGATION $UNWIND & $RAND to fetch a random statement
+            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/
+            // https://www.mongodb.com/docs/manual/reference/operator/aggregation/rand/
+            const randomStatementData = await userGettingRandomStatement.aggregate([
+                // { $match: { _id: userId } }, // Match the user with the specified userId
                 { $unwind: "$gratitudeStatements" }, // Unwind the gratitudeStatements array
                 { $sample: { size: 1 } }, // Select one random gratitude statement
-                console.log("------ randomStatement:", randomStatement, "----------")
             ]).catch((error) => {
                 console.error("Error in aggregation:", error);
-                res.status(400).json({ status: "Error retrieving random statement." }); // More specific error response
             });
+            console.log("------ randomStatement:", randomStatementData, "----------")
 
-            // {
-            //     if (countOfStatements > 0) {
-            //         res.status(200).json({ status: "Statements exist and random Statement was selected." }); // Send the first (random) statement
-            //     } else {
+
 
 
         } catch (error) {

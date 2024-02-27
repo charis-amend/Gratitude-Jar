@@ -41,9 +41,9 @@ export default function Home() {
     return (
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
+          <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
           {/* image for the loading page showing this image before the 3D object has loaded  */}
-          <div className="image-container z-1 relative h-2/4 place-self-center">
+          {/* <div className="image-container z-1 relative h-2/4 place-self-center">
             <Image
               priority
               src="/preloadedGlasJar.png"
@@ -55,7 +55,7 @@ export default function Home() {
                 objectFit: 'cover',
               }}
             />
-          </div>
+          </div> */}
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
