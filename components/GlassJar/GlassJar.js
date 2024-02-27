@@ -10,7 +10,7 @@ import { OrbitControls, Preload } from '@react-three/drei'
 import React from "react";
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
-import { MaterialLoader, ObjectLoader } from 'three';
+import { MeshPhysicalMaterial, MeshStandardMaterial } from 'three';
 
 const Loader = () => {
     const { progress } = useProgress();
@@ -37,24 +37,46 @@ const Loader = () => {
 };
 
 function GlassJarObject(props) {
-    const { nodes, materials } = useLoader(GLTFLoader, "/assets/newjar2702.gltf");
+    const { nodes, materials } = useLoader(GLTFLoader, "/sceneOverWrites.gltf");
     const scale = [2, 2, 2];
+
+    // Create a new instance of MeshStandardMaterial with depthTest overridden
+    const customMaterialJar = new MeshPhysicalMaterial({
+        ...materials.material_1, // Copy existing material properties
+        depthTest: false, // Override depthTest to false
+        depthWrite: false, // Override depthTest to false
+        // add material_1_baseColor.png for MAP 
+    });
+
+    // Create a new instance of MeshStandardMaterial with depthTest overridden
+    const customMaterialLid = new MeshStandardMaterial({
+        ...materials.material, // Copy existing material properties
+        depthTest: true, // Override depthTest to false
+        depthWrite: true,
+    });
 
     return (
         <group {...props}
             dispose={null}
             scale={scale}>
 
+            {/* jar: */}
             <mesh
                 name="defaultMaterial"
+                castShadow
+                receiveShadow
                 geometry={nodes.defaultMaterial.geometry}
-                material={materials.material_1}
+                material={customMaterialJar}
                 userData={{ name: "defaultMaterial" }}
             />
+
+            {/* top or  lid: */}
             <mesh
                 name="defaultMaterial_1"
+                castShadow
+                receiveShadow
                 geometry={nodes.defaultMaterial_1.geometry}
-                material={materials.material}
+                material={customMaterialLid}
                 userData={{ name: "defaultMaterial" }}
             />
         </group>
