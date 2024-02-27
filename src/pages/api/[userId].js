@@ -43,22 +43,18 @@ export default async function handler(req, res) {
                 return res.status(404).json({ error: "User not found" })
             }
 
-            const countOfUsersStatements = userGettingRandomStatement.gratitudeStatements.length
-            if (countOfUsersStatements === 0) {
+            const usersGratitudeStatements = userGettingRandomStatement.gratitudeStatements
+            if (usersGratitudeStatements.length === 0) {
                 return res.status(404).json({ status: "User has no gratitudeStatements Error retrieving random statement." });
             }
 
             // Randomly select a GratitudeStatement ID from the user's array
-            const randomGratitudeStatementId = userGratitudeStatements[Math.floor(Math.random() * userGratitudeStatements.length)];
+            const randomGratitudeStatementId = usersGratitudeStatements[Math.floor(Math.random() * usersGratitudeStatements.length)];
 
-            // Retrieve the full GratitudeStatement document using the ID
+            // Retrieve the full GratitudeStatement-object (=document in mongodb) using the randomGratitudeStatementId
             const randomGratitudeStatement = await GratitudeStatement.findById(randomGratitudeStatementId);
-
-            console.log("------ randomStatement:", randomStatementData, "----------")
-
-
-
-
+            console.log("------ randomGratitudeStatement:", randomGratitudeStatement, "----------")
+            res.status(200).json(randomGratitudeStatement);
         } catch (error) {
             console.error("Error in GET /api/gratitudeStatements/[userId].js:", error);
             res.status(500).json({ status: "Internal Server Error" });

@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import GratitudeStatementContainer from "../GratitudeStatementContainer/GratitudeStatementContainer"
 
 export default function RandomGratitudeButton() {
@@ -11,18 +11,18 @@ export default function RandomGratitudeButton() {
 
     async function gettingRandomStatement() {
         try {
-            const response = await fetch(`/api/${userId}/`)
-            const data = await response.json()
-            console.log("data from api: (should be returning a single random statement", data) // logic for random object in array is ssr.
+            const response = await fetch(`/api/${userId}/${randomGratitudeStatement}`)
+            const randomGratitudeStatement = await response.json()
+            console.log("data from api: (should be returning a single random statement", randomGratitudeStatement) // logic for random object in array is ssr.
 
 
-            if (!response.ok || !data) {  // Check for errors or empty response
+            if (!response.ok || !randomGratitudeStatement) {  // Check for errors or empty response
                 console.error("Error fetching random statement:", response);
                 setShowError(showError);
                 return;
             }
 
-            if (randomStatement) {
+            if (randomGratitudeStatement) {
                 setRandomStatement(randomStatement);
                 setShowStatement(!showStatement) // after succesfull fetch
             }
@@ -31,15 +31,12 @@ export default function RandomGratitudeButton() {
             setShowError(!showError)
             console.error("error in RandomGratitudeButton.js: ", error)
         }
-        if (userId) {
-            gettingRandomStatement()
-        }
     }
 
     return (
         <>
             {showStatement && randomStatement ? null : (
-                <GratitudeStatementContainer gratitudeStatement={randomStatement} />)
+                <GratitudeStatementContainer randomGratitudeStatement={randomGratitudeStatement} />)
             }
             <button
                 className="randombutton bg-blue-700 hover:bg-v-blue-200 active:bg-blue-700 disabled:bg-blue-200 text-white font-bold py-3 px-6 rounded-md shadow-lg my-5"
