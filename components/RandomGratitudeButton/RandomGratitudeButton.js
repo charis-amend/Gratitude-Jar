@@ -5,7 +5,7 @@ import GratitudeStatementContainer from "../GratitudeStatementContainer/Gratitud
 export default function RandomGratitudeButton() {
     const { data: session } = useSession()
     const userId = session.user.userId
-    const [randomStatement, setRandomStatement] = useState(null); // defining randomStatement from the fetch from api endpoint
+    const [randomGratitudeStatement, setRandomGratitudeStatement] = useState(null); // defining randomStatement from the fetch from api endpoint
     const [showStatement, setShowStatement] = useState(false); // display/hides <GratitudeStatement /> Component
     const [showError, setShowError] = useState(false); // State variable for error handling
 
@@ -15,16 +15,13 @@ export default function RandomGratitudeButton() {
             const randomGratitudeStatement = await response.json()
             console.log("data from api: (should be returning a single random statement", randomGratitudeStatement) // logic for random object in array is ssr.
 
-
             if (!response.ok || !randomGratitudeStatement) {  // Check for errors or empty response
                 console.error("Error fetching random statement:", response);
                 setShowError(showError);
                 return;
-            }
-
-            if (randomGratitudeStatement) {
-                setRandomStatement(randomStatement);
-                setShowStatement(!showStatement) // after succesfull fetch
+            } else if (randomGratitudeStatement) {
+                setRandomGratitudeStatement(randomGratitudeStatement);
+                setShowStatement(!showStatement)
             }
 
         } catch (error) {
@@ -35,7 +32,7 @@ export default function RandomGratitudeButton() {
 
     return (
         <>
-            {showStatement && randomStatement ? null : (
+            {showStatement && randomGratitudeStatement ? null : (
                 <GratitudeStatementContainer randomGratitudeStatement={randomGratitudeStatement} />)
             }
             <button
@@ -45,7 +42,7 @@ export default function RandomGratitudeButton() {
                 onClick={() => gettingRandomStatement()}>
                 Get Random Gratitude Memory
             </button>
-            {showError ? null : <p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p>}
+            {showError ? <p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p> : null}
         </>
     )
 }
