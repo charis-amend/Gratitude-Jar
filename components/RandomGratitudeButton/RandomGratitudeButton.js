@@ -11,7 +11,7 @@ export default function RandomGratitudeButton() {
 
     async function gettingRandomStatement() {
         try {
-            const response = await fetch(`/api/${userId}/${randomGratitudeStatement}`)
+            const response = await fetch(`/api/${userId}/`)
             const randomGratitudeStatement = await response.json()
             console.log("data from api: (should be returning a single random statement", randomGratitudeStatement) // logic for random object in array is ssr.
 
