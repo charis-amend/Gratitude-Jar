@@ -11,47 +11,6 @@ import React from "react";
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
 
-
-// export default function GlassJar(props) {
-
-//     const { nodes, materials } = useGLTF("/assets/jar2final.gltf");
-//     // async function loadObject() {
-//     // }
-//     const scale = [2, 2, 2];
-
-//     return (
-//         <>
-//             <Canvas>
-//                 <Suspense fallback={<Loader />}>
-//                     <ambientLight intensity={0.6} />
-//                     <directionalLight color="white" position={[0, 0, 5]} />
-//                     <pointLight position={[-10, -10, -10]} decay={0} intensity={0.9} />
-//                     <directionalLight position={[3.3, 1.0, 4.4]} />
-//                     <OrbitControls target={[1, 1, 1]} autoRotate />
-//                     <group {...props}
-//                         dispose={null}
-//                         scale={scale}>
-
-//                         <mesh
-//                             name="defaultMaterial"
-//                             geometry={nodes.defaultMaterial.geometry}
-//                             material={materials.material_1}
-//                             userData={{ name: "defaultMaterial" }}
-//                         />
-//                         <mesh
-//                             name="defaultMaterial_1"
-//                             geometry={nodes.defaultMaterial_1.geometry}
-//                             material={materials.material}
-//                             userData={{ name: "defaultMaterial" }}
-//                         />
-//                     </group>
-//                 </Suspense>
-//             </Canvas>
-//         </>
-//     );
-// }
-// useGLTF.preload("/assets/jar2final.gltf");
-
 const Loader = () => {
     const { progress } = useProgress();
 
@@ -75,7 +34,6 @@ const Loader = () => {
         </Html >
     );
 };
-
 
 function GlassJarObject(props) {
     const { nodes, materials } = useLoader(GLTFLoader, "/assets/newjar2702.gltf");
@@ -103,7 +61,6 @@ function GlassJarObject(props) {
 }
 
 
-
 export default function GlassJar() {
 
     // async function loadObject() {
@@ -119,11 +76,50 @@ export default function GlassJar() {
                 gl={true}
             >
                 <Suspense fallback={<Loader />}>
-                    <ambientLight color="white" intensity={6} />
+                    {/* <ambientLight color="white" intensity={6} /> */}
                     {/* <directionalLight color="white" position={[5, 5, 5]} /> */}
                     {/* <pointLight position={[10, 10, 10]} decay={0} intensity={3} /> */}
-                    <directionalLight position={[3.3, 1.0, 4.4]} />
-                    <hemisphereLight skyColor="0xffffff" groundColor="black" intensity={3} />
+                    {/* <directionalLight position={[3.3, 1.0, 4.4]} /> */}
+                    {/* <hemisphereLight skyColor="0xffffff" groundColor="black" intensity={3} /> */}
+                    <spotLight
+                        name="SpotLight"
+                        intensity={20}
+                        angle={0.444}
+                        penumbra={1}
+                        decay={2}
+                        distance={2}
+                        position={[26.709, 34.772, 2.75]}
+                        rotation={[0.111, 0.048, 1.016]}
+                        scale={[39.767, 102.189, 209.574]}
+                        userData={{ name: "SpotLight" }}
+                    />
+                    <directionalLight
+                        name="DirectionalLight"
+                        intensity={5}
+                        decay={2}
+                        color="#fffaeb"
+                        position={[-13.409, 48.408, -0.96]}
+                        userData={{ name: "DirectionalLight" }}
+                    />
+                    <directionalLight
+                        name="DirectionalLightFromSide"
+                        intensity={5}
+                        decay={2}
+                        position={[-11.225, 13.52, -17.363]}
+                        rotation={[-1.168, 0, 0.04]}
+                        scale={10.927}
+                        userData={{ name: "DirectionalLightFromSide" }}
+                    />
+                    <pointLight
+                        name="PointLight"
+                        intensity={20}
+                        decay={2}
+                        color="#d2bdb1"
+                        position={[7.648, 13.877, 28.447]}
+                        rotation={[-2.318, 1.041, -2.644]}
+                        userData={{ name: "PointLight" }}
+                    />
+
                     <OrbitControls
                         target={[0, 0, 0]}
                         autoRotate
@@ -139,33 +135,3 @@ export default function GlassJar() {
         </>
     );
 }
-
-
-
-
-
-
-// const baseMaterial = useRef(new MeshStandardMaterial({
-//     transparent: true,
-//     opacity: 0.5,
-//     depthTest: false,
-//     side: DoubleSide,
-//     color: new Color(244, 247, 247),
-//     roughness: 0.3,
-//     metalness: 0.7,
-// }))
-// const lidMaterial = useRef(new MeshPhysicalMaterial({
-//     // transparent: false,
-//     // depthTest: true,
-//     // depthWrite: true,
-//     // side: BackSide,
-//     // // color: new Color(68, 68, 68),
-//     // color: new Color(1, 0, 0),
-//     // emissive: new Color(35, 35, 35),
-//     // roughness: 0.3,
-//     color: "red",
-//     metalness: 0.2,
-//     roughness: 0,
-//     clearcoat: 0.8,
-
-// }))
