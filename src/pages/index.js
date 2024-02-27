@@ -79,20 +79,7 @@ export default function Home() {
     return (
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          {/* <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" /> */}
-          <div className="image-container z-1 relative h-2/4 place-self-center">
-            <Image
-              priority
-              src="/preloadedGlasJar.png"
-              alt="placeholder-glasjar"
-              width={500}
-              height={500}
-              sizes="90vw"
-              style={{
-                objectFit: 'cover',
-              }}
-            />
-          </div>
+          <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
 
           {/* lower section: */}
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
