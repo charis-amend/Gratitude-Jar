@@ -18,7 +18,7 @@
     font-family: Arial, sans-serif; /* Default font family */
     margin: 0; /* Remove default margin */
     padding: 20px; /* Add padding to create spacing around content */
-    color: rgb(191, 220, 212);
+    color: whitesmoke;
   }
 }
 
@@ -38,4 +38,13 @@
     #2c2c2c 80%,
     #141414 100%
   );
+}
+
+.animate-fade-out {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+
+.animate-fade-out.out {
+  opacity: 0;
 }
