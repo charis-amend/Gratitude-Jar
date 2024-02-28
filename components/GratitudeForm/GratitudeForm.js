@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForGratitudeStatement }) {
     const [showForm, setShowForm] = useState(false) // hide & show form with Add Gratitude Button
     const [showMaxLengthMessage, setShowMaxLengthMessage] = useState(false)
+    const [submitted, setSubmitted] = useState(false);
+
 
     function submittingGratitudeForm(event) {
         event.preventDefault()
@@ -13,7 +15,11 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
         onSubmit(gratitudeStatementData)
         event.target.reset() // reseting input to empty
         setShowForm(false) // hiding form again
+        setSubmitted(true); // Show submitted message
         console.log("successfully submitted gratitude statement clientside and backendside // gratitudeStatementData:", gratitudeStatementData)
+        setTimeout(() => {
+            setSubmitted(false);
+        }, 3000); // 3000 milliseconds = 3 seconds
     }
     function handleCharacterCount(event) {
         const formTextInput = event.target.value;
@@ -26,7 +32,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
     return (
         <>
             <button
-                className="displayformbutton bg-blue-700 hover:bg-v-blue-200 active:bg-blue-700 disabled:bg-blue-200 text-white font-bold py-3 px-6 rounded-md shadow-lg my-5"
+                className="displayformbutton text-white text-sm bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-xl m-3"
                 type="button"
                 id="displayFormButton"
                 name="displayFormButton"
@@ -36,7 +42,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
 
             {showForm ?
                 <form
-                    className="form w-full max-w-sm"
+                    className="form w-full max-w-sm transition-all duration-1000 delay-150 ease-in-out"
                     onSubmit={submittingGratitudeForm}>
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">
@@ -58,12 +64,21 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
                         </button>
 
                     </div>
+                    {submitted ?
+                        <p className="submitted-message text-xs text-red-500 p-3 animate-fade-out duration-300">
+                            🫙 You added a gratitude memory!
+                        </p>
+                        : null
+                    }
+
+
                     {showMaxLengthMessage ?
                         <p className="maxlength-message text-xs text-red-500 p-3"> 🫙 Please shorten your gratitude statement or add a new one. </p>
                         :
                         null
                     }
-                </form>
+
+                </form >
                 :
                 null
             }
