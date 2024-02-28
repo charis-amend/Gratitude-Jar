@@ -27,6 +27,22 @@
     text-wrap: balance;
   }
 }
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .backgroundapp {
   background: linear-gradient(
@@ -47,4 +63,8 @@
 
 .animate-fade-out.out {
   opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fadeIn ease-in 700ms;
 }
