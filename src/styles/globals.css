@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@import "../../components/GratitudeStatementContainer/GratitudeStatementContainer.module.css";
+
+:root  {
   /* CSS HEX */
   --Grey-jar: #515151ff;
   --Brown-jar: #938c81ff;
