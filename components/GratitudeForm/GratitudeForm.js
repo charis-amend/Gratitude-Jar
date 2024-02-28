@@ -17,9 +17,10 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
         setShowForm(false) // hiding form again
         setSubmitted(true); // Show submitted message
         console.log("successfully submitted gratitude statement clientside and backendside // gratitudeStatementData:", gratitudeStatementData)
+
         setTimeout(() => {
             setSubmitted(false);
-        }, 3000); // 3000 milliseconds = 3 seconds
+        }, 3000); // 3s
     }
     function handleCharacterCount(event) {
         const formTextInput = event.target.value;
@@ -32,7 +33,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
     return (
         <>
             <button
-                className="displayformbutton text-white text-sm bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-xl m-3"
+                className="displayformbutton text-white text-sm bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-xl m-3 transition-colors duration-500 hover:bg-SageGreen-jar-hover shadow-[0_4px_9px_-4px_#515151] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                 type="button"
                 id="displayFormButton"
                 name="displayFormButton"
@@ -55,21 +56,16 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
                             onChange={handleCharacterCount}
 
                             required
-                            className="inputfield appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none disabled:border-red-300"
+                            className="inputfield appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none disabled:border-red-300 transition-all duration-300 animate-fade-out"
                         />
                         <input type="hidden" value={dateFormSubmission} name="dateCreation" />
                         <button type="submit"
-                            className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow">
+                            className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow transition-all duration-1000">
                             ADD
                         </button>
 
                     </div>
-                    {submitted ?
-                        <p className="submitted-message text-xs text-red-500 p-3 animate-fade-out duration-300">
-                            🫙 You added a gratitude memory!
-                        </p>
-                        : null
-                    }
+
 
 
                     {showMaxLengthMessage ?
@@ -82,6 +78,13 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
                 :
                 null
             }
+            {submitted ?
+                <p className="submitted-message text-xs text-red-500 p-3 animate-fade-out ease-in-out duration-1000">
+                    🫙 You added a gratitude memory!
+                </p>
+                : null
+            }
         </>
     )
 }
+
