@@ -16,7 +16,7 @@ import { useRef } from 'react';
 import { useSpring, animated } from '@react-spring/three'
 
 
-const Loader = () => {
+function Loader() {
     const { progress } = useProgress();
 
     return (
@@ -40,7 +40,7 @@ const Loader = () => {
     );
 };
 
-const JarObject = () => {
+function JarObject() {
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
     // Creating a new instance of MeshStandardMaterial with depthTest overridden
     const customMaterialJar = new MeshPhysicalMaterial({
@@ -78,7 +78,7 @@ const JarObject = () => {
     )
 }
 
-const LidObject = () => {
+function LidObject() {
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
     const customMaterialLid = new MeshStandardMaterial({
         ...materials.material, // Copy existing material properties
@@ -114,7 +114,10 @@ const LidObject = () => {
     )
 }
 
-const PaperObject = () => {
+function PaperObject() {
+
+
+
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
     const customPaperMaterial = new MeshMatcapMaterial({
         ...materials.Map07,
@@ -128,7 +131,6 @@ const PaperObject = () => {
     });
     return (
         <group
-            // {...props}
             dispose={null}
             scale={2}
         >
@@ -231,7 +233,6 @@ export default function GlassJar() {
                     }}>
                 <Suspense fallback={<Loader />}>
                     <Scene />
-                    <GlassJarObject />
                 </Suspense>
             </Canvas >
         </>
