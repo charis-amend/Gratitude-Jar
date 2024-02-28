@@ -3,7 +3,6 @@ import { useSession, signIn, signOut } from "next-auth/react"
 export default function Login() {
     const { data: session, status } = useSession()
     if (status === "loading") { return <div>... Loading your jar 🫙</div> }
-    const isAuthenticated = status === "authenticated"
 
     if (session) {
         return (
@@ -14,7 +13,7 @@ export default function Login() {
                     {session.user.email}
                 </p>
                 <button type="button" onClick={() => signOut()}
-                    className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign out</button>
+                    className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-xl border-2 border-Grey-jar"                    >Sign out</button>
             </>
         )
     }
@@ -26,7 +25,7 @@ export default function Login() {
             </p>
             <button type="button"
                 onClick={() => signIn()}
-                className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign In
+                className="signout-button place-self-end text-white text-xs bg-SageGreen-jar w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md"                >Sign In
             </button>
         </>
     )
