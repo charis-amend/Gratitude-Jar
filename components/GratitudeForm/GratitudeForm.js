@@ -33,7 +33,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
     return (
         <>
             <button
-                className="displayformbutton text-white text-sm bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-2xl m-3 transition-colors duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
+                className="displayformbutton text-white text-xs bg-SageGreen-jar w-60 font-bold py-2 px-4 rounded-md shadow-2xl m-3 transition-colors duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
                 type="button"
                 id="displayFormButton"
                 name="displayFormButton"
