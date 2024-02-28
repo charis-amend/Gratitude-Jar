@@ -11,7 +11,7 @@ export default function SignInButton() {
              </p> */}
             <button type="button"
                 onClick={() => signIn()}
-                className="signout-button place-self-center text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-md">Sign In
+                className="signout-button place-self-center text-white text-xl bg-SageGreen-jar w-4/12 border-1 rounded-2xl p-5 my-1 shadow-md">Sign In
             </button>
         </>
     )
