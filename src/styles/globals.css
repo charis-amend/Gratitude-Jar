@@ -18,7 +18,7 @@
     font-family: Arial, sans-serif; /* Default font family */
     margin: 0; /* Remove default margin */
     padding: 20px; /* Add padding to create spacing around content */
-    color: antiquewhite;
+    color: rgb(191, 220, 212);
   }
 }
 
@@ -30,18 +30,12 @@
 
 .backgroundapp {
   background: linear-gradient(
-    to bottom right,
+    -65deg,
     #070707 0%,
     #111111 20%,
     #262626 40%,
-    #474646 60%,
+    rgb(80, 92, 88) 60%,
     #2c2c2c 80%,
     #141414 100%
-      /* #e1d8d8 0%,
-    #727171 20%,
-    #656060 40%,
-    #abd9d6 60%,
-    #a5a1a1 80%,
-    #e4d4d4 100% */
   );
 }
