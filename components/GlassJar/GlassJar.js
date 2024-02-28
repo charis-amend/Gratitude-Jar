@@ -129,6 +129,64 @@ function GlassJarObject({ props }) {
     )
 }
 
+function Scene() {
+    const { advance } = useThree();
+    useInterval(() => advance(1), 1000);
+    return (
+        <>
+            <EnvironmentMap background="black" />
+            {/* <primitive object={roomTexture} attach="background" /> */}
+
+            <spotLight
+                name="SpotLight"
+                intensity={20}
+                angle={0.444}
+                penumbra={1}
+                decay={2}
+                distance={2}
+                position={[26.709, 34.772, 2.75]}
+                rotation={[0.111, 0.048, 1.016]}
+                scale={[39.767, 102.189, 209.574]}
+                userData={{ name: "SpotLight" }}
+            />
+            <directionalLight
+                name="DirectionalLight"
+                intensity={5}
+                decay={2}
+                color="#fffaeb"
+                position={[-13.409, 48.408, -0.96]}
+                userData={{ name: "DirectionalLight" }}
+            />
+            <directionalLight
+                name="DirectionalLightFromSide"
+                intensity={5}
+                decay={2}
+                position={[-11.225, 13.52, -17.363]}
+                rotation={[-1.168, 0, 0.04]}
+                scale={10.927}
+                userData={{ name: "DirectionalLightFromSide" }}
+            />
+            <pointLight
+                name="PointLight"
+                intensity={20}
+                decay={2}
+                color="#d2bdb1"
+                position={[7.648, 13.877, 28.447]}
+                rotation={[-2.318, 1.041, -2.644]}
+                userData={{ name: "PointLight" }}
+            />
+
+            <OrbitControls
+                enableZoom={false}
+                enablePan={true}
+                enableRotate={true}
+            />
+
+        </>
+    )
+
+}
+
 export default function GlassJar() {
 
 
@@ -137,7 +195,6 @@ export default function GlassJar() {
             <Canvas
                 frameloop="demand"
                 shadows
-
                 camera={
                     {
                         position: [0, 10, 25], // position for scene and jar
@@ -150,62 +207,10 @@ export default function GlassJar() {
                         near: 0.01,
                         frustumCulled: true,
                         visible: true,
-                    }}
-            // gl={true}
-            >
-
+                    }}>
                 <Suspense fallback={<Loader />}>
-
-                    <EnvironmentMap background="black" />
-                    {/* <primitive object={roomTexture} attach="background" /> */}
-
-                    <spotLight
-                        name="SpotLight"
-                        intensity={20}
-                        angle={0.444}
-                        penumbra={1}
-                        decay={2}
-                        distance={2}
-                        position={[26.709, 34.772, 2.75]}
-                        rotation={[0.111, 0.048, 1.016]}
-                        scale={[39.767, 102.189, 209.574]}
-                        userData={{ name: "SpotLight" }}
-                    />
-                    <directionalLight
-                        name="DirectionalLight"
-                        intensity={5}
-                        decay={2}
-                        color="#fffaeb"
-                        position={[-13.409, 48.408, -0.96]}
-                        userData={{ name: "DirectionalLight" }}
-                    />
-                    <directionalLight
-                        name="DirectionalLightFromSide"
-                        intensity={5}
-                        decay={2}
-                        position={[-11.225, 13.52, -17.363]}
-                        rotation={[-1.168, 0, 0.04]}
-                        scale={10.927}
-                        userData={{ name: "DirectionalLightFromSide" }}
-                    />
-                    <pointLight
-                        name="PointLight"
-                        intensity={20}
-                        decay={2}
-                        color="#d2bdb1"
-                        position={[7.648, 13.877, 28.447]}
-                        rotation={[-2.318, 1.041, -2.644]}
-                        userData={{ name: "PointLight" }}
-                    />
-
-                    <OrbitControls
-                        enableZoom={false}
-                        enablePan={true}
-                        enableRotate={true}
-                    />
-
+                    <Scene />
                     <GlassJarObject />
-
                 </Suspense>
             </Canvas >
         </>
