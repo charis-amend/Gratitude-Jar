@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 :root {
-  /* 
-  some variables ...  
-
-  --foreground-rgb: 0, 0, 0;
-   */
+  /* CSS HEX */
+  --Grey-jar: #515151ff;
+  --Brown-jar: #938c81ff;
+  --Khaki-jar: #b4aa99ff;
+  --SageGreen-jar: #72948aff;
+  --LightMint-jar: #98b0a9ff;
 }
+
 /* Apply styles for screens up to 767px wide (mobile devices) */
 @media only screen and (max-width: 767px) {
   body {

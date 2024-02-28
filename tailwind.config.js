@@ -7,6 +7,16 @@ module.exports = {
     "./public/**.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors:
+    {
+      transparent: 'transparent',
+      current: 'currentColor',
+      "Grey-jar": "#515151",
+      "Brown-jar": "#938c81",
+      "Khaki-jar": "#b4aa99",
+      "SageGreen-jar": "#72948a",
+      "LightMint-jar": "98b0a9"
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -17,3 +27,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+
