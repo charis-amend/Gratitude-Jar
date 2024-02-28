@@ -45,23 +45,18 @@ function GlassJarObject(props) {
     // Create a new instance of MeshStandardMaterial with depthTest overridden
     const customMaterialJar = new MeshPhysicalMaterial({
         ...materials.material_1, // Copy existing material properties
-        depthTest: false, // Override depthTest to false
-        depthWrite: false, // Override depthTest to false
+        depthTest: false, // Override depthTest to false so glass = transparent
+        depthWrite: false, // Override depthTest to false so glass = transparent
         side: BackSide,
         blending: NormalBlending,
         transparent: true,
         reflectivity: 2.1,
-
-        // add material_1_baseColor.png for MAP -maybe
-        // add darker sheen  color
-        // color: 0xB0B0B0,
-
     });
 
     // Create a new instance of MeshStandardMaterial with depthTest overridden
     const customMaterialLid = new MeshStandardMaterial({
         ...materials.material, // Copy existing material properties
-        depthTest: true, // Override depthTest to false
+        depthTest: true, // Override depthTest to true
         depthWrite: true,
     });
 
