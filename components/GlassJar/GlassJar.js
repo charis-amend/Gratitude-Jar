@@ -11,8 +11,8 @@ import React from "react";
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
 import { MeshPhysicalMaterial, MeshStandardMaterial } from 'three';
-import { RoomEnvironment } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/environments/RoomEnvironment.js';
-import { PMREMGenerator } from 'three';
+// import { RoomEnvironment } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/environments/RoomEnvironment.js';
+// import { PMREMGenerator } from 'three';
 
 const Loader = () => {
     const { progress } = useProgress();
@@ -89,8 +89,8 @@ function GlassJarObject(props) {
 }
 
 export default function GlassJar() {
-    const pmremGenerator = new PMREMGenerator(renderer);
-    const roomTexture = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+    // const pmremGenerator = new PMREMGenerator(renderer);
+    // const roomTexture = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
 
 
     return (
@@ -104,7 +104,7 @@ export default function GlassJar() {
                 <Suspense fallback={<Loader />}>
 
                     {/* Environment: */}
-                    <primitive object={roomTexture} attach="background" />
+                    {/* <primitive object={roomTexture} attach="background" /> */}
 
                     <spotLight
                         name="SpotLight"
