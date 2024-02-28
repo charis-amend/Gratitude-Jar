@@ -33,18 +33,17 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
     return (
         <>
             <button
-                className="displayformbutton text-white text-sm bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-xl m-3 transition-colors duration-500 hover:bg-SageGreen-jar-hover transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                className="displayformbutton text-white text-sm bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-2xl m-3 transition-colors duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
                 type="button"
                 id="displayFormButton"
                 name="displayFormButton"
                 onClick={() => setShowForm(!showForm)}
-
             >Add Gratitude Memory</button>
 
 
             {showForm ?
                 <form
-                    className="form w-full max-w-sm transition-all duration-1000 delay-150 ease-in-out"
+                    className="form w-full max-w-sm animate-fade-in transition-all animatduration-1000 delay-150 ease-in-out"
                     onSubmit={submittingGratitudeForm}>
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">
@@ -80,7 +79,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
                 null
             }
             {submitted ?
-                <p className="submitted-message text-xs text-red-500 p-3 animate-fade-out ease-in-out duration-1000">
+                <p className="submitted-message text-xs text-red-500 p-3 animate-fade-in animate-fade-out ease-in-out duration-1000">
                     🫙 You added a gratitude memory!
                 </p>
                 : null
