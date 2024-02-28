@@ -10,9 +10,11 @@ import { EnvironmentMap, OrbitControls, Preload } from '@react-three/drei'
 import React from "react";
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
-import { BackSide, DoubleSide, FrontSide, MeshPhysicalMaterial, MeshStandardMaterial, MultiplyBlending, NormalBlending } from 'three';
-// import { RoomEnvironment } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/environments/RoomEnvironment.js';
-// import { PMREMGenerator } from 'three';
+import { AnimationAction, BackSide, DoubleSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
+import { useFrame } from '@react-three/fiber'
+import { useRef } from 'react';
+import { useSpring, animated } from '@react-spring/three'
+
 
 const Loader = () => {
     const { progress } = useProgress();
@@ -38,59 +40,96 @@ const Loader = () => {
     );
 };
 
-function GlassJarObject(props) {
-    const { nodes, materials } = useLoader(GLTFLoader, "/sceneOverWrites.gltf");
-    const scale = [2, 2, 2];
 
-    // Create a new instance of MeshStandardMaterial with depthTest overridden
+function GlassJarObject({ props }) {
+    const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
+
+    const animations = React.useRef()
+    useFrame(({ clock }) => {
+        const time = clock.getElapsedTime();
+        console.log("time:", time)
+    });
+
+    // Creating a new instance of MeshStandardMaterial with depthTest overridden
     const customMaterialJar = new MeshPhysicalMaterial({
         ...materials.material_1, // Copy existing material properties
-        depthTest: false, // Override depthTest to false so glass = transparent
+        depthTest: true, // Override depthTest to false so glass = transparent
         depthWrite: false, // Override depthTest to false so glass = transparent
         side: BackSide,
         blending: NormalBlending,
         transparent: true,
         reflectivity: 2.1,
     });
-
-    // Create a new instance of MeshStandardMaterial with depthTest overridden
     const customMaterialLid = new MeshStandardMaterial({
         ...materials.material, // Copy existing material properties
         depthTest: true, // Override depthTest to true
         depthWrite: true,
     });
+    // Creating a new instance of MestmatCap material to overwrite existing properties
+    const customPaperMaterial = new MeshMatcapMaterial({
+        ...materials.Map07,
+        color: 0xffffff,
+        side: FrontSide,
+        transparent: false,
+        depthTest: true,
+        depthWrite: true,
+        blending: NormalBlending,
+
+    });
 
     return (
         <group {...props}
             dispose={null}
-            scale={scale}>
+            scale={2}
+            ref={animations}
+        >
+            <group
+                name="Sketchfab_model"
+                position={[0, 0, 0]}
+            // rotation={[-Math.PI / 2, 0, 0]}
+            >
+                <group
+                    name="Collada_visual_scene_group"
+                    position={[0, 0, 0]}
+                    scale={4}
+                >
+                    {/* jar: */}
+                    <mesh
+                        name="defaultMaterial"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.defaultMaterial.geometry}
+                        material={customMaterialJar}
+                        userData={{ name: "defaultMaterial" }}
+                    />
 
-            {/* jar: */}
-            <mesh
-                name="defaultMaterial"
-                castShadow
-                receiveShadow
-                geometry={nodes.defaultMaterial.geometry}
-                material={customMaterialJar}
-                userData={{ name: "defaultMaterial" }}
-            />
+                    {/* top or  lid: */}
+                    <mesh
+                        name="defaultMaterial_1"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.defaultMaterial_1.geometry}
+                        material={customMaterialLid}
+                        userData={{ name: "defaultMaterial" }}
+                    />
+                </group>
+            </group>
 
-            {/* top or  lid: */}
-            <mesh
-                name="defaultMaterial_1"
-                castShadow
-                receiveShadow
-                geometry={nodes.defaultMaterial_1.geometry}
-                material={customMaterialLid}
-                userData={{ name: "defaultMaterial" }}
-            />
+            <group name="finalpapergltf" position={[6.897, 12.232, -0.181]}>
+                <group name="Folded_Paperobj" scale={0.1}>
+                    <mesh
+                        name="Map07"
+                        geometry={nodes.Map07.geometry}
+                        material={customPaperMaterial}
+                        rotation={[0, 0, 0.682]}
+                    />
+                </group>
+            </group>
         </group>
     )
 }
 
 export default function GlassJar() {
-    // const pmremGenerator = new PMREMGenerator(renderer);
-    // const roomTexture = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
 
 
     return (
@@ -98,9 +137,23 @@ export default function GlassJar() {
             <Canvas
                 frameloop="demand"
                 shadows
-                camera={{ position: [15, 0, 0], fov: 25 }}
-                gl={true}
+
+                camera={
+                    {
+                        position: [0, 10, 25], // position for scene and jar
+                        // position: [10, 30, 20],  // position for paper
+                        // fov: 100, //  for paper
+                        fov: 50,
+                        scale: [1, 1, 1],
+                        rotation: [-13.7, 2.3, 0.58],
+                        far: 1000,
+                        near: 0.01,
+                        frustumCulled: true,
+                        visible: true,
+                    }}
+            // gl={true}
             >
+
                 <Suspense fallback={<Loader />}>
 
                     <EnvironmentMap background="black" />
@@ -146,10 +199,10 @@ export default function GlassJar() {
                     />
 
                     <OrbitControls
-                        target={[0, 0, 0]}
-                        autoRotate
+                        enableZoom={false}
+                        enablePan={true}
+                        enableRotate={true}
                     />
-
 
                     <GlassJarObject />
 
