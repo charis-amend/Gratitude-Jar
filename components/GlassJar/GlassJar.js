@@ -158,7 +158,7 @@ function PaperObject({ startPosition, endPosition }) {
         //     position={position}
         // // rotation={animatedRotation}
         // >
-        <group position={position}>
+        <animated.group position={position}>
             <group name="finalpapergltf">
                 <group name="Folded_Paperobj" scale={0.1}>
                     <mesh
@@ -168,7 +168,7 @@ function PaperObject({ startPosition, endPosition }) {
                     />
                 </group>
             </group>
-        </group>
+        </animated.group>
         // </animated.group>
 
     )
@@ -185,7 +185,7 @@ export default function GlassJar() {
     return (
         <>
             <Canvas
-                frameloop="demand"
+                // frameloop="demand"
                 shadows
                 camera={
                     {
@@ -251,13 +251,13 @@ export default function GlassJar() {
 
                     <JarObject />
                     <LidObject />
-                    {/* <button
-                        onClick={handleButtonClick}>Animate Paper</button>
-                    {animatePaper && 
-                     */}
-                    <PaperObject
-                        startPosition={[-7.897, 21.232, -0.181]}
-                        endPosition={[1.890, 1.213, 0.397]} />
+
+                    {animatePaper &&
+
+                        <PaperObject
+                            startPosition={[-7.897, 21.232, -0.181]}
+                            endPosition={[0.890, -7.613, 0.397]} />}
+
 
                     {/* <PaperObject */}
                     {/* // startPosition={[-7.897, 21.232, -0.181]}
@@ -269,77 +269,9 @@ export default function GlassJar() {
                     {/* /> */}
                 </Suspense>
             </Canvas >
-            <AnimationControl onClick={handleButtonClick} />
+            <AnimationControl onAnimate={handleButtonClick} />
         </>
     );
 }
 
 
-
-
-// function Scene() {
-
-//     return (
-//         <>
-//             <OrbitControls
-//                 enableZoom={true}
-//                 enablePan={true}
-//                 enableRotate={true}
-//             />
-//             <EnvironmentMap background="white" />
-//             {/* <primitive object={roomTexture} attach="background" /> */}
-
-//             <spotLight
-//                 name="SpotLight"
-//                 intensity={20}
-//                 angle={0.444}
-//                 penumbra={1}
-//                 decay={2}
-//                 distance={2}
-//                 position={[26.709, 34.772, 2.75]}
-//                 rotation={[0.111, 0.048, 1.016]}
-//                 scale={[39.767, 102.189, 209.574]}
-//                 userData={{ name: "SpotLight" }}
-//             />
-//             <directionalLight
-//                 name="DirectionalLight"
-//                 intensity={5}
-//                 decay={2}
-//                 color="#fffaeb"
-//                 position={[-13.409, 48.408, -0.96]}
-//                 userData={{ name: "DirectionalLight" }}
-//             />
-//             <directionalLight
-//                 name="DirectionalLightFromSide"
-//                 intensity={5}
-//                 decay={2}
-//                 position={[-11.225, 13.52, -17.363]}
-//                 rotation={[-1.168, 0, 0.04]}
-//                 scale={10.927}
-//                 userData={{ name: "DirectionalLightFromSide" }}
-//             />
-//             <pointLight
-//                 name="PointLight"
-//                 intensity={20}
-//                 decay={2}
-//                 color="0xd2bdb1"
-//                 position={[7.648, 13.877, 28.447]}
-//                 rotation={[-2.318, 1.041, -2.644]}
-//                 userData={{ name: "PointLight" }}
-//             />
-
-//             <JarObject />
-//             <LidObject />
-//             <PaperObject
-//             // startPosition={[-7.897, 21.232, -0.181]}
-//             // startRotation={[0, 0, 0]}
-//             // startOpacity={1}
-//             // endPosition={[1.890, 1.213, 0.397]}
-//             // endRotation={[13.20, 25.91, 142.91]}
-//             // endOpacity={0}
-//             />
-
-//         </>
-//     )
-
-// }
