@@ -23,8 +23,11 @@ export default function Home() {
   const userId = session?.user?.userId
   const dateCreation = new Date().toDateString();
   const { mutate } = useSWR(userId ? `/api/${userId}` : null, fetcher);
-  const [animatePaper, setAnimatePaper] = useState(false); // state of animation
 
+  const [animatePaper, setAnimatePaper] = useState(false); // state of animation
+  function triggerAnimationPaper() {
+    setAnimatePaper(true)
+  }
   async function addingGratitudeStatement(gratitudeStatementData) {
     const response = await fetch(`/api/${userId}`, {
       method: "POST",
@@ -32,8 +35,8 @@ export default function Home() {
       headers: { "Content-Type": "application/json" },
     });
     if (response.ok) {
-      mutate()// add data to database
-      setAnimatePaper(!animatePaper);// doing animation glassjar.js component
+      mutate(); // add data to database
+      triggerAnimationPaper(); // doing animation glassjar.js component
     }
   }
 
@@ -41,19 +44,22 @@ export default function Home() {
     return (
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
+          <GlassJar
+            className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
+            animatePaper={animatePaper}
+          />
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
 
           {/* lower section: */}
-          <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-16 z-5 p-4 flex flex-col justify-center items-center">
+          <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-1 z-5 p-4 flex flex-col justify-center items-center">
             <RandomGratitudeButton />
             <GratitudeForm
               onSubmit={addingGratitudeStatement}
               userIdForGratitudeStatement={userId}
               dateFormSubmission={dateCreation}
-
+              triggerAnimationPaper={triggerAnimationPaper}
             />
 
           </div>
@@ -66,7 +72,6 @@ export default function Home() {
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
           <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
-            animatePaper={animatePaper}
           />
 
           {/* lower section: */}
