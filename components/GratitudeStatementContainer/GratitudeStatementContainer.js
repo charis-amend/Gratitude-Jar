@@ -21,28 +21,19 @@ export default function GratitudeStatementContainer({ randomGratitudeStatement, 
             <>
                 <div className="outside-viewbox z-0 top-0 left-0 fixed h-screen w-screen flex"
                     onClick={handleClose}>
-                    <div
-                        className={`${styles.statementBox}`}>
 
-                        {/* <button
-                            type="button"
-                            id="closeButton"
-                            name="closeButton"
-                            onClick={handleClose}
-                            className="cancelButton top-4 right-4 pr-3 pt-3 place-self-end text-white/60 text-lg"
-                        >
-                            ⓧ
-                        </button> */}
+                    <div
+                        className={styles.viewbox}>
 
                         <p
-                            className="statement text-left place-self-start pl-5 pb-4 pt-5 h-full"
+                            className="statement text-left place-self-start p-4 w-full h-full"
                         >{randomGratitudeStatement.statementText}</p>
 
                         <p
                             className="date-statement right-3 place-self-end text-xs pb-10  pr-3"
                         >{randomGratitudeStatement.dateCreation}</p>
                     </div >
-                </div>
+                </div >
             </>
         )
     }
