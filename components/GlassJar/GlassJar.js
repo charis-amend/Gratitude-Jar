@@ -1,18 +1,15 @@
 
-import { Suspense, useState } from 'react'
+import React from "react";
+import { Suspense } from 'react'
+import Image from 'next/image';
+import * as THREE from "three";
+import { useSpring, animated } from '@react-spring/three'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, Canvas } from "@react-three/fiber";
-import { EnvironmentMap, OrbitControls, useMatcapTexture } from '@react-three/drei'
-import React from "react";
-import { useEffect } from 'react';
-import { Html, useProgress } from "@react-three/drei";
-import Image from 'next/image';
-import { BackSide, DoubleSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
-import { useSpring, animated } from '@react-spring/three'
-
-import * as THREE from "three";
-import { TextureLoader } from 'three';
 const textureLoader = new THREE.TextureLoader();
+import { OrbitControls } from '@react-three/drei'
+import { Html, useProgress } from "@react-three/drei";
+import { BackSide, DoubleSide, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
 
 function Loader() {
     const { progress } = useProgress();
