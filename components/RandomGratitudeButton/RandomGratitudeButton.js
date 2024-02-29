@@ -48,12 +48,12 @@ export default function RandomGratitudeButton() {
                     onClose={handleClose}
                 />) : null}
             <button
-                className="randombutton text-white bg-Khaki-jar text-sm font-bold py-4 px-4 rounded-md shadow-xl m-5 transition-all duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 focus:shadow-outline active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
+                className="randombutton text-white bg-Khaki-jar text-sm font-bold py-4 px-4 w-40 rounded-3xl shadow-xl m-5 transition-all duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 focus:shadow-outline active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
 
                 type="button"
                 id="RandomGratitudeButton"
                 onClick={() => gettingRandomStatement()}>
-                Random Gratitude
+                Gratitude Memory
             </button>
             {/* {showError ? null : (<p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p>)} */}
         </>

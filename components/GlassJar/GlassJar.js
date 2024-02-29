@@ -8,7 +8,7 @@ import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
 import { BackSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
 import { useSpring, animated } from '@react-spring/three'
-
+import AnimationControl from './AnimationControl';
 
 function Loader() {
     const { progress } = useProgress();
@@ -112,13 +112,13 @@ function LidObject() {
 function PaperObject({ startPosition, endPosition }) {
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
 
-    // animation:
-    const [showPaper, setShowPaper] = useState(true) //  default always showing paper
+    // const [showPaper, setShowPaper] = useState(true) //  default always showing paper
     // const fadeInTime = 500  // half a second for paper to appear from opacity 0->1
     // const restingTime = 3000; // 3 seconds for full opacity where the paper should chill
     // const fadeOutTime = 5000; // 5 seconds to fade out
 
 
+    // animation:
     const { position
         // animatedOpacity, 
         // animatedRotation 
@@ -145,7 +145,7 @@ function PaperObject({ startPosition, endPosition }) {
 
     const customPaperMaterial = new MeshMatcapMaterial({
         ...materials.Map07,
-        color: 0xffffff,
+        color: 0xd7e7e1,
         side: FrontSide,
         transparent: true,
         depthTest: true,
@@ -158,11 +158,7 @@ function PaperObject({ startPosition, endPosition }) {
         //     position={position}
         // // rotation={animatedRotation}
         // >
-        <group
-            dispose={null}
-            scale={2}
-            position={position}
-        >
+        <group position={position}>
             <group name="finalpapergltf">
                 <group name="Folded_Paperobj" scale={0.1}>
                     <mesh
@@ -181,10 +177,10 @@ function PaperObject({ startPosition, endPosition }) {
 
 
 export default function GlassJar() {
-    // const [animatePaper, setAnimatePaper] = useState(false);
-    // function handleButtonClick() {
-    //     setAnimatePaper(!animatePaper);
-    // };
+    const [animatePaper, setAnimatePaper] = useState(false);
+    function handleButtonClick() {
+        setAnimatePaper(!animatePaper);
+    };
 
     return (
         <>
@@ -209,6 +205,7 @@ export default function GlassJar() {
                         enableZoom={true}
                         enablePan={true}
                         enableRotate={true}
+                        autoRotate
                     />
                     <EnvironmentMap background="white" />
                     {/* <primitive object={roomTexture} attach="background" /> */}
@@ -272,6 +269,7 @@ export default function GlassJar() {
                     {/* /> */}
                 </Suspense>
             </Canvas >
+            <AnimationControl onClick={handleButtonClick} />
         </>
     );
 }
