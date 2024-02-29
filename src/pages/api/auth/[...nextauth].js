@@ -22,7 +22,7 @@ export default NextAuth({
         await transport.sendMail({
           to: email,
           from,
-          subject: `Your Sign in | Gratitude Jar`,
+          subject: `🫙 Gratitude Jar | SignIn Link`,
           text: text({ url, host }),
           html: html({ url, host, email }),
         })
@@ -101,7 +101,18 @@ function html({ url, host, email }) {
     <table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${mainBackgroundColor}; max-width: 600px; margin: auto; border-radius: 10px;">
       <tr>
         <td align="center" style="padding: 10px 0px 0px 0px; font-size: 13px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-          Sign in with your e-mail: ${escapedEmail}
+         
+        
+        Hi there, 
+          <br />
+          you requested a link to sign into the app GRATITUDE JAR. You don't have to create a password. 
+          <br />
+          So here is your personal link to sign in. 
+          <br />
+          Have Fun! 
+
+
+
         </td>
       </tr>
       <tr>
@@ -110,7 +121,11 @@ function html({ url, host, email }) {
             <tr>
               <td align="center" style="border-radius: 5px;" bgcolor="${buttonBackgroundColor}">
               <a href="${url}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${buttonTextColor}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${buttonBorderColor}; display: inline-block; font-weight: bold;">
-              Sign in 
+              
+
+              Sign In Here 🚀
+             
+             
               </a>
               </td>
             </tr>
@@ -119,8 +134,16 @@ function html({ url, host, email }) {
       </tr>
       <tr>
         <td align="center" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
-          If you did not request this email you can safely ignore it.
-        </td>
+        
+
+        
+        You entered this email address ${escapedEmail} to sign in.
+         <br />
+         If you did not request this email you can safely ignore it.
+       
+       
+       
+         </td>
       </tr>
     </table>
   </body>
