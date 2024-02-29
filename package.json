@@ -15,6 +15,7 @@
     "@react-spring/web": "^9.7.3",
     "@react-three/drei": "^9.99.0",
     "@react-three/fiber": "^8.15.16",
+    "gltfjsx": "^6.2.16",
     "htm": "^3.1.1",
     "mjml": "^4.15.3",
     "mongodb": "^6.3.0",
