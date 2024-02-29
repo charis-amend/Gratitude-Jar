@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { BackSide, DoubleSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
 import { useSpring, animated } from '@react-spring/three'
 import AnimationControl from './AnimationControl';
+
 import * as THREE from "three";
 import { TextureLoader } from 'three';
 const textureLoader = new THREE.TextureLoader();
@@ -171,7 +172,7 @@ function PaperObject({ startPosition, endPosition }) {
         // >
         <animated.group position={position}>
             <group name="finalpapergltf">
-                <group name="Folded_Paperobj" scale={0.1}>
+                <group name="Folded_Paperobj" scale={0.25}>
                     <mesh
                         name="Map07"
                         geometry={nodes.Map07.geometry}
@@ -236,7 +237,7 @@ export default function GlassJar() {
     // const [animatePaper, setAnimatePaper] = useState([[0.890, -6.613, 0.397]]);
 
 
-    function handleButtonClick() {
+    function handleRandomButtonClick() {
         setAnimatePaper(!animatePaper);
     };
 

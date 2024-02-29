@@ -62,7 +62,7 @@ export default function Home() {
           </div>
 
           {/* lower section: */}
-          {/* <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-16 z-5 p-4 flex flex-col justify-center items-center">
+          <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-16 z-5 p-4 flex flex-col justify-center items-center">
             <RandomGratitudeButton />
             <GratitudeForm
               onSubmit={addingGratitudeStatement}
@@ -71,7 +71,7 @@ export default function Home() {
 
             />
 
-          </div> */}
+          </div>
         </div>
       </>
     )
