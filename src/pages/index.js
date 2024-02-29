@@ -13,8 +13,8 @@ import SignInButton from "../../components/SignInButton/SignInButton";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import useSWR from "swr";
+import { useState } from "react";
 const fetcher = (url) => fetch(url).then((res) => res.json());
-
 
 
 
@@ -24,16 +24,19 @@ export default function Home() {
   const dateCreation = new Date().toDateString();
   const { mutate } = useSWR(userId ? `/api/${userId}` : null, fetcher);
 
+  const [animatePaper, setAnimatePaper] = useState(false); // state of animation
+  function triggerAnimationPaper() {
+    setAnimatePaper(true)
+  }
   async function addingGratitudeStatement(gratitudeStatementData) {
     const response = await fetch(`/api/${userId}`, {
       method: "POST",
       body: JSON.stringify(gratitudeStatementData),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     });
     if (response.ok) {
-      mutate();
+      mutate(); // add data to database
+      triggerAnimationPaper(); // doing animation glassjar.js component
     }
   }
 
@@ -41,34 +44,23 @@ export default function Home() {
     return (
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
-          {/* image for the loading page showing this image before the 3D object has loaded  */}
-          {/* <div className="image-container z-1 relative h-2/4 place-self-center">
-            <Image
-              priority
-              src="/preloadedGlasJar.png"
-              alt="placeholder-glasjar"
-              width={500}
-              height={500}
-              sizes="90vw"
-              style={{
-                objectFit: 'cover',
-              }}
-            />
-          </div> */}
+          <GlassJar
+            className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
+            animatePaper={animatePaper}
+          />
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
 
           {/* lower section: */}
-          <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-10 z-5 p-4 flex flex-col justify-center items-center">
+          <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-1 z-5 p-4 flex flex-col justify-center items-center">
+            <RandomGratitudeButton />
             <GratitudeForm
               onSubmit={addingGratitudeStatement}
               userIdForGratitudeStatement={userId}
               dateFormSubmission={dateCreation}
-
+              triggerAnimationPaper={triggerAnimationPaper}
             />
-            <RandomGratitudeButton />
 
           </div>
         </div>
@@ -79,7 +71,8 @@ export default function Home() {
     return (
       <>
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-          <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1" />
+          <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
+          />
 
           {/* lower section: */}
           <div className="lower-section fixed top-4/5 left-3.5 right-3.5  bottom-1 z-5 p-4 flex flex-col justify-center items-center">
@@ -97,5 +90,3 @@ export default function Home() {
 
   }
 }
-
-// Home.auth = true;

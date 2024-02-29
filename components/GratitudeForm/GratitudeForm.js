@@ -1,8 +1,9 @@
 import { useSession } from "next-auth/react"
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { animated } from "@react-spring/three";
 
-export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForGratitudeStatement }) {
+export default function GratitudeForm({ onSubmit, dateFormSubmission, triggerAnimationPaper }) {
     const [showForm, setShowForm] = useState(false) // hide & show form with Add Gratitude Button
     const [showMaxLengthMessage, setShowMaxLengthMessage] = useState(false)
     const [submitted, setSubmitted] = useState(false);
@@ -17,6 +18,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
         setShowForm(false) // hiding form again
         setSubmitted(true); // Show submitted message
         console.log("successfully submitted gratitude statement clientside and backendside // gratitudeStatementData:", gratitudeStatementData)
+        triggerAnimationPaper()
 
         setTimeout(() => {
             setSubmitted(false);
@@ -33,7 +35,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
     return (
         <>
             <button
-                className="displayformbutton text-white text-xs bg-SageGreen-jar w-60 font-bold py-2 px-4 rounded-md shadow-2xl m-3 transition-colors duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
+                className="displayformbutton text-white text-xs bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-2xl mt-3 mb-0 pb-0transition-colors duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
                 type="button"
                 id="displayFormButton"
                 name="displayFormButton"
@@ -43,7 +45,8 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
 
             {showForm ?
                 <form
-                    className="form w-full max-w-sm animate-fade-in transition-all animatduration-1000 delay-150 ease-in-out"
+                    className="form w-full max-w-sm mb-5 animate-fade-in transition-all animatduration-1000 delay-150 ease-in-out"
+
                     onSubmit={submittingGratitudeForm}>
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">

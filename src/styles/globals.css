@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "/components/GratitudeStatementContainer/GratitudeStatementContainer.module.css";
+
 :root {
   /* CSS HEX */
   --Grey-jar: #515151ff;
@@ -19,6 +21,17 @@
     margin: 0; /* Remove default margin */
     padding: 20px; /* Add padding to create spacing around content */
     color: whitesmoke;
+  }
+}
+/* Styles for screens wider than 767px */
+@media only screen and (min-width: 768px) {
+  body {
+    background-color: #f5f5f5; /* Light gray background */
+    font-family: Arial, sans-serif; /* Default font family */
+    margin: 0; /* Center content horizontally */
+    padding: 20px; /* Increase padding for wider screens */
+    color: whitesmoke; /* Dark text color */
+
   }
 }
 

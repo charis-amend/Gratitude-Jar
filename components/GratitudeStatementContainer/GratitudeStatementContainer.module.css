@@ -1,0 +1,107 @@
+.viewbox {
+  z-index: 10;
+  position: fixed;
+  padding: 3px;
+  margin: 3px;
+  margin-top: 60px;
+  right: 50px;
+  left: 50px;
+  bottom: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  justify-content: space-between;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+  opacity: 0.8;
+  background-image: url("/white-torn-paper-example.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: top;
+
+  width: 300px;
+  height: 180px;
+  color: black;
+  font-size: 12px;
+
+  /* Animation */
+  animation-name: fade-in;
+  animation-duration: 1s;
+  /* animation-delay: 0.15s;  */
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+/* 
+.viewboxLayer {
+  background-color: #98b0a9ff;
+  opacity: 0.4;
+  z-index: 11;
+  position: fixed;
+  padding: 3px;
+  margin: 3px;
+  margin-top: 60px;
+  right: 50px;
+  left: 50px;
+  bottom: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  justify-content: space-between;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
+  width: 299px;
+  height: 180px;
+} */
+/* 
+.statementBox {
+  z-index: 10;
+  position: fixed;
+  padding: 3px;
+  margin: 3px;
+  margin-top: 60px;
+  right: 50px;
+  left: 50px;
+  bottom: -50px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  background-image: url("/white-torn-paper-example.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: top;
+  width: 300px;
+  height: 180px;
+  color: black;
+  font-size: 12px;
+  opacity: 0.3;
+  transition: opacity 0.7s ease-in-out,
+     bottom 0.7s ease-in-out,
+     transform 0.1s ease-in-out 0.1s; 
+} */
+/* 
+.viewbox.show {
+  opacity: 1;
+  bottom: 250px;
+}
+
+.viewbox.closing {
+  opacity: 0;
+  transform: scale(0.8);
+} */
