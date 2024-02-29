@@ -86,7 +86,7 @@ export default function Home() {
           <div className="lower-section fixed top-4/5 left-3.5 right-3.5  bottom-1 z-5 p-4 flex flex-col justify-center items-center">
             <SignInButton />
             <p
-              className="statement text-center  w-3/4 text-xs p-2 text-blue-50 place-self-center h-full my-5"
+              className="statement text-center w-11/12 text-xs p-2 text-blue-50  place-self-center h-full mt-5"
             >
               Login here, to add your gratitude statements. We will only send you a link to your e-mail to log you in. None of your data will be processed.
             </p>
