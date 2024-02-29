@@ -23,6 +23,16 @@
     color: whitesmoke;
   }
 }
+/* Styles for screens wider than 767px */
+@media only screen and (min-width: 768px) {
+  body {
+    background-color: #f5f5f5; /* Light gray background */
+    font-family: Arial, sans-serif; /* Default font family */
+    margin: 0; /* Center content horizontally */
+    padding: 20px; /* Increase padding for wider screens */
+    color: whitesmoke; /* Dark text color */
+  }
+}
 
 @layer utilities {
   .text-balance {

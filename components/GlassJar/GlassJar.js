@@ -112,15 +112,11 @@ function PaperObject({ startPosition, endPosition, startOpacity, endOpacity, sta
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
 
     // animation:
-    // const [showPaper, setShowPaper] = useState(true) //  default always showing paper
+    const [showPaper, setShowPaper] = useState(true) //  default always showing paper
     const fadeInTime = 500  // half a second for paper to appear from opacity 0->1
     const restingTime = 3000; // 3 seconds for full opacity where the paper should chill
     const fadeOutTime = 5000; // 5 seconds to fade out
-    // const startRotation = [0, 0, 0]
-    // const startOpacity = 1
-    // const endPosition = [1.890, 1.213, 0.397]
-    // const endRotation = [13.20, 25.91, 142.91]
-    // const endOpacity = 0
+
 
     const { animatedPosition, animatedOpacity, animatedRotation } = useSpring({
         from: { position: startPosition, opacity: startOpacity, rotation: startRotation },
@@ -228,11 +224,11 @@ function Scene() {
             <LidObject />
             <PaperObject
                 startPosition={[-7.897, 21.232, -0.181]}
-            // startRotation={[0, 0, 0]}
-            // startOpacity={1}
-            // endPosition={[1.890, 1.213, 0.397]}
-            // endRotation={[13.20, 25.91, 142.91]}
-            // endOpacity={0}
+                startRotation={[0, 0, 0]}
+                startOpacity={1}
+                endPosition={[1.890, 1.213, 0.397]}
+                endRotation={[13.20, 25.91, 142.91]}
+                endOpacity={0}
             />
 
         </>
