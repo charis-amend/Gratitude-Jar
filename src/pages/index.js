@@ -78,12 +78,15 @@ export default function Home() {
         <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
           <GlassJar className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
           />
+          <div className="arrows-section z-50 fixed top-1/3 left-1/2 h-10 inset-1/4 w-1/6 flex justify-center items-center">
+            <Arrows />
+          </div>
 
           {/* lower section: */}
           <div className="lower-section fixed top-4/5 left-3.5 right-3.5  bottom-1 z-5 p-4 flex flex-col justify-center items-center">
             <SignInButton />
             <p
-              className="statement text-center  w-2/3 text-xs p-2 text-blue-50 place-self-center h-full my-5"
+              className="statement text-center  w-3/4 text-xs p-2 text-blue-50 place-self-center h-full my-5"
             >
               Login here, to add your gratitude statements. We will only send you a link to your e-mail to log you in. None of your data will be processed.
             </p>
