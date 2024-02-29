@@ -2,13 +2,16 @@
 import { Suspense, useState } from 'react'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, Canvas } from "@react-three/fiber";
-import { EnvironmentMap, OrbitControls } from '@react-three/drei'
+import { EnvironmentMap, OrbitControls, useMatcapTexture } from '@react-three/drei'
 import React from "react";
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
-import { BackSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
+import { BackSide, DoubleSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
 import { useSpring, animated } from '@react-spring/three'
 import AnimationControl from './AnimationControl';
+import * as THREE from "three";
+import { TextureLoader } from 'three';
+const textureLoader = new THREE.TextureLoader();
 
 function Loader() {
     const { progress } = useProgress();
@@ -111,6 +114,7 @@ function LidObject() {
 // function PaperObject({ startPosition, endPosition, startOpacity, endOpacity, startRotation, endRotation }) {
 function PaperObject({ startPosition, endPosition }) {
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
+    const mapTexture = textureLoader.load("/materialpaper.jpg")
 
     // const [showPaper, setShowPaper] = useState(true) //  default always showing paper
     // const fadeInTime = 500  // half a second for paper to appear from opacity 0->1
@@ -143,14 +147,21 @@ function PaperObject({ startPosition, endPosition }) {
         // onRest: () => setShowPaper(false), // Hide the paper after animation completes
     })
 
-    const customPaperMaterial = new MeshMatcapMaterial({
+    const customPaperMaterial = new MeshStandardMaterial({
         ...materials.MeshMatcapMaterial,
-        color: 0xEFE8CE,
-        side: FrontSide,
+        color: 0x959178,
+        side: DoubleSide,
         transparent: true,
         depthTest: true,
         depthWrite: true,
         blending: NormalBlending,
+        opacity: 1,
+        roughness: 1,
+        metalness: 0.5,
+        emissive: 0x000000,
+        map: mapTexture,
+
+
     });
 
     return (
@@ -174,10 +185,57 @@ function PaperObject({ startPosition, endPosition }) {
     )
 }
 
+function Lights() {
 
+    return (
+        <>
+            <spotLight
+                name="SpotLight"
+                intensity={20}
+                angle={0.444}
+                penumbra={1}
+                decay={2}
+                distance={2}
+                position={[26.709, 34.772, 2.75]}
+                rotation={[0.111, 0.048, 1.016]}
+                scale={[39.767, 102.189, 209.574]}
+                userData={{ name: "SpotLight" }}
+            />
+            <directionalLight
+                name="DirectionalLight"
+                intensity={5}
+                decay={2}
+                color="#fffaeb"
+                position={[-13.409, 48.408, -0.96]}
+                userData={{ name: "DirectionalLight" }}
+            />
+            <directionalLight
+                name="DirectionalLightFromSide"
+                intensity={5}
+                decay={2}
+                position={[-11.225, 13.52, -17.363]}
+                rotation={[-1.168, 0, 0.04]}
+                scale={10.927}
+                userData={{ name: "DirectionalLightFromSide" }}
+            />
+            <pointLight
+                name="PointLight"
+                intensity={20}
+                decay={2}
+                color={0xd2bdb1}
+                position={[7.648, 13.877, 28.447]}
+                rotation={[-2.318, 1.041, -2.644]}
+                userData={{ name: "PointLight" }}
+            />
+        </>
+    )
+}
 
 export default function GlassJar() {
     const [animatePaper, setAnimatePaper] = useState(false);
+    // const [animatePaper, setAnimatePaper] = useState([[0.890, -6.613, 0.397]]);
+
+
     function handleButtonClick() {
         setAnimatePaper(!animatePaper);
     };
@@ -189,8 +247,8 @@ export default function GlassJar() {
                 shadows
                 camera={
                     {
-                        position: [0, 10, 25], // position for scene and jar
-                        // position: [10, 30, 20],  // position for paper
+                        position: [0, 10, 25], // camera position for scene and jar
+                        // position: [10, 30, 20],  // camera position for paper
                         // fov: 100, //  for paper
                         fov: 50,
                         scale: [1, 1, 1],
@@ -210,54 +268,25 @@ export default function GlassJar() {
                     <EnvironmentMap background="white" />
                     {/* <primitive object={roomTexture} attach="background" /> */}
 
-                    <spotLight
-                        name="SpotLight"
-                        intensity={20}
-                        angle={0.444}
-                        penumbra={1}
-                        decay={2}
-                        distance={2}
-                        position={[26.709, 34.772, 2.75]}
-                        rotation={[0.111, 0.048, 1.016]}
-                        scale={[39.767, 102.189, 209.574]}
-                        userData={{ name: "SpotLight" }}
-                    />
-                    <directionalLight
-                        name="DirectionalLight"
-                        intensity={5}
-                        decay={2}
-                        color="#fffaeb"
-                        position={[-13.409, 48.408, -0.96]}
-                        userData={{ name: "DirectionalLight" }}
-                    />
-                    <directionalLight
-                        name="DirectionalLightFromSide"
-                        intensity={5}
-                        decay={2}
-                        position={[-11.225, 13.52, -17.363]}
-                        rotation={[-1.168, 0, 0.04]}
-                        scale={10.927}
-                        userData={{ name: "DirectionalLightFromSide" }}
-                    />
-                    <pointLight
-                        name="PointLight"
-                        intensity={20}
-                        decay={2}
-                        color={0xd2bdb1}
-                        position={[7.648, 13.877, 28.447]}
-                        rotation={[-2.318, 1.041, -2.644]}
-                        userData={{ name: "PointLight" }}
-                    />
+                    <Lights />
 
                     <JarObject />
                     <LidObject />
 
-                    {animatePaper &&
 
+                    {animatePaper &&
                         <PaperObject
                             startPosition={[-7.897, 21.232, -0.181]}
-                            endPosition={[0.890, -7.613, 0.397]} />}
+                            endPosition={[0.890, -7.613, 0.397]} />
+                    }
 
+                    {/* 
+                    {animatePaper && animatePaper.map((position) => <PaperObject
+                        startPosition={[-7.897, 21.232, -0.181]}
+                        endPosition={position} />
+                    )
+                    }
+                     */}
 
                     {/* <PaperObject */}
                     {/* // startPosition={[-7.897, 21.232, -0.181]}
