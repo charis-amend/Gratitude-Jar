@@ -108,29 +108,39 @@ function LidObject() {
     )
 }
 
-function PaperObject({ startPosition, endPosition, startOpacity, endOpacity, startRotation, endRotation }) {
+// function PaperObject({ startPosition, endPosition, startOpacity, endOpacity, startRotation, endRotation }) {
+function PaperObject({ startPosition, endPosition }) {
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
 
     // animation:
     const [showPaper, setShowPaper] = useState(true) //  default always showing paper
-    const fadeInTime = 500  // half a second for paper to appear from opacity 0->1
-    const restingTime = 3000; // 3 seconds for full opacity where the paper should chill
-    const fadeOutTime = 5000; // 5 seconds to fade out
+    // const fadeInTime = 500  // half a second for paper to appear from opacity 0->1
+    // const restingTime = 3000; // 3 seconds for full opacity where the paper should chill
+    // const fadeOutTime = 5000; // 5 seconds to fade out
 
 
-    const { animatedPosition, animatedOpacity, animatedRotation } = useSpring({
-        from: { position: startPosition, opacity: startOpacity, rotation: startRotation },
-        to: async (next) => {
-            await new Promise((resolve) => setTimeout(resolve, fadeInTime))
-            await next({ position: endPosition, rotation: endRotation });
-            await new Promise((resolve) => setTimeout(resolve, restingTime))
-            await next({ opacity: endOpacity })
-            await new Promise((resolve) => setTimeout(resolve, fadeOutTime));
-            // setShowPaper(false);
-            await next({ position: startPosition, opacity: startOpacity, rotation: startRotation });
-            // setShowPaper(true);
+    const { position
+        // animatedOpacity, 
+        // animatedRotation 
+    } = useSpring({
+        from: {
+            position: startPosition,
+            // opacity: startOpacity,
+            // rotation: startRotation
         },
-        reset: true,
+        to: { position: endPosition },
+
+        // async (next) => {
+        //     await new Promise((resolve) => setTimeout(resolve, fadeInTime))
+        //     await next({ position: endPosition, rotation: endRotation });
+        //     await new Promise((resolve) => setTimeout(resolve, restingTime))
+        //     await next({ opacity: endOpacity })
+        //     await new Promise((resolve) => setTimeout(resolve, fadeOutTime));
+        //     // setShowPaper(false);
+        //     await next({ position: startPosition, opacity: startOpacity, rotation: startRotation });
+        //     // setShowPaper(true);
+        // },
+        // onRest: () => setShowPaper(false), // Hide the paper after animation completes
     })
 
     const customPaperMaterial = new MeshMatcapMaterial({
@@ -144,99 +154,37 @@ function PaperObject({ startPosition, endPosition, startOpacity, endOpacity, sta
     });
 
     return (
-        <animated.group
-            position={animatedPosition}
-            rotation={animatedRotation}
+        // <animated.group
+        //     position={position}
+        // // rotation={animatedRotation}
+        // >
+        <group
+            dispose={null}
+            scale={2}
+            position={position}
         >
-            <group
-                dispose={null}
-                scale={2}
-            >
-                <group name="finalpapergltf">
-                    <group name="Folded_Paperobj" scale={0.1}>
-                        <animated.mesh
-                            name="Map07"
-                            geometry={nodes.Map07.geometry}
-                            material={[customPaperMaterial, animatedOpacity]}
-                        />
-                    </group>
+            <group name="finalpapergltf">
+                <group name="Folded_Paperobj" scale={0.1}>
+                    <mesh
+                        name="Map07"
+                        geometry={nodes.Map07.geometry}
+                        material={customPaperMaterial}
+                    />
                 </group>
             </group>
-        </animated.group>
+        </group>
+        // </animated.group>
 
     )
 }
 
 
-
-function Scene() {
-
-    return (
-        <>
-            <OrbitControls
-                enableZoom={true}
-                enablePan={true}
-                enableRotate={true}
-            />
-            <EnvironmentMap background="black" />
-            {/* <primitive object={roomTexture} attach="background" /> */}
-
-            <spotLight
-                name="SpotLight"
-                intensity={20}
-                angle={0.444}
-                penumbra={1}
-                decay={2}
-                distance={2}
-                position={[26.709, 34.772, 2.75]}
-                rotation={[0.111, 0.048, 1.016]}
-                scale={[39.767, 102.189, 209.574]}
-                userData={{ name: "SpotLight" }}
-            />
-            <directionalLight
-                name="DirectionalLight"
-                intensity={5}
-                decay={2}
-                color="#fffaeb"
-                position={[-13.409, 48.408, -0.96]}
-                userData={{ name: "DirectionalLight" }}
-            />
-            <directionalLight
-                name="DirectionalLightFromSide"
-                intensity={5}
-                decay={2}
-                position={[-11.225, 13.52, -17.363]}
-                rotation={[-1.168, 0, 0.04]}
-                scale={10.927}
-                userData={{ name: "DirectionalLightFromSide" }}
-            />
-            <pointLight
-                name="PointLight"
-                intensity={20}
-                decay={2}
-                color="0xd2bdb1"
-                position={[7.648, 13.877, 28.447]}
-                rotation={[-2.318, 1.041, -2.644]}
-                userData={{ name: "PointLight" }}
-            />
-
-            <JarObject />
-            <LidObject />
-            <PaperObject
-                startPosition={[-7.897, 21.232, -0.181]}
-                // startRotation={[0, 0, 0]}
-                // startOpacity={1}
-                endPosition={[1.890, 1.213, 0.397]}
-            // endRotation={[13.20, 25.91, 142.91]}
-            // endOpacity={0}
-            />
-
-        </>
-    )
-
-}
 
 export default function GlassJar() {
+    // const [animatePaper, setAnimatePaper] = useState(false);
+    // function handleButtonClick() {
+    //     setAnimatePaper(!animatePaper);
+    // };
 
     return (
         <>
@@ -257,9 +205,143 @@ export default function GlassJar() {
                         visible: true,
                     }}>
                 <Suspense fallback={<Loader />}>
-                    <Scene />
+                    <OrbitControls
+                        enableZoom={true}
+                        enablePan={true}
+                        enableRotate={true}
+                    />
+                    <EnvironmentMap background="white" />
+                    {/* <primitive object={roomTexture} attach="background" /> */}
+
+                    <spotLight
+                        name="SpotLight"
+                        intensity={20}
+                        angle={0.444}
+                        penumbra={1}
+                        decay={2}
+                        distance={2}
+                        position={[26.709, 34.772, 2.75]}
+                        rotation={[0.111, 0.048, 1.016]}
+                        scale={[39.767, 102.189, 209.574]}
+                        userData={{ name: "SpotLight" }}
+                    />
+                    <directionalLight
+                        name="DirectionalLight"
+                        intensity={5}
+                        decay={2}
+                        color="#fffaeb"
+                        position={[-13.409, 48.408, -0.96]}
+                        userData={{ name: "DirectionalLight" }}
+                    />
+                    <directionalLight
+                        name="DirectionalLightFromSide"
+                        intensity={5}
+                        decay={2}
+                        position={[-11.225, 13.52, -17.363]}
+                        rotation={[-1.168, 0, 0.04]}
+                        scale={10.927}
+                        userData={{ name: "DirectionalLightFromSide" }}
+                    />
+                    <pointLight
+                        name="PointLight"
+                        intensity={20}
+                        decay={2}
+                        color={0xd2bdb1}
+                        position={[7.648, 13.877, 28.447]}
+                        rotation={[-2.318, 1.041, -2.644]}
+                        userData={{ name: "PointLight" }}
+                    />
+
+                    <JarObject />
+                    <LidObject />
+                    {/* <button
+                        onClick={handleButtonClick}>Animate Paper</button>
+                    {animatePaper && 
+                     */}
+                    <PaperObject
+                        startPosition={[-7.897, 21.232, -0.181]}
+                        endPosition={[1.890, 1.213, 0.397]} />
+
+                    {/* <PaperObject */}
+                    {/* // startPosition={[-7.897, 21.232, -0.181]}
+                    // startRotation={[0, 0, 0]}
+                    // startOpacity={1}
+                    // endPosition={[1.890, 1.213, 0.397]}
+                    // endRotation={[13.20, 25.91, 142.91]}
+                    // endOpacity={0} */}
+                    {/* /> */}
                 </Suspense>
             </Canvas >
         </>
     );
 }
+
+
+
+
+// function Scene() {
+
+//     return (
+//         <>
+//             <OrbitControls
+//                 enableZoom={true}
+//                 enablePan={true}
+//                 enableRotate={true}
+//             />
+//             <EnvironmentMap background="white" />
+//             {/* <primitive object={roomTexture} attach="background" /> */}
+
+//             <spotLight
+//                 name="SpotLight"
+//                 intensity={20}
+//                 angle={0.444}
+//                 penumbra={1}
+//                 decay={2}
+//                 distance={2}
+//                 position={[26.709, 34.772, 2.75]}
+//                 rotation={[0.111, 0.048, 1.016]}
+//                 scale={[39.767, 102.189, 209.574]}
+//                 userData={{ name: "SpotLight" }}
+//             />
+//             <directionalLight
+//                 name="DirectionalLight"
+//                 intensity={5}
+//                 decay={2}
+//                 color="#fffaeb"
+//                 position={[-13.409, 48.408, -0.96]}
+//                 userData={{ name: "DirectionalLight" }}
+//             />
+//             <directionalLight
+//                 name="DirectionalLightFromSide"
+//                 intensity={5}
+//                 decay={2}
+//                 position={[-11.225, 13.52, -17.363]}
+//                 rotation={[-1.168, 0, 0.04]}
+//                 scale={10.927}
+//                 userData={{ name: "DirectionalLightFromSide" }}
+//             />
+//             <pointLight
+//                 name="PointLight"
+//                 intensity={20}
+//                 decay={2}
+//                 color="0xd2bdb1"
+//                 position={[7.648, 13.877, 28.447]}
+//                 rotation={[-2.318, 1.041, -2.644]}
+//                 userData={{ name: "PointLight" }}
+//             />
+
+//             <JarObject />
+//             <LidObject />
+//             <PaperObject
+//             // startPosition={[-7.897, 21.232, -0.181]}
+//             // startRotation={[0, 0, 0]}
+//             // startOpacity={1}
+//             // endPosition={[1.890, 1.213, 0.397]}
+//             // endRotation={[13.20, 25.91, 142.91]}
+//             // endOpacity={0}
+//             />
+
+//         </>
+//     )
+
+// }
