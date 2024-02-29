@@ -25,6 +25,9 @@ module.exports = {
         '5000': '5000ms',
 
       },
+      fontSize: {
+        "4px": "xxs",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

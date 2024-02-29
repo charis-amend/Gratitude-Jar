@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "/components/GratitudeStatementContainer/GratitudeStatementContainer.module.css";
+@import "/components/Arrows/Arrows.module.css";
 
 :root {
   /* CSS HEX */
@@ -31,7 +31,6 @@
     margin: 0; /* Center content horizontally */
     padding: 20px; /* Increase padding for wider screens */
     color: whitesmoke; /* Dark text color */
-
   }
 }
 
