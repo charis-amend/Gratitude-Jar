@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react"
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForGratitudeStatement }) {
+export default function GratitudeForm({ onSubmit, dateFormSubmission, setAnimatePaper }) {
     const [showForm, setShowForm] = useState(false) // hide & show form with Add Gratitude Button
     const [showMaxLengthMessage, setShowMaxLengthMessage] = useState(false)
     const [submitted, setSubmitted] = useState(false);
@@ -17,7 +17,8 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, userIdForG
         setShowForm(false) // hiding form again
         setSubmitted(true); // Show submitted message
         console.log("successfully submitted gratitude statement clientside and backendside // gratitudeStatementData:", gratitudeStatementData)
-
+        // Trigger animation in GlassJar component
+        setAnimatePaper(true);
         setTimeout(() => {
             setSubmitted(false);
         }, 3000); // 3s

@@ -4,11 +4,11 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, Canvas } from "@react-three/fiber";
 import { EnvironmentMap, OrbitControls, useMatcapTexture } from '@react-three/drei'
 import React from "react";
+import { useEffect } from 'react';
 import { Html, useProgress } from "@react-three/drei";
 import Image from 'next/image';
 import { BackSide, DoubleSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
 import { useSpring, animated } from '@react-spring/three'
-import AnimationControl from './AnimationControl';
 
 import * as THREE from "three";
 import { TextureLoader } from 'three';
@@ -232,14 +232,18 @@ function Lights() {
     )
 }
 
-export default function GlassJar() {
-    const [animatePaper, setAnimatePaper] = useState(false);
+export default function GlassJar({ animatePaper }) {
+    const [animationTriggered, setAnimationTriggered] = useState(false);
     // const [animatePaper, setAnimatePaper] = useState([[0.890, -6.613, 0.397]]);
 
+    // animation only when animationTriggered AND the animatePaper state from index.js parent
+    useEffect(() => {
+        if (animatePaper && !animationTriggered) {
+            setAnimationTriggered(true);
+        }
+    }, [animatePaper, animationTriggered]);
 
-    function handleAddingStatementAnimationClick() {
-        setAnimatePaper(!animatePaper);
-    };
+
 
     return (
         <>
@@ -299,7 +303,8 @@ export default function GlassJar() {
                     {/* /> */}
                 </Suspense>
             </Canvas >
-            <AnimationControl onAnimate={handleAddingStatementAnimationClick} />
+            {/* <button onClick={handleAnimationPaper}
+                className="animationbutton border-solid border-2 w-20 h-20 justify-center place-self-center align-middle">Animate Paper</button> */}
         </>
     );
 }
