@@ -237,7 +237,7 @@ export default function GlassJar() {
     // const [animatePaper, setAnimatePaper] = useState([[0.890, -6.613, 0.397]]);
 
 
-    function handleRandomButtonClick() {
+    function handleAddingStatementAnimationClick() {
         setAnimatePaper(!animatePaper);
     };
 
@@ -299,7 +299,7 @@ export default function GlassJar() {
                     {/* /> */}
                 </Suspense>
             </Canvas >
-            <AnimationControl onAnimate={handleButtonClick} />
+            <AnimationControl onAnimate={handleAddingStatementAnimationClick} />
         </>
     );
 }
