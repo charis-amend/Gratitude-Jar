@@ -24,6 +24,7 @@ export default function Home() {
   const dateCreation = new Date().toDateString();
   const { mutate } = useSWR(userId ? `/api/${userId}` : null, fetcher);
 
+
   async function addingGratitudeStatement(gratitudeStatementData) {
     const response = await fetch(`/api/${userId}`, {
       method: "POST",
