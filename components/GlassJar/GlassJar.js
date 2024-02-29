@@ -144,8 +144,8 @@ function PaperObject({ startPosition, endPosition }) {
     })
 
     const customPaperMaterial = new MeshMatcapMaterial({
-        ...materials.Map07,
-        color: 0xd7e7e1,
+        ...materials.MeshMatcapMaterial,
+        color: 0xEFE8CE,
         side: FrontSide,
         transparent: true,
         depthTest: true,
