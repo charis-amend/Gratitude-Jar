@@ -224,11 +224,11 @@ function Scene() {
             <LidObject />
             <PaperObject
                 startPosition={[-7.897, 21.232, -0.181]}
-                startRotation={[0, 0, 0]}
-                startOpacity={1}
+                // startRotation={[0, 0, 0]}
+                // startOpacity={1}
                 endPosition={[1.890, 1.213, 0.397]}
-                endRotation={[13.20, 25.91, 142.91]}
-                endOpacity={0}
+            // endRotation={[13.20, 25.91, 142.91]}
+            // endOpacity={0}
             />
 
         </>
@@ -263,80 +263,3 @@ export default function GlassJar() {
         </>
     );
 }
-
-// old object with jar, lid and paper -- now destructured
-// function GlassJarObject({ props }) {
-// const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
-// const customMaterialJar = new MeshPhysicalMaterial({
-//     ...materials.material_1, // Copy existing material properties
-//     depthTest: true, // Override depthTest to false so glass = transparent
-//     depthWrite: false, // Override depthTest to false so glass = transparent
-//     side: BackSide,
-//     blending: NormalBlending,
-//     transparent: true,
-//     reflectivity: 2.1,
-// });
-// const customMaterialLid = new MeshStandardMaterial({
-//     ...materials.material, // Copy existing material properties
-//     depthTest: true, // Override depthTest to true
-//     depthWrite: true,
-// });
-// Creating a new instance of MestmatCap material to overwrite existing properties
-// const customPaperMaterial = new MeshMatcapMaterial({
-//     ...materials.Map07,
-//     color: 0xffffff,
-//     side: FrontSide,
-//     transparent: false,
-//     depthTest: true,
-//     depthWrite: true,
-//     blending: NormalBlending,
-
-// });
-
-// return (
-// <group {...props}
-//     dispose={null}
-//     scale={2}
-// >
-//     <group
-//         name="Sketchfab_model"
-//         position={[0, 0, 0]}
-//     >
-//         <group
-//             name="Collada_visual_scene_group"
-//             position={[0, 0, 0]}
-//             scale={4}
-//         >
-//             {/* jar: */}
-//             <mesh
-//                 name="defaultMaterial"
-//                 castShadow
-//                 receiveShadow
-//                 geometry={nodes.defaultMaterial.geometry}
-//                 material={customMaterialJar}
-//                 userData={{ name: "defaultMaterial" }}
-//             />
-
-//             {/* top or  lid: */}
-//             <mesh
-//                 name="defaultMaterial_1"
-//                 castShadow
-//                 receiveShadow
-//                 geometry={nodes.defaultMaterial_1.geometry}
-//                 material={customMaterialLid}
-//                 userData={{ name: "defaultMaterial" }}
-//             />
-//         </group>
-//     </group>
-
-// <group name="finalpapergltf" position={[6.897, 12.232, -0.181]}>
-//     <group name="Folded_Paperobj" scale={0.1}>
-//         <mesh
-//             name="Map07"
-//             geometry={nodes.Map07.geometry}
-//             material={customPaperMaterial}
-//             rotation={[0, 0, 0.682]}
-//         />
-//     </group>
-//     </group>
-// </group>)}
