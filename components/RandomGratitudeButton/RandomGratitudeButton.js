@@ -24,7 +24,7 @@ export default function RandomGratitudeButton() {
 
             if (randomGratitudeStatement) {
                 setRandomGratitudeStatement(randomGratitudeStatement);
-                toggleStatementBox()
+                setShowStatement(true)
             }
 
         } catch (error) {
@@ -34,7 +34,7 @@ export default function RandomGratitudeButton() {
     }
 
     // Function to handle closing the GratitudeStatementContainer
-    function toggleStatementBox() {
+    function handleClose() {
         setShowStatement(false);
         setRandomGratitudeStatement(null); // resets the randomGratitudeStatement state when closing
     }

@@ -3,18 +3,14 @@ import styles from "./GratitudeStatementContainer.module.css";
 
 export default function GratitudeStatementContainer({ randomGratitudeStatement, onClose }) {
     const [closeContainer, setCloseContainer] = useState(false)
+    const [showViewBox, setShowViewBox] = useState(false);
 
     if (!randomGratitudeStatement) {
         return null;
     }
-
     const handleClose = () => {
-        setCloseContainer(false); // Toggle the state when the close button is clicked
-        setTimeout(() => {
-            // Remove the viewbox entirely after transitions are complete
-            onClose(); // Call the onClose function provided as a prop
-        }, 1100);
-
+        setCloseContainer(!closeContainer); // Toggle the state when the close button is clicked
+        onClose();
     };
 
 
@@ -26,7 +22,7 @@ export default function GratitudeStatementContainer({ randomGratitudeStatement, 
                 <div className="outside-viewbox z-0 top-0 left-0 fixed h-screen w-screen flex"
                     onClick={handleClose}>
                     <div
-                        className={`${styles.statementBox} ${!closeContainer ? 'show' : ''}`}>
+                        className={`${styles.statementBox}`}>
 
                         {/* <button
                             type="button"

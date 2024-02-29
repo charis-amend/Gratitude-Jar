@@ -1,4 +1,3 @@
-/* 
 .viewbox {
   z-index: 10;
   position: fixed;
@@ -24,8 +23,8 @@
   height: 180px;
   color: black;
   font-size: 12px;
-} */
-
+}
+/* 
 .statementBox {
   z-index: 10;
   position: fixed;
@@ -34,7 +33,7 @@
   margin-top: 60px;
   right: 50px;
   left: 50px;
-  bottom: -50px; /* Position initially off-screen */
+  bottom: -50px; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,10 +50,10 @@
   font-size: 12px;
   opacity: 0.3;
   transition: opacity 0.7s ease-in-out,
-    /* Fade in/out duration */ bottom 0.7s ease-in-out,
-    /* Move up/down duration */ transform 0.1s ease-in-out 0.1s; /* Shrink delay */
-}
-
+     bottom 0.7s ease-in-out,
+     transform 0.1s ease-in-out 0.1s; 
+} */
+/* 
 .viewbox.show {
   opacity: 1;
   bottom: 250px;
@@ -63,4 +62,4 @@
 .viewbox.closing {
   opacity: 0;
   transform: scale(0.8);
-}
+} */
