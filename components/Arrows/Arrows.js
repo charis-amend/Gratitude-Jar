@@ -11,8 +11,8 @@ export default function Arrows() {
                     priority
                     src={"/arrowsfinger3.png"}
                     alt="placeholder-glasjar"
-                    width={60}
-                    height={60}
+                    width={70}
+                    height={70}
                 />
             </div>
         </>

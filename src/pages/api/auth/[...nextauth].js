@@ -98,7 +98,7 @@ function html({ url, host, email }) {
         </td>
       </tr>
     </table>
-    <table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${mainBackgroundColor}; max-width: 600px; margin: auto; border-radius: 10px;">
+    <table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${mainBackgroundColor}; max-width: 600px; margin: auto; border-radius: 10px 10px 0 0;">
       <tr>
         <td align="center" style="padding: 10px 0px 0px 0px; font-size: 13px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
          
