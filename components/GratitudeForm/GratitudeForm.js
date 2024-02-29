@@ -19,6 +19,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, triggerAni
         setSubmitted(true); // Show submitted message
         console.log("successfully submitted gratitude statement clientside and backendside // gratitudeStatementData:", gratitudeStatementData)
         triggerAnimationPaper()
+
         setTimeout(() => {
             setSubmitted(false);
         }, 3000); // 3s
@@ -45,6 +46,7 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, triggerAni
             {showForm ?
                 <form
                     className="form w-full max-w-sm mb-5 animate-fade-in transition-all animatduration-1000 delay-150 ease-in-out"
+
                     onSubmit={submittingGratitudeForm}>
                     <div className="flex items-center border-b border-white py-2 bg-transparent">
                         <label htmlFor="formTextInput">

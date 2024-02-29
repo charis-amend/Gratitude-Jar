@@ -5,6 +5,7 @@ export default function GratitudeStatementContainer({ randomGratitudeStatement, 
     const [closeContainer, setCloseContainer] = useState(false)
     const [showViewBox, setShowViewBox] = useState(false);
 
+
     if (!randomGratitudeStatement) {
         return null;
     }
