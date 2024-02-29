@@ -9,6 +9,7 @@ import GlassJar from "../../components/GlassJar/GlassJar";
 import GratitudeForm from "../../components/GratitudeForm/GratitudeForm";
 import RandomGratitudeButton from "../../components/RandomGratitudeButton/RandomGratitudeButton";
 import SignInButton from "../../components/SignInButton/SignInButton";
+import Arrows from "../../components/Arrows/Arrows";
 // -------------------------
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -52,7 +53,11 @@ export default function Home() {
             <Login />
           </div>
 
+          <div className="arrows-section z-50 fixed top-1/3 left-1/2 h-10 inset-1/4 w-1/6 flex justify-center items-center">
+            <Arrows />
+          </div>
           {/* lower section: */}
+
           <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-1 z-5 p-4 flex flex-col justify-center items-center">
             <RandomGratitudeButton />
             <GratitudeForm
