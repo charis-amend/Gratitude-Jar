@@ -1,6 +1,9 @@
 import { Canvas } from "@react-three/fiber";
+import { ScrollControls, OrbitControls } from "@react-three/drei";
 import Experience from "../../components/GlassJar/Experience";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { Suspense } from "react";
+import Loader from "../../components/GlassJar/Loader";
 
 export default function BreakingPage() {
     return (
@@ -20,7 +23,13 @@ export default function BreakingPage() {
                             frustumCulled: true,
                             visible: true,
                         }}>
-                    <Experience />
+                    <Suspense fallback={<Loader />}>
+                        <OrbitControls enableZoom={false} />
+                        {/* need to change scroll controls later!!!! */}
+                        <ScrollControls pages={4}>
+                            <Experience />
+                        </ScrollControls>
+                    </Suspense>
                 </Canvas>
 
                 <button

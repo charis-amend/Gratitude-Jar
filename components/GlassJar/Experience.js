@@ -4,8 +4,8 @@ import BreakingJar from "./BreakingJar";
 export default function Experience() {
     return (<>
 
-        <OrbitControls enableZoom={true} />
-        <Float floatIntensity={2} speed={3}>
+        <OrbitControls enableZoom={false} />
+        <Float floatIntensity={2} speed={1}>
 
             <BreakingJar
                 className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
