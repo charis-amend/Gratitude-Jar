@@ -7,7 +7,7 @@ import { useSpring, animated } from '@react-spring/three'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, Canvas } from "@react-three/fiber";
 const textureLoader = new THREE.TextureLoader();
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, Float } from '@react-three/drei'
 import { Html, useProgress } from "@react-three/drei";
 import { BackSide, DoubleSide, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
 
@@ -259,26 +259,28 @@ export default function GlassJar({ animatePaper }) {
                         visible: true,
                     }}>
                 <Suspense fallback={<Loader />}>
-                    <OrbitControls
-                        enableZoom={true}
-                        enablePan={true}
-                        enableRotate={true}
-                        autoRotate
-                    />
+                    <Float floatIntensity={2} speed={1}>
 
-                    <Lights />
+                        <OrbitControls
+                            enableZoom={true}
+                            enablePan={true}
+                            enableRotate={true}
+                            autoRotate
+                        />
 
-                    <JarObject />
-                    <LidObject />
+                        <Lights />
+
+                        <JarObject />
+                        <LidObject />
 
 
-                    {animatePaper &&
-                        <PaperObject
-                            startPosition={[-7.897, 21.232, -0.181]}
-                            endPosition={[0.890, -7.613, 0.397]} />
-                    }
+                        {animatePaper &&
+                            <PaperObject
+                                startPosition={[-7.897, 21.232, -0.181]}
+                                endPosition={[0.890, -7.613, 0.397]} />
+                        }
 
-                    {/* 
+                        {/* 
                     {animatePaper && animatePaper.map((position) => <PaperObject
                         startPosition={[-7.897, 21.232, -0.181]}
                         endPosition={position} />
@@ -286,14 +288,15 @@ export default function GlassJar({ animatePaper }) {
                     }
                      */}
 
-                    {/* <PaperObject */}
-                    {/* // startPosition={[-7.897, 21.232, -0.181]}
+                        {/* <PaperObject */}
+                        {/* // startPosition={[-7.897, 21.232, -0.181]}
                     // startRotation={[0, 0, 0]}
                     // startOpacity={1}
                     // endPosition={[1.890, 1.213, 0.397]}
                     // endRotation={[13.20, 25.91, 142.91]}
                     // endOpacity={0} */}
-                    {/* /> */}
+                        {/* /> */}
+                    </Float>
                 </Suspense>
             </Canvas >
             {/* <button

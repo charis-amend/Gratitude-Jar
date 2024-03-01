@@ -37,10 +37,9 @@ function Loader() {
   );
 };
 
-function JarObjectBreaking() {
-  const { nodes, materials } = useLoader(GLTFLoader, '/breakingJar.glb', {
-    dracoLoader: new DRACOLoader(),
-  })
+
+export default function BreakingJar() {
+  const { nodes, materials } = useLoader(GLTFLoader, '/breakingJar0103.gltf')
   // Creating a new instance of MeshStandardMaterial with depthTest overridden
   const materialBreakingJar = new MeshPhysicalMaterial({
     ...materials.material_1, // Copy existing material properties
@@ -51,6 +50,8 @@ function JarObjectBreaking() {
     transparent: true,
     reflectivity: 2.1,
   });
+
+
 
   return (
     <group
@@ -151,105 +152,23 @@ function JarObjectBreaking() {
   )
 }
 
-function LidObject() {
-  const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
-  const customMaterialLid = new MeshStandardMaterial({
-    ...materials.material, // Copy existing material properties
-    depthTest: true, // Override depthTest to true
-    depthWrite: true,
-  });
-  return (
-    <group position={[-0.471, 1.491, 0.736]} rotation={[-Math.PI / 2, 0, 0]}>
-      <group position={[0.532, 0.868, 7.115]} rotation={[Math.PI / 2, 0, 0]} scale={7.915}>
-        <mesh geometry={nodes.defaultMaterial.geometry} material={customMaterialLid} />
-        <mesh geometry={nodes.defaultMaterial_1.geometry} material={customMaterialLid} />
-      </group>
-    </group>
-  )
-}
+// function LidObject() {
+//   const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
+//   const customMaterialLid = new MeshStandardMaterial({
+//     ...materials.material, // Copy existing material properties
+//     depthTest: true, // Override depthTest to true
+//     depthWrite: true,
+//   });
+//   return (
+//     <group position={[-0.471, 1.491, 0.736]} rotation={[-Math.PI / 2, 0, 0]}>
+//       <group position={[0.532, 0.868, 7.115]} rotation={[Math.PI / 2, 0, 0]} scale={7.915}>
+//         <mesh geometry={nodes.defaultMaterial.geometry} material={customMaterialLid} />
+//         <mesh geometry={nodes.defaultMaterial_1.geometry} material={customMaterialLid} />
+//       </group>
+//     </group>
+//   )
+// }
 
-function Lights() {
 
-  return (
-    <>
-      <spotLight
-        name="SpotLight"
-        intensity={20}
-        angle={0.444}
-        penumbra={1}
-        decay={2}
-        distance={2}
-        position={[26.709, 34.772, 2.75]}
-        rotation={[0.111, 0.048, 1.016]}
-        scale={[39.767, 102.189, 209.574]}
-        userData={{ name: "SpotLight" }}
-      />
-      <directionalLight
-        name="DirectionalLight"
-        intensity={5}
-        decay={2}
-        color="#fffaeb"
-        position={[-13.409, 48.408, -0.96]}
-        userData={{ name: "DirectionalLight" }}
-      />
-      <directionalLight
-        name="DirectionalLightFromSide"
-        intensity={5}
-        decay={2}
-        position={[-11.225, 13.52, -17.363]}
-        rotation={[-1.168, 0, 0.04]}
-        scale={10.927}
-        userData={{ name: "DirectionalLightFromSide" }}
-      />
-      <pointLight
-        name="PointLight"
-        intensity={20}
-        decay={2}
-        color={0xd2bdb1}
-        position={[7.648, 13.877, 28.447]}
-        rotation={[-2.318, 1.041, -2.644]}
-        userData={{ name: "PointLight" }}
-      />
-    </>
-  )
-}
 
-export default function BreakingJar() {
-
-  return (
-    <>
-      <Canvas
-        plugins={[new DRACOLoader()]}
-        shadows
-        camera={
-          {
-            position: [0, 10, 25], // camera position for scene and jar
-            fov: 50,
-            scale: [1, 1, 1],
-            rotation: [-13.7, 2.3, 0.58],
-            far: 1000,
-            near: 0.01,
-            frustumCulled: true,
-            visible: true,
-          }}>
-        <Suspense fallback={<Loader />}>
-          <OrbitControls
-            enableZoom={true}
-            enablePan={true}
-            enableRotate={true}
-            autoRotate
-          />
-          <Lights />
-          <JarObjectBreaking />
-          <LidObject />
-
-        </Suspense>
-      </Canvas >
-      <button
-        // onClick={handleAnimationPaper}
-        className="animationbutton border-solid border-2 w-20 h-20 justify-center place-self-center align-middle">
-        Animate Break</button>
-    </>
-  );
-}
 
