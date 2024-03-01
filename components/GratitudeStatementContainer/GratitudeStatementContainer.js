@@ -20,7 +20,7 @@ export default function GratitudeStatementContainer({ randomGratitudeStatement, 
     } else {
         return (
             <>
-                <div className="outside-viewbox z-0 top-0 left-0 fixed h-screen w-screen flex"
+                <div className="outside-viewbox z-0 top-0 left-0 fixed h-screen w-screen flex flex-col justify-center"
                     onClick={handleClose}>
 
                     <div

@@ -6,7 +6,7 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { Suspense } from "react";
 import Loader from "../../components/GlassJar/Loader";
 import { useState } from "react";
-
+import Link from "next/link";
 
 export default function BreakingPage() {
     // trigger for animation:
@@ -16,49 +16,57 @@ export default function BreakingPage() {
     };
     return (
         <>
-            <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">  {/* css gradient background: */}
-                <Canvas
-                    className="canvas-no-scrolling"
-                    plugins={[new DRACOLoader()]}
-                    shadows
-                    camera={
-                        {
-                            position: [0, 10, 25], // camera position for scene and jar
-                            fov: 50,
-                            scale: [1, 1, 1],
-                            rotation: [-13.7, 2.3, 0.58],
-                            far: 1000,
-                            near: 0.01,
-                            frustumCulled: true,
-                            visible: true,
-                        }}>
-                    <Suspense fallback={<Loader />}>
-                        <ScrollControls pages={4}>
-                            <OrbitControls enableZoom={false} />
-                            <Float floatIntensity={2} speed={1}>
+            <div className="backgroundapp z-0 top-0 left-0 fixed h-screen w-screen flex">
 
-                                <BreakingJar
-                                    className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
-                                    clickState={clickState}
-                                />
-                                <Lights />
 
-                            </Float>
-                            {/* <LidObject /> */}
-
-                        </ScrollControls>
-                    </Suspense>
-                </Canvas>
-                {/* 
-                <button
-                    // onClick={handleAnimationPaper}
-                    className="animationbutton border-solid border-2 w-20 h-20 justify-center place-self-center align-middle"
-                    onClick={handleClickBreak}
+                <Link
+                    href="/"
                 >
-                    Animate Break</button> */}
+                    <div className="back-button-section z-50 fixed top-5 left-1 h-10 inset-1/4 w-1/6 flex justify-center items-center"
+                    >
+                        <button
+                            className="backbutton button place-self-end text-lg w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-xl border-2 border-Grey-jar transition-all duration-400"
+                        >🔙</button>
+                    </div>
+                </Link >
 
+                <div
+                    onClick={handleClickBreak}
+                    className="shatter-div z-40 top-0 left-0 fixed h-screen w-screen flex"
+                >
+                    <Canvas
+                        frameloop="demand"
+                        className="canvas-no-scrolling"
+                        plugins={[new DRACOLoader()]}
+                        shadows
+                        camera={
+                            {
+                                position: [0, 20, 24], // camera position for jar
+                                fov: 50,
+                                scale: [1, 1, 1],
+                                rotation: [0.7, 13, 3],
+                                far: 1000,
+                                near: 0.01,
+                                frustumCulled: true,
+                                visible: true,
+                            }}>
+                        <Suspense fallback={<Loader />}>
+                            <ScrollControls pages={1}>
+                                <OrbitControls enableZoom={false} />
+                                <Float floatIntensity={3} speed={2}>
 
-            </div>
+                                    <BreakingJar
+                                        className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
+                                        clickState={clickState}
+                                    />
+                                    <Lights />
+                                </Float>
+
+                            </ScrollControls>
+                        </Suspense>
+                    </Canvas>
+                </div>
+            </div >
 
         </>)
 }

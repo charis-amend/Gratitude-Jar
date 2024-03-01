@@ -12,9 +12,10 @@ import SignInButton from "../../components/SignInButton/SignInButton";
 import Arrows from "../../components/Arrows/Arrows";
 // -------------------------
 import { useSession } from "next-auth/react";
-import Image from "next/image";
+import Link from "next/link";
 import useSWR from "swr";
 import { useState } from "react";
+import ShatterButton from "../../components/ShatterButton/ShatterButton";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 
@@ -49,6 +50,13 @@ export default function Home() {
             className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
             animatePaper={animatePaper}
           />
+
+          <Link href="/BreakingPage">
+            <div className="shatter-section z-50 fixed top-5 left-1 h-10 inset-1/4 w-1/6 flex justify-center items-center"
+            >
+              <ShatterButton />
+            </div>
+          </Link>
           <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
             <Login />
           </div>
