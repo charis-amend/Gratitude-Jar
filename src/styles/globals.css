@@ -67,6 +67,9 @@
     #141414 100%
   );
 }
+.canvas-no-scrolling {
+  touch-action: auto !important;
+}
 
 .animate-fade-out {
   opacity: 1;

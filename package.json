@@ -27,7 +27,8 @@
     "react-dom": "^18.2.0",
     "sass": "^1.71.1",
     "swr": "^2.2.5",
-    "three": "^0.161.0"
+    "three": "^0.161.0",
+    "three-stdlib": "^2.29.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",

@@ -236,7 +236,7 @@ export default function GlassJar({ animatePaper }) {
                         visible: true,
                     }}>
                 <Suspense fallback={<Loader />}>
-                    <Float floatIntensity={2} speed={1}>
+                    <Float floatIntensity={1} speed={1}>
 
                         <OrbitControls
                             enableZoom={true}
