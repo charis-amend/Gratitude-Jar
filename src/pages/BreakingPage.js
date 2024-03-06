@@ -36,27 +36,30 @@ export default function BreakingPage() {
                 >
                     <Canvas
                         frameloop="demand"
-                        className="canvas-no-scrolling"
+                        // className="canvas-no-scrolling"
                         plugins={[new DRACOLoader()]}
                         shadows
                         camera={
                             {
-                                position: [0, 20, 24], // camera position for jar
+                                position: [0, 10, 25], // camera position for  breaking jar
                                 fov: 50,
                                 scale: [1, 1, 1],
-                                rotation: [0.7, 13, 3],
-                                far: 1000,
+                                rotation: [-13.7, 2.3, 0.58],
+                                far: 700,
                                 near: 0.01,
                                 frustumCulled: true,
                                 visible: true,
                             }}>
                         <Suspense fallback={<Loader />}>
-                            <ScrollControls pages={1}>
-                                <OrbitControls enableZoom={false} />
-                                <Float floatIntensity={3} speed={2}>
+                            <ScrollControls pages={3}>
+                                <OrbitControls
+                                    enableZoom={false}
+                                    autoRotate
+                                />
+                                <Float floatIntensity={2} speed={2}>
 
                                     <BreakingJar
-                                        className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
+                                        // className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
                                         clickState={clickState}
                                     />
                                     <Lights />

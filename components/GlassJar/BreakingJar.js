@@ -24,7 +24,7 @@ export default function BreakingJar({ clickState }) {
     reflectivity: 2.1,
   });
   const jarGroup = useRef();
-  const distance = 5;
+  const distance = 15;
   const enableRotation = true;
 
 
@@ -122,6 +122,7 @@ export default function BreakingJar({ clickState }) {
       <group
         dispose={null}
         ref={jarGroup}
+        position={[0, -10, 0]}
       >
         <directionalLight name="DirectionalLight" intensity={5} decay={2} color="#fffaeb" position={[-13.409, 48.408, -0.96]} userData={{ name: 'DirectionalLight' }} />
         <directionalLight name="DirectionalLightFromSide" intensity={5} decay={2} position={[8.558, 41.288, 25.153]} rotation={[-1.724, -0.007, 0.023]} scale={10.927} userData={{ name: 'DirectionalLightFromSide' }} />
@@ -217,28 +218,47 @@ export default function BreakingJar({ clickState }) {
         <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materialBreakingJar} position={[0.06, 8.605, -0.132]} scale={7.915} userData={{ name: 'defaultMaterial' }} />
       </group>
 
-
+      <LidObject />
 
     </>
   )
 }
 // useGLTF.preload('/breakingJar0103.gltf');
 
-// function LidObject() {
-//   const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
-//   const customMaterialLid = new MeshStandardMaterial({
-//     ...materials.material, // Copy existing material properties
-//     depthTest: true, // Override depthTest to true
-//     depthWrite: true,
-//   });
-//   return (
-//     <group position={[-0.471, 1.491, 0.736]} rotation={[-Math.PI / 2, 0, 0]}>
-//       <group position={[0.532, 0.868, 7.115]} rotation={[Math.PI / 2, 0, 0]} scale={7.915}>
-//         <mesh geometry={nodes.defaultMaterial.geometry} material={customMaterialLid} />
-//         <mesh geometry={nodes.defaultMaterial_1.geometry} material={customMaterialLid} />
-//       </group>
-//     </group>
-//   )
-// }
 
+function LidObject() {
+  const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
+  const customMaterialLid = new MeshStandardMaterial({
+    ...materials.material, // Copy existing material properties
+    depthTest: true, // Override depthTest to true
+    depthWrite: true,
+  });
+  return (
+    <group
+      // {...props}
+      dispose={null}
+      scale={2}
+      position={[0, -1.6, 0]}
+    >
+      <group
+        name="Sketchfab_model"
+        position={[0, 0, 0]}>
+        <group
+          name="Collada_visual_scene_group"
+          position={[0, 0, 0]}
+          scale={4}>
+          {/* top or  lid: */}
+          <mesh
+            name="defaultMaterial_1"
+            castShadow
+            receiveShadow
+            geometry={nodes.defaultMaterial_1.geometry}
+            material={customMaterialLid}
+            userData={{ name: "defaultMaterial" }}
+          />
+        </group>
+      </group>
+    </group>
 
+  )
+}
