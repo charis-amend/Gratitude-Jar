@@ -50,22 +50,23 @@ export default function BreakingPage() {
                                 frustumCulled: true,
                                 visible: true,
                             }}>
+
                         <Suspense fallback={<Loader />}>
                             <ScrollControls pages={3}>
-                                <OrbitControls
-                                    enableZoom={false}
-                                    autoRotate
-                                />
-                                <Float floatIntensity={2} speed={2}>
 
+                                <Float floatIntensity={2} speed={2}>
                                     <BreakingJar
                                         // className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
-                                        clickState={clickState}
-                                    />
+                                        clickState={clickState} />
                                     <Lights />
                                 </Float>
-
                             </ScrollControls>
+
+
+                            <OrbitControls
+                                enableZoom={false}
+                                autoRotate
+                            />
                         </Suspense>
                     </Canvas>
                 </div>
