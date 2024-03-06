@@ -45,7 +45,7 @@ export default function BreakingPage() {
                         camera={
                             {
                                 position: [0, 10, 25], // camera position for  breaking jar
-                                fov: 100,
+                                fov: 50,
                                 scale: [1, 1, 1],
                                 rotation: [-13.7, 2.3, 0.58],
                                 far: 700,
@@ -55,7 +55,7 @@ export default function BreakingPage() {
                             }}>
 
                         <Suspense fallback={<Loader />}>
-                            <Physics debug gravity={[0, -9, 0]}>
+                            <Physics gravity={[0, -9, 0]}>
                                 <ScrollControls pages={3}>
                                     <Float floatIntensity={2} speed={2}>
                                         <BreakingJar
