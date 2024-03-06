@@ -7,6 +7,9 @@ import { Suspense } from "react";
 import Loader from "../../components/GlassJar/Loader";
 import { useState } from "react";
 import Link from "next/link";
+import { Physics } from "@react-three/rapier"
+
+
 
 export default function BreakingPage() {
     // trigger for animation:
@@ -42,7 +45,7 @@ export default function BreakingPage() {
                         camera={
                             {
                                 position: [0, 10, 25], // camera position for  breaking jar
-                                fov: 50,
+                                fov: 100,
                                 scale: [1, 1, 1],
                                 rotation: [-13.7, 2.3, 0.58],
                                 far: 700,
@@ -52,19 +55,21 @@ export default function BreakingPage() {
                             }}>
 
                         <Suspense fallback={<Loader />}>
-                            <ScrollControls pages={3}>
+                            <Physics debug gravity={[0, -9, 0]}>
+                                <ScrollControls pages={3}>
+                                    <Float floatIntensity={2} speed={2}>
+                                        <BreakingJar
+                                            // className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
+                                            clickState={clickState}
 
-                                <Float floatIntensity={2} speed={2}>
-                                    <BreakingJar
-                                        // className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
-                                        clickState={clickState} />
-                                    <Lights />
-                                </Float>
-                            </ScrollControls>
-
+                                        />
+                                        <Lights />
+                                    </Float>
+                                </ScrollControls>
+                            </Physics>
 
                             <OrbitControls
-                                enableZoom={false}
+                                enableZoom={true}
                                 autoRotate
                             />
                         </Suspense>
