@@ -1,42 +1,16 @@
 
-import { Suspense, useState } from 'react'
+import React from "react";
+import { Suspense } from 'react'
+import Image from 'next/image';
+import * as THREE from "three";
+import { useSpring, animated } from '@react-spring/three'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, Canvas } from "@react-three/fiber";
-import { EnvironmentMap, OrbitControls, useMatcapTexture } from '@react-three/drei'
-import React from "react";
-import { useEffect } from 'react';
-import { Html, useProgress } from "@react-three/drei";
-import Image from 'next/image';
-import { BackSide, DoubleSide, FrontSide, MeshMatcapMaterial, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
-import { useSpring, animated } from '@react-spring/three'
-
-import * as THREE from "three";
-import { TextureLoader } from 'three';
 const textureLoader = new THREE.TextureLoader();
-
-function Loader() {
-    const { progress } = useProgress();
-
-    return (
-        <Html>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="text-center">
-                    <Image
-                        priority
-                        src="/preloadedGlasJar.png"
-                        alt="placeholder-glasjar"
-                        width={500}
-                        height={500}
-                    />
-
-                    <p className="text-sm color text-white-100 font-extrabold p-3 justify-items-center">
-                        {progress.toFixed(2)}%
-                    </p>
-                </div>
-            </div>
-        </Html >
-    );
-};
+import { OrbitControls, Float } from '@react-three/drei'
+import { Html, useProgress } from "@react-three/drei";
+import { BackSide, DoubleSide, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
+import Loader from "./Loader";
 
 function JarObject() {
     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
@@ -262,26 +236,28 @@ export default function GlassJar({ animatePaper }) {
                         visible: true,
                     }}>
                 <Suspense fallback={<Loader />}>
-                    <OrbitControls
-                        enableZoom={true}
-                        enablePan={true}
-                        enableRotate={true}
-                        autoRotate
-                    />
+                    <Float floatIntensity={1} speed={1}>
 
-                    <Lights />
+                        <OrbitControls
+                            enableZoom={true}
+                            enablePan={true}
+                            enableRotate={true}
+                            autoRotate
+                        />
 
-                    <JarObject />
-                    <LidObject />
+                        <Lights />
+
+                        <JarObject />
+                        <LidObject />
 
 
-                    {animatePaper &&
-                        <PaperObject
-                            startPosition={[-7.897, 21.232, -0.181]}
-                            endPosition={[0.890, -7.613, 0.397]} />
-                    }
+                        {animatePaper &&
+                            <PaperObject
+                                startPosition={[-7.897, 21.232, -0.181]}
+                                endPosition={[0.890, -7.613, 0.397]} />
+                        }
 
-                    {/* 
+                        {/* 
                     {animatePaper && animatePaper.map((position) => <PaperObject
                         startPosition={[-7.897, 21.232, -0.181]}
                         endPosition={position} />
@@ -289,14 +265,15 @@ export default function GlassJar({ animatePaper }) {
                     }
                      */}
 
-                    {/* <PaperObject */}
-                    {/* // startPosition={[-7.897, 21.232, -0.181]}
+                        {/* <PaperObject */}
+                        {/* // startPosition={[-7.897, 21.232, -0.181]}
                     // startRotation={[0, 0, 0]}
                     // startOpacity={1}
                     // endPosition={[1.890, 1.213, 0.397]}
                     // endRotation={[13.20, 25.91, 142.91]}
                     // endOpacity={0} */}
-                    {/* /> */}
+                        {/* /> */}
+                    </Float>
                 </Suspense>
             </Canvas >
             {/* <button

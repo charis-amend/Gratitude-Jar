@@ -1,17 +1,21 @@
 .viewbox {
   z-index: 10;
   position: fixed;
-  padding: 3px;
+  /* padding: 3px;
   margin: 3px;
   margin-top: 60px;
-  right: 50px;
-  left: 50px;
-  bottom: 250px;
+  right: 50px; */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: center;
   justify-self: center;
-  justify-content: space-between;
+  justify-content: center;
+  justify-items: center;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 
@@ -29,20 +33,23 @@
   /* Animation */
   animation-name: fade-in;
   animation-duration: 1s;
-  /* animation-delay: 0.15s;  */
+  animation-timing-function: ease-in-out;
+  animation-name: fade-out;
+  animation-duration: 1s;
   animation-timing-function: ease-in-out;
 }
 
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(-50px);
+    /* transform: translateY(-50%); */
   }
   to {
     opacity: 0.8;
-    transform: translateY(0);
+    /* transform: translateY(0); */
   }
 }
+
 /* 
 .viewboxLayer {
   background-color: #98b0a9ff;

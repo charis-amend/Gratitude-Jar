@@ -3,6 +3,10 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['three'],
+
+  devIndicators: {
+    buildActivity: false
+  },
   webpack: (config, { isServer }) => {
 
     // Add GLTF loader
