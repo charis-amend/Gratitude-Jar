@@ -11,51 +11,112 @@ import { Suspense, useEffect } from "react";
 import { Box, useGLTF } from "@react-three/drei";
 import { useRef } from "react";
 import { RigidBody } from "@react-three/rapier";
-import Loader from "./Loader";
+import { useSpring, animated } from "@react-spring/three";
+import { Canvas } from "@react-three/fiber";
+import { ScrollControls, OrbitControls } from "@react-three/drei";
+import { Float } from "@react-three/drei";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { Physics } from "@react-three/rapier"
+import Loader from "../../components/GlassJar/Loader";
 
 
-function LidObject() {
+function Lights() {
+
+  return (
+    <>
+      <spotLight
+        name="SpotLight"
+        intensity={20}
+        angle={0.444}
+        penumbra={1}
+        decay={2}
+        distance={2}
+        position={[26.709, 34.772, 2.75]}
+        rotation={[0.111, 0.048, 1.016]}
+        scale={[39.767, 102.189, 209.574]}
+        userData={{ name: "SpotLight" }}
+      />
+      <directionalLight
+        name="DirectionalLight"
+        intensity={5}
+        decay={2}
+        color="#fffaeb"
+        position={[-13.409, 48.408, -0.96]}
+        userData={{ name: "DirectionalLight" }}
+      />
+      <directionalLight
+        name="DirectionalLightFromSide"
+        intensity={5}
+        decay={2}
+        position={[-11.225, 13.52, -17.363]}
+        rotation={[-1.168, 0, 0.04]}
+        scale={10.927}
+        userData={{ name: "DirectionalLightFromSide" }}
+      />
+      <pointLight
+        name="PointLight"
+        intensity={20}
+        decay={2}
+        color={0xd2bdb1}
+        position={[7.648, 13.877, 28.447]}
+        rotation={[-2.318, 1.041, -2.644]}
+        userData={{ name: "PointLight" }}
+      />
+    </>
+  )
+}
+
+function LidObject({ startPosition, endPosition }) {
   const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
+
+  // animation:
+  const { position } = useSpring({
+    from: { position: startPosition },
+    to: { position: endPosition },
+  })
+
+  // material:
   const customMaterialLid = new MeshStandardMaterial({
     ...materials.material, // Copy existing material properties
     depthTest: true, // Override depthTest to true
     depthWrite: true,
   });
+
+
   return (
-    <group
-      // {...props}
-      dispose={null}
-      scale={2}
-      position={[0, -1.6, 0]}
-    >
+    <animated.group position={position}>
       <group
-        name="Sketchfab_model"
-        position={[0, 0, 0]}>
+        // {...props}
+        dispose={null}
+        scale={2}
+      // position={[0, -1.6, 0]}
+      >
         <group
-          name="Collada_visual_scene_group"
-          position={[0, 0, 0]}
-          scale={4}>
-          {/* top or  lid: */}
-          <mesh
-            name="defaultMaterial_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.defaultMaterial_1.geometry}
-            material={customMaterialLid}
-            userData={{ name: "defaultMaterial" }}
-          />
+          name="Sketchfab_model"
+          position={[0, 0, 0]}>
+          <group
+            name="Collada_visual_scene_group"
+            position={[0, 0, 0]}
+            scale={4}>
+            {/* top or  lid: */}
+            <mesh
+              name="defaultMaterial_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.defaultMaterial_1.geometry}
+              material={customMaterialLid}
+              userData={{ name: "defaultMaterial" }}
+            />
+          </group>
         </group>
       </group>
-    </group>
-
+    </animated.group>
   )
 }
 
-
-
-export default function BreakingJar({ clickState }) {
+function GlassJarObject({ clickState }) {
   const { nodes, materials } = useLoader(GLTFLoader, '/breakingJar0103.gltf')
-  // Creating a new instance of MeshStandardMaterial with depthTest overridden
+  // Creating a new instance of MeshStandardMaterial with depthTest overwritten
   const materialBreakingJar = new MeshPhysicalMaterial({
     ...materials.material_1, // Copy existing material properties
     depthTest: true, // Override depthTest to false so glass = transparent
@@ -103,7 +164,6 @@ export default function BreakingJar({ clickState }) {
   // animation jar pieces:
   useFrame(() => {
     jarGroup.current.children.forEach((mesh) => {
-      // if (scrollData.offset < 0.00001) {
       if (!clickState) {
         if (mesh.name === "defaultMaterial") {
           mesh.visible = true
@@ -121,19 +181,16 @@ export default function BreakingJar({ clickState }) {
       mesh.position.x = THREE.MathUtils.lerp(
         mesh.originalPosition.x,
         mesh.targetPosition.x,
-        // scrollData.offset, // 0->start and 1-> after scroll
         clickState,
       )
       mesh.position.y = THREE.MathUtils.lerp(
         mesh.originalPosition.y,
         mesh.targetPosition.y,
-        // scrollData.offset, // 0->start and 1-> after scroll
         clickState,
       )
       mesh.position.z = THREE.MathUtils.lerp(
         mesh.originalPosition.z,
         mesh.targetPosition.z,
-        // scrollData.offset, // 0->start and 1-> after scroll
         clickState,
       );
 
@@ -141,30 +198,24 @@ export default function BreakingJar({ clickState }) {
         mesh.rotation.x = THREE.MathUtils.lerp(
           mesh.originalRotation.x,
           mesh.targetRotation.x,
-          clickState // 0 at the beginning and 1 after scroll
+          clickState
         );
         mesh.rotation.y = THREE.MathUtils.lerp(
           mesh.originalRotation.y,
           mesh.targetRotation.y,
-          clickState // 0 at the beginning and 1 after scroll
+          clickState
         );
         mesh.rotation.z = THREE.MathUtils.lerp(
           mesh.originalRotation.z,
           mesh.targetRotation.z,
-          clickState // 0 at the beginning and 1 after scroll
+          clickState
         );
       }
     })
   })
 
-
   return (
     <>
-      <directionalLight name="DirectionalLight" intensity={5} decay={2} color="#fffaeb" position={[-13.409, 48.408, -0.96]} userData={{ name: 'DirectionalLight' }} />
-      <directionalLight name="DirectionalLightFromSide" intensity={5} decay={2} position={[8.558, 41.288, 25.153]} rotation={[-1.724, -0.007, 0.023]} scale={10.927} userData={{ name: 'DirectionalLightFromSide' }} />
-      <pointLight name="PointLight" intensity={20} decay={2} color="#d2bdb1" position={[7.648, 13.877, 28.447]} rotation={[-2.318, 1.041, -2.644]} userData={{ name: 'PointLight' }} />
-      <spotLight name="SpotLight" intensity={20} angle={0.7} penumbra={1} decay={2} position={[54.775, 73.158, -33.214]} rotation={[-1.923, 0.711, 3.048]} scale={[39.767, 102.189, 209.574]} userData={{ name: 'SpotLight' }} />
-      {/* <RigidBody friction={2} mass={50} type="kinematicPosition"> */}
 
       <group
         dispose={null}
@@ -429,19 +480,77 @@ export default function BreakingJar({ clickState }) {
         <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materialBreakingJar} position={[0.06, 8.605, -0.132]} scale={7.915} userData={{ name: 'defaultMaterial' }} />
       </group >
 
+    </>
+  )
 
-      <RigidBody friction={1} mass={10}>
-        <LidObject />
-      </RigidBody>
+}
+
+
+export default function BreakingJar({ clickState }) {
 
 
 
+  return (
+    <>
+
+      {/* <RigidBody friction={2} mass={50} type="kinematicPosition"> */}
+      {/* <RigidBody friction={1} mass={10}> */}
+      {/* </RigidBody> */}
       {/* Floor for Gravity: */}
       {/* <RigidBody type="fixed" mass={0}>
         <Box position={[0, -80, 0]} args={[50, 1, 50]}>
           <meshBasicMaterial color="grey" />
         </Box>
       </RigidBody> */}
+
+      <Canvas
+        frameloop="demand"
+        // className="canvas-no-scrolling"
+        plugins={[new DRACOLoader()]}
+        shadows
+        camera={
+          {
+            position: [0, 10, 25], // camera position for  breaking jar
+            fov: 50,
+            scale: [1, 1, 1],
+            rotation: [-13.7, 2.3, 0.58],
+            far: 700,
+            near: 0.01,
+            frustumCulled: true,
+            visible: true,
+          }}>
+
+        <Suspense fallback={<Loader />}>
+          <Physics gravity={[0, -9, 0]}>
+            <ScrollControls pages={3}>
+              <Float floatIntensity={2} speed={2}>
+
+                {clickState &&
+                  <LidObject
+                    startPosition={[0, -1.6, 0]}
+                    endPosition={[0, -10, 5]}
+                  />
+                }
+
+
+                <GlassJarObject
+                  clickState={clickState}
+                />
+
+                <Lights />
+              </Float>
+            </ScrollControls>
+          </Physics>
+
+          <OrbitControls
+            enableZoom={true}
+            autoRotate
+          />
+        </Suspense>
+      </Canvas>
+
+
+
 
     </>
   )

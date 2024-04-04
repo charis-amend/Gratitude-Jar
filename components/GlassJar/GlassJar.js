@@ -213,14 +213,9 @@ export default function GlassJar({ animatePaper }) {
 
     // handleAnimationPaper()
 
-
-    console.log("----- animatePaper status in glassjar: ", animatePaper)
-
-
     return (
         <>
             <Canvas
-                // frameloop="demand"
                 shadows
                 camera={
                     {
@@ -276,9 +271,6 @@ export default function GlassJar({ animatePaper }) {
                     </Float>
                 </Suspense>
             </Canvas >
-            {/* <button
-                onClick={handleAnimationPaper}
-                className="animationbutton border-solid border-2 w-20 h-20 justify-center place-self-center align-middle">Animate Paper</button> */}
         </>
     );
 }
