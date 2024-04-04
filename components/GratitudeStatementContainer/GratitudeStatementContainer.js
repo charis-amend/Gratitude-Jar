@@ -3,14 +3,12 @@ import styles from "./GratitudeStatementContainer.module.css";
 
 export default function GratitudeStatementContainer({ randomGratitudeStatement, onClose }) {
     const [closeContainer, setCloseContainer] = useState(false)
-    const [showViewBox, setShowViewBox] = useState(false);
-
 
     if (!randomGratitudeStatement) {
         return null;
     }
     const handleClose = () => {
-        setCloseContainer(!closeContainer); // Toggle the state when the close button is clicked
+        setCloseContainer(!closeContainer); // Toggle the state when user clicks anywhere
         onClose();
     };
 
@@ -18,9 +16,11 @@ export default function GratitudeStatementContainer({ randomGratitudeStatement, 
     if (closeContainer) {
         return null;
     } else {
+
+
         return (
             <>
-                <div className="outside-viewbox z-0 top-0 left-0 fixed h-screen w-screen flex flex-col justify-center"
+                <div className="outside-viewbox z-50 top-0 left-0 fixed h-screen w-screen flex flex-col justify-center bg-Grey-jar bg-opacity-70"
                     onClick={handleClose}>
 
                     <div

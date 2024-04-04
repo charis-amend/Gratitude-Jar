@@ -8,10 +8,16 @@ import { useLoader } from "@react-three/fiber";
 import { BackSide, MeshPhysicalMaterial, MeshStandardMaterial, NormalBlending } from 'three';
 import { useFrame } from "@react-three/fiber";
 import { useEffect } from "react";
-import { useGLTF } from "@react-three/drei";
 import { useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import { ScrollControls, OrbitControls } from "@react-three/drei";
+import { Float } from "@react-three/drei";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { Suspense } from "react";
+import Loader from "../../components/GlassJar/Loader.js";
 
-export default function BreakingJar({ clickState }) {
+
+function BrokenJarObject({ clickState }) {
   const { nodes, materials } = useLoader(GLTFLoader, '/breakingJar0103.gltf')
   // Creating a new instance of MeshStandardMaterial with depthTest overridden
   const materialBreakingJar = new MeshPhysicalMaterial({
@@ -27,8 +33,6 @@ export default function BreakingJar({ clickState }) {
   const distance = 15;
   const enableRotation = true;
 
-
-  console.log("----jargroup", jarGroup.current)
 
   useEffect(() => {
     // calculating position of each mesh (shattered piece of the jar):
@@ -62,7 +66,6 @@ export default function BreakingJar({ clickState }) {
   // animation:
   useFrame(() => {
     jarGroup.current.children.forEach((mesh) => {
-      // if (scrollData.offset < 0.00001) {
       if (!clickState) {
         if (mesh.name === "defaultMaterial") {
           mesh.visible = true
@@ -80,19 +83,16 @@ export default function BreakingJar({ clickState }) {
       mesh.position.x = THREE.MathUtils.lerp(
         mesh.originalPosition.x,
         mesh.targetPosition.x,
-        // scrollData.offset, // 0->start and 1-> after scroll
         clickState,
       )
       mesh.position.y = THREE.MathUtils.lerp(
         mesh.originalPosition.y,
         mesh.targetPosition.y,
-        // scrollData.offset, // 0->start and 1-> after scroll
         clickState,
       )
       mesh.position.z = THREE.MathUtils.lerp(
         mesh.originalPosition.z,
         mesh.targetPosition.z,
-        // scrollData.offset, // 0->start and 1-> after scroll
         clickState,
       );
 
@@ -116,7 +116,6 @@ export default function BreakingJar({ clickState }) {
     })
   })
 
-
   return (
     <>
       <group
@@ -124,10 +123,6 @@ export default function BreakingJar({ clickState }) {
         ref={jarGroup}
         position={[0, -10, 0]}
       >
-        <directionalLight name="DirectionalLight" intensity={5} decay={2} color="#fffaeb" position={[-13.409, 48.408, -0.96]} userData={{ name: 'DirectionalLight' }} />
-        <directionalLight name="DirectionalLightFromSide" intensity={5} decay={2} position={[8.558, 41.288, 25.153]} rotation={[-1.724, -0.007, 0.023]} scale={10.927} userData={{ name: 'DirectionalLightFromSide' }} />
-        <pointLight name="PointLight" intensity={20} decay={2} color="#d2bdb1" position={[7.648, 13.877, 28.447]} rotation={[-2.318, 1.041, -2.644]} userData={{ name: 'PointLight' }} />
-        <spotLight name="SpotLight" intensity={20} angle={0.7} penumbra={1} decay={2} position={[54.775, 73.158, -33.214]} rotation={[-1.923, 0.711, 3.048]} scale={[39.767, 102.189, 209.574]} userData={{ name: 'SpotLight' }} />
 
         <mesh name="defaultMaterial_cell" geometry={nodes.defaultMaterial_cell.geometry} material={materialBreakingJar} position={[-4.626, 4.751, -1.33]} userData={{ name: 'defaultMaterial_cell' }} />
         <mesh name="defaultMaterial_cell001" geometry={nodes.defaultMaterial_cell001.geometry} material={materialBreakingJar} position={[4.165, 9.714, -2.75]} userData={{ name: 'defaultMaterial_cell.001' }} />
@@ -217,8 +212,60 @@ export default function BreakingJar({ clickState }) {
         {/* jar origin:*/}
         <mesh name="defaultMaterial" geometry={nodes.defaultMaterial.geometry} material={materialBreakingJar} position={[0.06, 8.605, -0.132]} scale={7.915} userData={{ name: 'defaultMaterial' }} />
       </group>
+    </>
+  )
+}
 
-      <LidObject />
+
+
+
+
+export default function BreakingJar({ clickState }) {
+
+
+
+  return (
+    <>
+      <Canvas
+        // frameloop="demand"
+        // className="canvas-no-scrolling"
+        plugins={[new DRACOLoader()]}
+        shadows
+        camera={
+          {
+            position: [0, 10, 25], // camera position for  breaking jar
+            fov: 50,
+            scale: [1, 1, 1],
+            rotation: [-13.7, 2.3, 0.58],
+            far: 700,
+            near: 0.01,
+            frustumCulled: true,
+            visible: true,
+          }}>
+        <Suspense fallback={<Loader />}>
+          <ScrollControls pages={3}>
+            <OrbitControls
+              enableZoom={false}
+              autoRotate
+            />
+            <Float floatIntensity={2} speed={2}>
+              <Lights />
+
+              <BrokenJarObject clickState={clickState} />
+              <LidObject />
+
+            </Float>
+
+          </ScrollControls>
+        </Suspense>
+      </Canvas>
+      <directionalLight name="DirectionalLight" intensity={5} decay={2} color="#fffaeb" position={[-13.409, 48.408, -0.96]} userData={{ name: 'DirectionalLight' }} />
+      <directionalLight name="DirectionalLightFromSide" intensity={5} decay={2} position={[8.558, 41.288, 25.153]} rotation={[-1.724, -0.007, 0.023]} scale={10.927} userData={{ name: 'DirectionalLightFromSide' }} />
+      <pointLight name="PointLight" intensity={20} decay={2} color="#d2bdb1" position={[7.648, 13.877, 28.447]} rotation={[-2.318, 1.041, -2.644]} userData={{ name: 'PointLight' }} />
+      <spotLight name="SpotLight" intensity={20} angle={0.7} penumbra={1} decay={2} position={[54.775, 73.158, -33.214]} rotation={[-1.923, 0.711, 3.048]} scale={[39.767, 102.189, 209.574]} userData={{ name: 'SpotLight' }} />
+
+
+
 
     </>
   )
@@ -260,5 +307,52 @@ function LidObject() {
       </group>
     </group>
 
+  )
+}
+
+
+function Lights() {
+
+  return (
+    <>
+      <spotLight
+        name="SpotLight"
+        intensity={20}
+        angle={0.444}
+        penumbra={1}
+        decay={2}
+        distance={2}
+        position={[26.709, 34.772, 2.75]}
+        rotation={[0.111, 0.048, 1.016]}
+        scale={[39.767, 102.189, 209.574]}
+        userData={{ name: "SpotLight" }}
+      />
+      <directionalLight
+        name="DirectionalLight"
+        intensity={5}
+        decay={2}
+        color="#fffaeb"
+        position={[-13.409, 48.408, -0.96]}
+        userData={{ name: "DirectionalLight" }}
+      />
+      <directionalLight
+        name="DirectionalLightFromSide"
+        intensity={5}
+        decay={2}
+        position={[-11.225, 13.52, -17.363]}
+        rotation={[-1.168, 0, 0.04]}
+        scale={10.927}
+        userData={{ name: "DirectionalLightFromSide" }}
+      />
+      <pointLight
+        name="PointLight"
+        intensity={20}
+        decay={2}
+        color={0xd2bdb1}
+        position={[7.648, 13.877, 28.447]}
+        rotation={[-2.318, 1.041, -2.644]}
+        userData={{ name: "PointLight" }}
+      />
+    </>
   )
 }
