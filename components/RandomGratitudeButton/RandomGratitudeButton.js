@@ -66,7 +66,7 @@ export default function RandomGratitudeButton() {
             </button>
 
             {showError ?
-                <p className="errormessage text-center text-xs p-2 text-blue-50 place-self-center h-full"> Please add first a gratitude statement to your memories to get a random gratitude memory. </p>
+                <p className="errormessage text-center text-xs p-2 mb-10 text-blue-50 place-self-center h-full"> Please add first a gratitude statement to your memories to get a random gratitude memory. </p>
                 :
                 null
             }

@@ -35,12 +35,12 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, triggerAni
     return (
         <>
             <button
-                className="displayformbutton text-white text-xs bg-SageGreen-jar w-40 font-bold py-2 px-2 rounded-md shadow-2xl mt-3 mb-0 pb-0transition-colors duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
+                className="displayformbutton text-white text-sm bg-SageGreen-jar w-40 font-bold py-4 px-2 rounded-3xl shadow-2xl mt-3 mb-1 pb-0transition-colors duration-400 hover:bg-LightMint-jar hover:shadow-black focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-black dark:shadow-black dark:hover:shadow-black dark:focus:shadow-black dark:active:shadow-black"
                 type="button"
                 id="displayFormButton"
                 name="displayFormButton"
                 onClick={() => setShowForm(!showForm)}
-            >Add Gratitude Memory</button>
+            >Add Gratitude</button>
 
 
             {showForm ?
@@ -57,14 +57,13 @@ export default function GratitudeForm({ onSubmit, dateFormSubmission, triggerAni
                             placeholder="What are you grateful for...?"
                             maxLength={150}
                             onChange={handleCharacterCount}
-
                             required
-                            className="inputfield appearance-none bg-transparent border-none w-full text-blue-200 mr-3 py-1 px-2 leading-tight focus:outline-none disabled:border-red-300 transition-all duration-300 animate-fade-out"
+                            className="inputfield appearance-none bg-transparent border-none w-full text-blue-200 text-sm mr-3 py-1 px-2 leading-tight focus:outline-none disabled:border-red-300 transition-all duration-300 animate-fade-out"
                         />
                         <input type="hidden" value={dateFormSubmission} name="dateCreation" />
                         <button type="submit"
-                            className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-sm text-white py-1 px-2 rounded shadow transition-all duration-1000">
-                            ADD
+                            className="submit-button flex-shrink-0 bg-transparent hover:bg-gray-80 text-xl text-white mr-3 rounded shadow transition-all duration-1000">
+                            +
                         </button>
 
                     </div>
