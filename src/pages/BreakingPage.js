@@ -5,10 +5,10 @@ import Link from "next/link";
 
 export default function BreakingPage() {
     // trigger for glassjar animation:
-    const [clickState, setClickState] = useState(false); // Initial glassjar click state
+    const [glassJarState, setglassJarState] = useState(false); // Initial glassjar click state
 
     function handleClickBreak() {
-        setClickState(!clickState); // Toggle the click state on click
+        setglassJarState(!glassJarState); // Toggle the click state on click
     };
 
     return (
@@ -30,7 +30,7 @@ export default function BreakingPage() {
                     className="shatter-div z-40 top-0 left-0 fixed h-screen w-screen flex"
                 >
                     <BreakingJar
-                        clickState={clickState}
+                        glassJarState={glassJarState}
                     />
                 </div>
             </div >

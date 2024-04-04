@@ -114,7 +114,7 @@ function LidObject({ startPosition, endPosition }) {
   )
 }
 
-function GlassJarObject({ clickState }) {
+function GlassJarObject({ glassJarState }) {
   const { nodes, materials } = useLoader(GLTFLoader, '/breakingJar0103.gltf')
   // Creating a new instance of MeshStandardMaterial with depthTest overwritten
   const materialBreakingJar = new MeshPhysicalMaterial({
@@ -167,7 +167,7 @@ function GlassJarObject({ clickState }) {
   // animation jar pieces:
   useFrame(() => {
     jarGroup.current.children.forEach((mesh) => {
-      if (!clickState) {
+      if (!glassJarState) {
         if (mesh.name === "defaultMaterial") {
           mesh.visible = true
         } else {
@@ -184,34 +184,34 @@ function GlassJarObject({ clickState }) {
       mesh.position.x = THREE.MathUtils.lerp(
         mesh.originalPosition.x,
         mesh.targetPosition.x,
-        clickState,
+        glassJarState,
       )
       mesh.position.y = THREE.MathUtils.lerp(
         mesh.originalPosition.y,
         mesh.targetPosition.y,
-        clickState,
+        glassJarState,
       )
       mesh.position.z = THREE.MathUtils.lerp(
         mesh.originalPosition.z,
         mesh.targetPosition.z,
-        clickState,
+        glassJarState,
       );
 
       if (enableRotation) {
         mesh.rotation.x = THREE.MathUtils.lerp(
           mesh.originalRotation.x,
           mesh.targetRotation.x,
-          clickState
+          glassJarState
         );
         mesh.rotation.y = THREE.MathUtils.lerp(
           mesh.originalRotation.y,
           mesh.targetRotation.y,
-          clickState
+          glassJarState
         );
         mesh.rotation.z = THREE.MathUtils.lerp(
           mesh.originalRotation.z,
           mesh.targetRotation.z,
-          clickState
+          glassJarState
         );
       }
     })
@@ -489,7 +489,7 @@ function GlassJarObject({ clickState }) {
 }
 
 
-export default function BreakingJar({ clickState }) {
+export default function BreakingJar({ glassJarState }) {
 
 
 
@@ -528,16 +528,17 @@ export default function BreakingJar({ clickState }) {
             <ScrollControls pages={3}>
               <Float floatIntensity={2} speed={2}>
 
-                {clickState &&
-                  <LidObject
-                    startPosition={[0, -1.6, 0]}
-                    endPosition={[0, -10, 5]}
-                  />
-                }
+
+                <LidObject
+
+                  startPosition={[0, -1.6, 0]}
+                  endPosition={[0, -10, 5]}
+                />
+
 
 
                 <GlassJarObject
-                  clickState={clickState}
+                  glassJarState={glassJarState}
                 />
 
                 <Lights />
