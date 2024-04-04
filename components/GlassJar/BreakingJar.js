@@ -259,14 +259,6 @@ export default function BreakingJar({ clickState }) {
           </ScrollControls>
         </Suspense>
       </Canvas>
-      <directionalLight name="DirectionalLight" intensity={5} decay={2} color="#fffaeb" position={[-13.409, 48.408, -0.96]} userData={{ name: 'DirectionalLight' }} />
-      <directionalLight name="DirectionalLightFromSide" intensity={5} decay={2} position={[8.558, 41.288, 25.153]} rotation={[-1.724, -0.007, 0.023]} scale={10.927} userData={{ name: 'DirectionalLightFromSide' }} />
-      <pointLight name="PointLight" intensity={20} decay={2} color="#d2bdb1" position={[7.648, 13.877, 28.447]} rotation={[-2.318, 1.041, -2.644]} userData={{ name: 'PointLight' }} />
-      <spotLight name="SpotLight" intensity={20} angle={0.7} penumbra={1} decay={2} position={[54.775, 73.158, -33.214]} rotation={[-1.923, 0.711, 3.048]} scale={[39.767, 102.189, 209.574]} userData={{ name: 'SpotLight' }} />
-
-
-
-
     </>
   )
 }
@@ -325,7 +317,7 @@ function Lights() {
         position={[26.709, 34.772, 2.75]}
         rotation={[0.111, 0.048, 1.016]}
         scale={[39.767, 102.189, 209.574]}
-        userData={{ name: "SpotLight" }}
+      // userData={{ name: "SpotLight" }}
       />
       <directionalLight
         name="DirectionalLight"
@@ -333,7 +325,7 @@ function Lights() {
         decay={2}
         color="#fffaeb"
         position={[-13.409, 48.408, -0.96]}
-        userData={{ name: "DirectionalLight" }}
+      // userData={{ name: "DirectionalLight" }}
       />
       <directionalLight
         name="DirectionalLightFromSide"
@@ -342,7 +334,7 @@ function Lights() {
         position={[-11.225, 13.52, -17.363]}
         rotation={[-1.168, 0, 0.04]}
         scale={10.927}
-        userData={{ name: "DirectionalLightFromSide" }}
+      // userData={{ name: "DirectionalLightFromSide" }}
       />
       <pointLight
         name="PointLight"
@@ -351,7 +343,7 @@ function Lights() {
         color={0xd2bdb1}
         position={[7.648, 13.877, 28.447]}
         rotation={[-2.318, 1.041, -2.644]}
-        userData={{ name: "PointLight" }}
+      // userData={{ name: "PointLight" }}
       />
     </>
   )
