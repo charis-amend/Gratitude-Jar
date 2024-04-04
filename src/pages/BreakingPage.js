@@ -1,14 +1,16 @@
 import BreakingJar from "../../components/GlassJar/BreakingJar";
 import { useState } from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 
 export default function BreakingPage() {
-    // trigger for glassjar animation:
-    const [glassJarState, setglassJarState] = useState(false); // Initial glassjar click state
+    const [glassJarState, setGlassJarState] = useState(false); // Initial glassJarState is false=unshattered
+    const [lidFlyingState, setLidFlyingState] = useState(false); // initial lidFlyingState is false = NOT Flying!
 
+    // trigger for both animations:
     function handleClickBreak() {
-        setglassJarState(!glassJarState); // Toggle the click state on click
+        setGlassJarState(!glassJarState);
+        setLidFlyingState(!lidFlyingState);
     };
 
     return (
@@ -25,13 +27,33 @@ export default function BreakingPage() {
                     </div>
                 </Link >
 
-                <div
-                    onClick={handleClickBreak}
-                    className="shatter-div z-40 top-0 left-0 fixed h-screen w-screen flex"
-                >
-                    <BreakingJar
-                        glassJarState={glassJarState}
-                    />
+                <BreakingJar
+                    glassJarState={glassJarState}
+                    lidFlyingState={lidFlyingState}
+                />
+
+                <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-1 z-5 p-4 flex flex-col justify-center items-center">
+
+                    {
+                        !glassJarState && !lidFlyingState ?
+                            (<button
+                                className="triggerbutton bg-transparent text-5xl font-bold p-4 w-40 m-2"
+                                type="button"
+                                id="RandomGratitudeButton"
+                                onClick={handleClickBreak}>
+                                🔨
+                            </button>)
+                            :
+                            (<button
+                                className="triggerbutton bg-transparent text-5xl font-bold p-4 m-2"
+                                type="button"
+                                id="RandomGratitudeButton"
+                                onClick={handleClickBreak}>
+                                🪄
+
+                            </button>)
+
+                    }
                 </div>
             </div >
 
@@ -40,51 +62,3 @@ export default function BreakingPage() {
 
 
 
-
-// function LidObject({ startPosition, endPosition }) {
-//     const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
-
-//     // animation:
-//     const { position } = useSpring({
-//         from: { position: startPosition },
-//         to: { position: endPosition },
-//     })
-
-//     // material:
-//     const customMaterialLid = new MeshStandardMaterial({
-//         ...materials.material, // Copy existing material properties
-//         depthTest: true, // Override depthTest to true
-//         depthWrite: true,
-//     });
-
-
-//     return (
-//         <animated.group position={position}>
-//             <group
-//                 // {...props}
-//                 dispose={null}
-//                 scale={2}
-//                 position={[0, -1.6, 0]}
-//             >
-//                 <group
-//                     name="Sketchfab_model"
-//                     position={[0, 0, 0]}>
-//                     <group
-//                         name="Collada_visual_scene_group"
-//                         position={[0, 0, 0]}
-//                         scale={4}>
-//                         {/* top or  lid: */}
-//                         <mesh
-//                             name="defaultMaterial_1"
-//                             castShadow
-//                             receiveShadow
-//                             geometry={nodes.defaultMaterial_1.geometry}
-//                             material={customMaterialLid}
-//                             userData={{ name: "defaultMaterial" }}
-//                         />
-//                     </group>
-//                 </group>
-//             </group>
-//         </animated.group>
-//     )
-// }

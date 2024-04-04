@@ -20,100 +20,6 @@ import { Physics } from "@react-three/rapier"
 import Loader from "../../components/GlassJar/Loader";
 
 
-function Lights() {
-
-  return (
-    <>
-      <spotLight
-        name="SpotLight"
-        intensity={20}
-        angle={0.444}
-        penumbra={1}
-        decay={2}
-        distance={2}
-        position={[26.709, 34.772, 2.75]}
-        rotation={[0.111, 0.048, 1.016]}
-        scale={[39.767, 102.189, 209.574]}
-        userData={{ name: "SpotLight" }}
-      />
-      <directionalLight
-        name="DirectionalLight"
-        intensity={5}
-        decay={2}
-        color="#fffaeb"
-        position={[-13.409, 48.408, -0.96]}
-        userData={{ name: "DirectionalLight" }}
-      />
-      <directionalLight
-        name="DirectionalLightFromSide"
-        intensity={5}
-        decay={2}
-        position={[-11.225, 13.52, -17.363]}
-        rotation={[-1.168, 0, 0.04]}
-        scale={10.927}
-        userData={{ name: "DirectionalLightFromSide" }}
-      />
-      <pointLight
-        name="PointLight"
-        intensity={20}
-        decay={2}
-        color={0xd2bdb1}
-        position={[7.648, 13.877, 28.447]}
-        rotation={[-2.318, 1.041, -2.644]}
-        userData={{ name: "PointLight" }}
-      />
-    </>
-  )
-}
-
-function LidObject({ startPosition, endPosition }) {
-  const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
-
-  // animation:
-  const { position } = useSpring({
-    from: { position: startPosition },
-    to: { position: endPosition },
-  })
-
-  // material:
-  const customMaterialLid = new MeshStandardMaterial({
-    ...materials.material, // Copy existing material properties
-    depthTest: true, // Override depthTest to true
-    depthWrite: true,
-  });
-
-
-  return (
-    <animated.group position={position}>
-      <group
-        // {...props}
-        dispose={null}
-        scale={2}
-      // position={[0, -1.6, 0]}
-      >
-        <group
-          name="Sketchfab_model"
-          position={[0, 0, 0]}>
-          <group
-            name="Collada_visual_scene_group"
-            position={[0, 0, 0]}
-            scale={4}>
-            {/* top or  lid: */}
-            <mesh
-              name="defaultMaterial_1"
-              castShadow
-              receiveShadow
-              geometry={nodes.defaultMaterial_1.geometry}
-              material={customMaterialLid}
-              userData={{ name: "defaultMaterial" }}
-            />
-          </group>
-        </group>
-      </group>
-    </animated.group>
-  )
-}
-
 function GlassJarObject({ glassJarState }) {
   const { nodes, materials } = useLoader(GLTFLoader, '/breakingJar0103.gltf')
   // Creating a new instance of MeshStandardMaterial with depthTest overwritten
@@ -138,22 +44,22 @@ function GlassJarObject({ glassJarState }) {
     // calculating position of each mesh (shattered piece of the jar):
     const groupWorldPosition = new THREE.Vector3();
     jarGroup.current.getWorldPosition(groupWorldPosition);
-    if (jarGroup.current) {
-      jarGroup.current.children.forEach((mesh) => {
-        mesh.originalPosition = mesh.position.clone();
-        const meshWorldPosition = new THREE.Vector3();
-        mesh.getWorldPosition(meshWorldPosition);
 
-        mesh.directionVector = meshWorldPosition.clone().sub(groupWorldPosition).normalize();
+    jarGroup.current.children.forEach((mesh) => {
+      mesh.originalPosition = mesh.position.clone();
+      const meshWorldPosition = new THREE.Vector3();
+      mesh.getWorldPosition(meshWorldPosition);
 
-        mesh.originalRotation = mesh.rotation.clone();
-        mesh.targetRotation = new THREE.Euler(
-          Math.random() * Math.PI,
-          Math.random() * Math.PI,
-          Math.random() * Math.PI
-        );
-      })
-    };
+      mesh.directionVector = meshWorldPosition.clone().sub(groupWorldPosition).normalize();
+
+      mesh.originalRotation = mesh.rotation.clone();
+      mesh.targetRotation = new THREE.Euler(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      );
+    })
+      ;
   }, []);
 
   useEffect(() => {
@@ -489,7 +395,7 @@ function GlassJarObject({ glassJarState }) {
 }
 
 
-export default function BreakingJar({ glassJarState }) {
+export default function BreakingJar({ glassJarState, lidFlyingState }) {
 
 
 
@@ -507,7 +413,7 @@ export default function BreakingJar({ glassJarState }) {
       </RigidBody> */}
 
       <Canvas
-        frameloop="demand"
+        // frameloop="demand"
         // className="canvas-no-scrolling"
         plugins={[new DRACOLoader()]}
         shadows
@@ -526,32 +432,31 @@ export default function BreakingJar({ glassJarState }) {
         <Suspense fallback={<Loader />}>
           <Physics gravity={[0, -9, 0]}>
             <ScrollControls pages={3}>
+              <OrbitControls
+                enableZoom={false}
+                autoRotate
+              /> <OrbitControls
+                enableZoom={false}
+                autoRotate
+              />
               <Float floatIntensity={2} speed={2}>
+                <Lights />
 
-
-                <LidObject
-
-                  startPosition={[0, -1.6, 0]}
-                  endPosition={[0, -10, 5]}
-                />
-
-
+                {lidFlyingState &&
+                  <LidObject
+                    startPosition={[0, -1.6, 0]}
+                    endPosition={[0, -10, 5]}
+                  />}
 
                 <GlassJarObject
                   glassJarState={glassJarState}
                 />
 
-                <Lights />
               </Float>
             </ScrollControls>
           </Physics>
-
-          <OrbitControls
-            enableZoom={true}
-            autoRotate
-          />
         </Suspense>
-      </Canvas>
+      </Canvas >
 
 
 
@@ -559,5 +464,100 @@ export default function BreakingJar({ glassJarState }) {
     </>
   )
 }
-// useGLTF.preload('/breakingJar0103.gltf');
+
+
+function LidObject({ startPosition, endPosition }) {
+  const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
+
+  // animation:
+  const { position } = useSpring({
+    from: { position: startPosition },
+    to: { position: endPosition },
+
+  })
+
+  // material:
+  const customMaterialLid = new MeshStandardMaterial({
+    ...materials.material, // Copy existing material properties
+    depthTest: true, // Override depthTest to true
+    depthWrite: true,
+  });
+
+
+  return (
+    <animated.group position={position}>
+      <group
+        // {...props}
+        dispose={null}
+        scale={2}
+      // position={[0, -1.6, 0]}
+      >
+        <group
+          name="Sketchfab_model"
+          position={[0, 0, 0]}>
+          <group
+            name="Collada_visual_scene_group"
+            position={[0, 0, 0]}
+            scale={4}>
+            {/* top or  lid: */}
+            <mesh
+              name="defaultMaterial_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.defaultMaterial_1.geometry}
+              material={customMaterialLid}
+              userData={{ name: "defaultMaterial" }}
+            />
+          </group>
+        </group>
+      </group>
+    </animated.group>
+  )
+}
+
+function Lights() {
+
+  return (
+    <>
+      <spotLight
+        name="SpotLight"
+        intensity={20}
+        angle={0.444}
+        penumbra={1}
+        decay={2}
+        distance={2}
+        position={[26.709, 34.772, 2.75]}
+        rotation={[0.111, 0.048, 1.016]}
+        scale={[39.767, 102.189, 209.574]}
+        userData={{ name: "SpotLight" }}
+      />
+      <directionalLight
+        name="DirectionalLight"
+        intensity={5}
+        decay={2}
+        color="#fffaeb"
+        position={[-13.409, 48.408, -0.96]}
+        userData={{ name: "DirectionalLight" }}
+      />
+      <directionalLight
+        name="DirectionalLightFromSide"
+        intensity={5}
+        decay={2}
+        position={[-11.225, 13.52, -17.363]}
+        rotation={[-1.168, 0, 0.04]}
+        scale={10.927}
+        userData={{ name: "DirectionalLightFromSide" }}
+      />
+      <pointLight
+        name="PointLight"
+        intensity={20}
+        decay={2}
+        color={0xd2bdb1}
+        position={[7.648, 13.877, 28.447]}
+        rotation={[-2.318, 1.041, -2.644]}
+        userData={{ name: "PointLight" }}
+      />
+    </>
+  )
+}
 
