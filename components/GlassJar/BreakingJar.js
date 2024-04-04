@@ -133,24 +133,27 @@ function GlassJarObject({ clickState }) {
   console.log("----jargroup", jarGroup.current)
 
   useEffect(() => {
+    console.log("Jar group:", jarGroup.current); // Check if jarGroup is defined and contains children
+
     // calculating position of each mesh (shattered piece of the jar):
     const groupWorldPosition = new THREE.Vector3();
     jarGroup.current.getWorldPosition(groupWorldPosition);
+    if (jarGroup.current) {
+      jarGroup.current.children.forEach((mesh) => {
+        mesh.originalPosition = mesh.position.clone();
+        const meshWorldPosition = new THREE.Vector3();
+        mesh.getWorldPosition(meshWorldPosition);
 
-    jarGroup.current.children.forEach((mesh) => {
-      mesh.originalPosition = mesh.position.clone();
-      const meshWorldPosition = new THREE.Vector3();
-      mesh.getWorldPosition(meshWorldPosition);
+        mesh.directionVector = meshWorldPosition.clone().sub(groupWorldPosition).normalize();
 
-      mesh.directionVector = meshWorldPosition.clone().sub(groupWorldPosition).normalize();
-
-      mesh.originalRotation = mesh.rotation.clone();
-      mesh.targetRotation = new THREE.Euler(
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        Math.random() * Math.PI
-      );
-    });
+        mesh.originalRotation = mesh.rotation.clone();
+        mesh.targetRotation = new THREE.Euler(
+          Math.random() * Math.PI,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI
+        );
+      })
+    };
   }, []);
 
   useEffect(() => {
