@@ -17,7 +17,7 @@ import { Suspense } from "react";
 import Loader from "../../components/GlassJar/Loader.js";
 
 
-function BrokenJarObject({ clickState }) {
+function BrokenJarObject({ jarCondition }) {
   const { nodes, materials } = useLoader(GLTFLoader, '/breakingJar0103.gltf')
   // Creating a new instance of MeshStandardMaterial with depthTest overridden
   const materialBreakingJar = new MeshPhysicalMaterial({
@@ -66,7 +66,7 @@ function BrokenJarObject({ clickState }) {
   // animation:
   useFrame(() => {
     jarGroup.current.children.forEach((mesh) => {
-      if (!clickState) {
+      if (!jarCondition) {
         if (mesh.name === "defaultMaterial") {
           mesh.visible = true
         } else {
@@ -83,34 +83,34 @@ function BrokenJarObject({ clickState }) {
       mesh.position.x = THREE.MathUtils.lerp(
         mesh.originalPosition.x,
         mesh.targetPosition.x,
-        clickState,
+        jarCondition,
       )
       mesh.position.y = THREE.MathUtils.lerp(
         mesh.originalPosition.y,
         mesh.targetPosition.y,
-        clickState,
+        jarCondition,
       )
       mesh.position.z = THREE.MathUtils.lerp(
         mesh.originalPosition.z,
         mesh.targetPosition.z,
-        clickState,
+        jarCondition,
       );
 
       if (enableRotation) {
         mesh.rotation.x = THREE.MathUtils.lerp(
           mesh.originalRotation.x,
           mesh.targetRotation.x,
-          clickState // 0 at the beginning and 1 after scroll
+          jarCondition // 0 at the beginning and 1 after scroll
         );
         mesh.rotation.y = THREE.MathUtils.lerp(
           mesh.originalRotation.y,
           mesh.targetRotation.y,
-          clickState // 0 at the beginning and 1 after scroll
+          jarCondition // 0 at the beginning and 1 after scroll
         );
         mesh.rotation.z = THREE.MathUtils.lerp(
           mesh.originalRotation.z,
           mesh.targetRotation.z,
-          clickState // 0 at the beginning and 1 after scroll
+          jarCondition // 0 at the beginning and 1 after scroll
         );
       }
     })
@@ -217,18 +217,12 @@ function BrokenJarObject({ clickState }) {
 }
 
 
-
-
-
-export default function BreakingJar({ clickState }) {
-
+export default function BreakingJar({ jarCondition }) {
 
 
   return (
     <>
       <Canvas
-        // frameloop="demand"
-        // className="canvas-no-scrolling"
         plugins={[new DRACOLoader()]}
         shadows
         camera={
@@ -245,14 +239,18 @@ export default function BreakingJar({ clickState }) {
         <Suspense fallback={<Loader />}>
           <ScrollControls pages={3}>
             <OrbitControls
-              enableZoom={false}
+              enableZoom={true}
               autoRotate
             />
             <Float floatIntensity={2} speed={2}>
               <Lights />
 
-              <BrokenJarObject clickState={clickState} />
-              <LidObject />
+              <BrokenJarObject jarCondition={jarCondition} />
+
+              <LidObject
+                jarCondition={jarCondition}
+              />
+
 
             </Float>
 
@@ -262,41 +260,118 @@ export default function BreakingJar({ clickState }) {
     </>
   )
 }
-// useGLTF.preload('/breakingJar0103.gltf');
 
 
-function LidObject() {
+function LidObject({ jarCondition }) {
   const { nodes, materials } = useLoader(GLTFLoader, "/jar-and-paper-scene.gltf");
   const customMaterialLid = new MeshStandardMaterial({
     ...materials.material, // Copy existing material properties
     depthTest: true, // Override depthTest to true
     depthWrite: true,
   });
+
+  const lidRef = useRef();
+  const distance = 30;
+  const enableRotation = true;
+
+  useEffect(() => {
+    //  position of lid
+    const lidWorldPosition = new THREE.Vector3();
+    lidRef.current.getWorldPosition(lidWorldPosition);
+
+    lidRef.current.children.forEach((mesh) => {
+      mesh.originalPosition = mesh.position.clone();
+      const meshWorldPosition = new THREE.Vector3();
+      mesh.getWorldPosition(meshWorldPosition);
+
+      mesh.directionVector = meshWorldPosition.clone().sub(lidWorldPosition).normalize();
+
+      mesh.originalRotation = mesh.rotation.clone();
+      mesh.targetRotation = new THREE.Euler(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    lidRef.current.children.forEach((mesh) => {
+      mesh.targetPosition = mesh.originalPosition
+        .clone()
+        .add(mesh.directionVector.clone().multiplyScalar(distance));
+    });
+  }, [distance]);
+
+  // animation:
+  useFrame(() => {
+    lidRef.current.children.forEach((mesh) => {
+      if (!jarCondition) {
+        if (mesh.name === "defaultMaterial_1") {
+          mesh.visible = true
+        } else {
+          mesh.visible = false;
+        }
+      } else {
+        if (mesh.name === "defaultMaterial_1") {
+          mesh.visible = false
+        } else {
+          mesh.visible = true;
+        }
+      }
+
+      mesh.position.x = THREE.MathUtils.lerp(
+        mesh.originalPosition.x,
+        mesh.targetPosition.x,
+        jarCondition,
+      )
+      mesh.position.y = THREE.MathUtils.lerp(
+        mesh.originalPosition.y,
+        mesh.targetPosition.y,
+        jarCondition,
+      )
+      mesh.position.z = THREE.MathUtils.lerp(
+        mesh.originalPosition.z,
+        mesh.targetPosition.z,
+        jarCondition,
+      );
+
+      if (enableRotation) {
+        mesh.rotation.x = THREE.MathUtils.lerp(
+          mesh.originalRotation.x,
+          mesh.targetRotation.x,
+          jarCondition
+        );
+        mesh.rotation.y = THREE.MathUtils.lerp(
+          mesh.originalRotation.y,
+          mesh.targetRotation.y,
+          jarCondition
+        );
+        mesh.rotation.z = THREE.MathUtils.lerp(
+          mesh.originalRotation.z,
+          mesh.targetRotation.z,
+          jarCondition
+        );
+      }
+    })
+  })
+
   return (
     <group
       // {...props}
       dispose={null}
-      scale={2}
+      scale={8}
       position={[0, -1.6, 0]}
+      ref={lidRef}
     >
-      <group
-        name="Sketchfab_model"
-        position={[0, 0, 0]}>
-        <group
-          name="Collada_visual_scene_group"
-          position={[0, 0, 0]}
-          scale={4}>
-          {/* top or  lid: */}
-          <mesh
-            name="defaultMaterial_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.defaultMaterial_1.geometry}
-            material={customMaterialLid}
-            userData={{ name: "defaultMaterial" }}
-          />
-        </group>
-      </group>
+      <mesh
+        name="defaultMaterial_1"
+        castShadow
+        receiveShadow
+        geometry={nodes.defaultMaterial_1.geometry}
+        material={customMaterialLid}
+        userData={{ name: "defaultMaterial" }}
+      />
     </group>
 
   )
