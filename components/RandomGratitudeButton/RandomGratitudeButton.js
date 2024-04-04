@@ -4,32 +4,39 @@ import GratitudeStatementContainer from "../GratitudeStatementContainer/Gratitud
 
 export default function RandomGratitudeButton() {
     const { data: session } = useSession()
-    const userId = session.user.userId
-    const [randomGratitudeStatement, setRandomGratitudeStatement] = useState(null); // defining randomStatement from the fetch from api endpoint
+    const userId = session?.user?.userId
+    const [randomGratitudeStatement, setRandomGratitudeStatement] = useState(null); // defining randomGratitudeStatement from the fetch from api endpoint
     const [showStatement, setShowStatement] = useState(false); // display/hides <GratitudeStatement /> Component
     const [showError, setShowError] = useState(false); // State variable for error handling
 
     async function gettingRandomStatement() {
         try {
-            const response = await fetch(`/api/${userId}/`)
-            const randomGratitudeStatement = await response.json()
-            console.log("data from api: (should be returning a single random statement", randomGratitudeStatement) // logic for random object in array is ssr.
-
-
-            if (!response.ok || !randomGratitudeStatement) {  // Check for errors or empty response
-                console.error("Error fetching random statement:", response);
-                setShowError(!showError);
+            if (!userId) {
+                console.error("User ID is not available.");
+                // add useState() with "please try again" <p> beneath button
                 return;
             }
 
-            if (randomGratitudeStatement) {
-                setRandomGratitudeStatement(randomGratitudeStatement);
-                setShowStatement(true)
+
+            const response = await fetch(`/api/${userId}/`)
+            if (!response.ok) {
+                throw new Error(`Failed to fetch random statement: ${response.statusText}`);
             }
+            const randomGratitudeStatement = await response.json()
+            if (!randomGratitudeStatement) {
+                throw new Error("Random gratitude statement is not available.");
+            }
+
+            setRandomGratitudeStatement(randomGratitudeStatement);
+            console.log("--- inside if(response.ok) randomGratitudeStatement=", randomGratitudeStatement)
+            setShowStatement(true)
+            console.log("--- showStatement useState() = ", showStatement)
+            //  setShowError(false)
+
 
         } catch (error) {
             setShowError(!showError)
-            console.error("error in RandomGratitudeButton.js: ", error)
+            console.error("--- error in async gettingRandomStatement() try catch // RandomGratitudeButton.js: ", error)
         }
     }
 
@@ -57,7 +64,12 @@ export default function RandomGratitudeButton() {
                 Gratitude Memory
 
             </button>
-            {showError ? (<p className="errormessage text-center text-xs p-2 text-blue-50 place-self-start h-full"> Please add a gratitude statement to your memories to get a random gratitude memory. </p>) : null}
+
+            {showError ?
+                <p className="errormessage text-center text-xs p-2 text-blue-50 place-self-center h-full"> Please add first a gratitude statement to your memories to get a random gratitude memory. </p>
+                :
+                null
+            }
         </>
     )
 }

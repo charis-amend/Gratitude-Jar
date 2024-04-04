@@ -43,18 +43,23 @@ export default async function handler(req, res) {
                 return res.status(404).json({ error: "User not found" })
             }
 
+
             const usersGratitudeStatements = userGettingRandomStatement.gratitudeStatements
-            if (usersGratitudeStatements.length === 0) {
+            if (usersGratitudeStatements.length >= 1) {
+                // Randomly select a GratitudeStatement ID from the user's array of gratitudeStatements
+                const randomGratitudeStatementId = usersGratitudeStatements[Math.floor(Math.random() * usersGratitudeStatements.length)];
+                console.log("--- in backend // randomGratitudeStatementId=", randomGratitudeStatementId)
+                // Retrieve the full GratitudeStatement-object (= in mongodb) using the randomGratitudeStatementId
+                const fetchedStatement = await GratitudeStatement.findById(randomGratitudeStatementId);
+                res.status(200).json(fetchedStatement);
+                console.log("------ server-side userId.js OBJECT fetchedStatement:", fetchedStatement, "----------")
+            }
+
+            else if (usersGratitudeStatements.length === 0) {
                 return res.status(404).json({ status: "User has no gratitudeStatements Error retrieving random statement." });
             }
 
-            // Randomly select a GratitudeStatement ID from the user's array
-            const randomGratitudeStatementId = usersGratitudeStatements[Math.floor(Math.random() * usersGratitudeStatements.length)];
 
-            // Retrieve the full GratitudeStatement-object (=document in mongodb) using the randomGratitudeStatementId
-            const randomGratitudeStatement = await GratitudeStatement.findById(randomGratitudeStatementId);
-            console.log("------ randomGratitudeStatement:", randomGratitudeStatement, "----------")
-            res.status(200).json(randomGratitudeStatement);
         } catch (error) {
             console.error("Error in GET /api/gratitudeStatements/[userId].js:", error);
             res.status(500).json({ status: "Internal Server Error" });
