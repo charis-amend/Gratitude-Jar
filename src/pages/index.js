@@ -57,7 +57,7 @@ export default function Home() {
               <ShatterButton />
             </div>
           </Link>
-          <div className="login-info-section z-5 fixed top-0.5 right-0.5 z-50 p-4 flex flex-col justify-end">
+          <div className="login-info-section z-5 fixed right-0.5 z-50 mr-4 flex flex-col justify-end">
             <Login />
           </div>
 

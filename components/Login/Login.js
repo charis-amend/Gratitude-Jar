@@ -13,7 +13,7 @@ export default function Login() {
                     {session.user.email}
                 </p>
                 <button type="button" onClick={() => signOut()}
-                    className="signout-button place-self-end text-white text-xs bg-blue-950/70 w-fit border-1 rounded-xl py-2 px-3 my-1 shadow-xl border-2 border-Grey-jar">
+                    className="signout-button place-self-end text-white text-xs w-fit rounded-2xl p-3 mb-1 border-none shadow-2xl shadow-SageGreen-jar">
                     Sign out</button>
             </>
         )
