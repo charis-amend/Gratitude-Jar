@@ -19,7 +19,6 @@ REST API
 ## Naming in this project
 
 ```jsx
-// defining the Data
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   gratitudeStatements: {
@@ -29,7 +28,6 @@ const userSchema = new Schema({
 });
 
 const gratitudeStatementsSchema = new Schema({
-  // gratitudeStatementObjectId: ObjectId('') predefined _id by mongoDB
   dateCreation: { type: String, require: true },
   statementText: { type: String, require: true },
 });
