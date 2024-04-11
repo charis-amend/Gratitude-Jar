@@ -14,7 +14,7 @@ REST API
 
 ## Data Structure
 
-[gratitude_jar_database-structure.pdf](gratitude_jar_database-structure.pdf)
+↪️ open here: [gratitude_jar_database-structure.pdf](gratitude_jar_database-structure.pdf)
 
 ## Naming in this project
 
