@@ -47,8 +47,12 @@ HomePage() {
 <GratitudeForm /> // adding gratitudeStatement
 <RandomGratitudeButton /> // Button to get a random gratitudeStatement
 }
+
+// -------- Parent Homepage --------
+BreakingPage() {
+// back button
+<BreakingJar />
+// button to break jar
+} 
 ```
 
-## Props UP and DOWN
-
-[https://miro.com/app/board/uXjVNsCw6Vo=/?share_link_id=781978993892](https://miro.com/app/board/uXjVNsCw6Vo=/?share_link_id=781978993892)
