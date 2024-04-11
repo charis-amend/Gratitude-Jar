@@ -9,9 +9,8 @@
 Vercel | MongoDB
 REST API
 | Tailwind CSS
-| NextAuth | Jest | Three Fiber
-|
-| --- | --- | --- | --- | --- | --- |
+| NextAuth | React Three Fiber | React Spring |
+
 
 ## Data Structure
 
