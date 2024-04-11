@@ -1,5 +1,7 @@
 # Gratitude Jar README
 
+<img src="https://github.com/charis-amend/Gratitude-Jar/blob/main/public/icon.png" alt="jar-logo" width="70" height="70" href="http://gratitude-jar0.vercel.app"/>
+
 <aside>
 💡 Browser-based web app to collect good things throughout the day which you are grateful for. And getting a random gratitude memory.
 
@@ -10,6 +12,9 @@ Vercel | MongoDB
 REST API
 | Tailwind CSS
 | NextAuth | React Three Fiber | React Spring |
+
+
+
 
 
 ## Data Structure
