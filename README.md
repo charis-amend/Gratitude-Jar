@@ -47,6 +47,7 @@ HomePage() {
 <GratitudeForm /> // adding gratitudeStatement
 <RandomGratitudeButton /> // Button to get a random gratitudeStatement
 }
+```
 
 ## Props UP and DOWN
 
