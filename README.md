@@ -15,7 +15,7 @@ REST API
 
 
 <aside>
-<img src="https://github.com/charis-amend/Gratitude-Jar/blob/main/screenshot.gratitudejar.png" alt="screenshot-app" wdith="80" height="200">
+<img src="https://github.com/charis-amend/Gratitude-Jar/blob/main/screenshot.gratitudejar.png" alt="screenshot-app" wdith="100" height="250">
 </aside>
 
 
