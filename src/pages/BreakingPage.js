@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export default function BreakingPage() {
     // trigger for animation:
-    const [clickState, setClickState] = useState(false); // Initial click state
+    const [jarCondition, setJarCondition] = useState(false); // Initial click state
     function handleClickBreak() {
-        setClickState(!clickState); // Toggle the click state on click
+        setJarCondition(!jarCondition); // Toggle the click state on click
     };
     return (
         <>
@@ -32,7 +32,7 @@ export default function BreakingPage() {
                 >
                     <BreakingJar
                         // className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
-                        clickState={clickState}
+                        jarCondition={jarCondition}
                     />
                 </div>
             </div >

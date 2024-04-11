@@ -8,7 +8,6 @@ export default function Arrows() {
             <div className={`${styles.arrows} animated`}>
                 <Image
                     className="imagefinger"
-                    priority
                     src={"/arrowsfinger3.png"}
                     alt="placeholder-glasjar"
                     width={70}
