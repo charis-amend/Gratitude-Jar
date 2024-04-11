@@ -18,6 +18,7 @@ REST API
 
 ## Naming in this project
 
+#### Schema Database
 ```jsx
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
@@ -33,87 +34,19 @@ const gratitudeStatementsSchema = new Schema({
 });
 ```
 
-| Variables                  | explanation / where its used                                                                                 |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| user                       | a user object with its whole info (only used in database)                                                    |
-| gratitudeStatement         | a object for the whole entry that a user does if they submit a gratitude statement                           |
-| dateCreation               | date when gratitudeStatement was created by user (no editing possible)                                       |
-| statementText              | written words of user                                                                                        |
-| userObjectId               | predefined \_id by mongoDB                                                                                   |
-| gratitudeStatementObjectId | predefined \_id by mongoDB                                                                                   |
-| usersList                  | list of all users === Array of userObjects and those userOjects have an array with gratitudeStatementObjects |
-
 ## REACT Components
 
 ```jsx
 
-// -------- top top top Parent --------
-export default function HomePage() {
-// no header!
- <Login /> // shows logged in user
- 	<BlurryLayer /> // only if GratitudeViewBox is active
- 	<CancelBackButton /> // only if GratitudeViewBox is active
-
- <GlassJar />
-
- <DisplayFormButton />
- // button to hide&display the GratitudeForm
- <GratitudeForm />
- // adding gratitudeStatement
- <GratitudeStatement />
- <RandomGratitudeButton />
- // Button to get a random gratitudeStatement
+// -------- Parent Homepage --------
+HomePage() {
+<Login /> // see nextauth for more
+<GlassJar /> // Canvas with 3D objects (jar and paper)
+<ShatterButton /> // leads to /BreakingPage
+<Arrows /> // shows user to interact with GlassJar
+<GratitudeForm /> // adding gratitudeStatement
+<RandomGratitudeButton /> // Button to get a random gratitudeStatement
 }
-// ------------------------------------
-
-// ---- user is logging in ------
-
-// -------- Parent ---------------------
-export default function Hompage() {
-// no header!
-<Login /> // shows logged in user
-	<BlurryLayer /> // only if GratitudeViewBox is active
-	<CancelBackButton /> // only if GratitudeViewBox is active
-
-<GlassJar />
-
-<DisplayFormButton />
-// button to hide&display the GratitudeForm
-<GratitudeForm />
-// adding gratitudeStatement
-<GratitudeStatement />
-<RandomGratitudeButton />
-// Button to get a random gratitudeStatement
-		}
-
-// ------------------------------------
-
-// ------------- 3rd Level ------------
-export default function GlassJar() {
-		<CrumpledPaper />
-}
-// ------------------------------------
-
-export default function Login() {}
-export default function AppBackground() {}
-export default function BlurryLayer() {}
-export default function CancelBackButton() {}
-	// Button to cancel writing an entry
-
-export default function GlassJar() {}
-	// Component for the animated glassJar with Three JS
-export default function CrumpledPaper() {}
-	// adding a CrumpledPaper everytime User submits a gratitudeStatement
-	// --> additional low prio feature
-
-export default function GratitudeStatement() {}
-export default function GratitudeForm() {}
-	// adding gratitudeStatement
-export default function GratitudeViewBox() {}
-	// div box with gratitudeStatement + dateCreated
-export default function RandomGratitudeButton() {}
-	// Button to get a random gratitudeStatement
-```
 
 ## Props UP and DOWN
 
