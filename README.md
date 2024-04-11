@@ -48,7 +48,7 @@ HomePage() {
 <RandomGratitudeButton /> // Button to get a random gratitudeStatement
 }
 
-// -------- Parent Homepage --------
+// -------- Subpage for Breaking the Jar --------
 BreakingPage() {
 // back button
 <BreakingJar />
