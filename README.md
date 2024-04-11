@@ -14,7 +14,9 @@ REST API
 | NextAuth | React Three Fiber | React Spring |
 
 
-
+<aside>
+<img src="https://github.com/charis-amend/Gratitude-Jar/blob/main/screenshot.gratitudejar.png" alt="screenshot-app" wdith="80" height="200">
+</aside>
 
 
 ## Data Structure
