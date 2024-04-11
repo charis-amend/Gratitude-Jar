@@ -26,16 +26,29 @@ export default function BreakingPage() {
                     </div>
                 </Link >
 
-                <div
-                    onClick={handleClickBreak}
-                    className="shatter-div z-40 top-0 left-0 fixed h-screen w-screen flex"
-                >
-                    <BreakingJar
-                        // className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
-                        jarCondition={jarCondition}
-                    />
+                <BreakingJar
+                    // className="glassjar-spreading-page top-0 left-0 fixed h-screen w-screen z-1"
+                    jarCondition={jarCondition}
+                />
+
+
+                <div className="lower-section fixed top-3/4 left-3.5 right-3.5  bottom-1/4 z-5 p-4 flex flex-col justify-center items-center">
+
+                    {!jarCondition ?
+                        (<>
+                            <button
+                                className="triggerbutton bg-transparent text-5xl font-bold p-4 w-40 m-2"
+                                type="button"
+                                id="RandomGratitudeButton"
+                                onClick={handleClickBreak}>
+                                🔨
+                            </button>
+                        </>)
+                        : (<></>)}
+
+
                 </div>
-            </div >
+            </div>
 
         </>)
 }
