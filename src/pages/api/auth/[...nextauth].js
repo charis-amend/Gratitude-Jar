@@ -6,12 +6,11 @@ import nodemailer from "nodemailer"
 
 
 export default NextAuth({
-  // Configure one or more authentication providers
   providers: [
     EmailProvider({
-      server: process.env.EMAIL_SERVER, // see details of server{} object in .env file
+      server: process.env.EMAIL_SERVER,
       from: process.env.EMAIL_FROM,
-      maxAge: 30 * 24 * 60 * 60, // 30daays
+      maxAge: 30 * 24 * 60 * 60, // 30days
       async sendVerificationRequest({
         identifier: email,
         url,
@@ -49,7 +48,7 @@ export default NextAuth({
   },
   theme: {
     colorScheme: "dark",
-    logo: "/finaljarlogo.png",
+    logo: "/public/finaljarlogo.png",
     brandColor: "#72948A",
   },
 })
