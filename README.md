@@ -18,6 +18,13 @@ REST API
 <img src="https://github.com/charis-amend/Gratitude-Jar/blob/main/screenshot.gratitudejar.png" alt="screenshot-app" wdith="100" height="250">
 </aside>
 
+## Run locally
+1. `npm run build`
+2. connect to db
+3. `npm run start`
+4. localhost 3000 
+
+
 
 ## Data Structure
 
