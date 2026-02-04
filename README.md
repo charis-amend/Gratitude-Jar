@@ -25,11 +25,6 @@ REST API
 4. localhost 3000 
 
 
-
-## Data Structure
-
-↪️ open here: [gratitude_jar_database-structure.pdf](gratitude_jar_database-structure.pdf)
-
 ## Naming in this project
 
 #### Schema Database
